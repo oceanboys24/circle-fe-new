@@ -1,14 +1,15 @@
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import {Provider} from "@/components/ui/provider"
-import ResetPassword from "@/Pages/ResetPassword/ResetPassword.tsx";
+// @ts-ignore
 import '@fontsource-variable/plus-jakarta-sans';
+import LayoutPages from "@/Layout/Layout.tsx";
 
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <Provider>
-            <ResetPassword/>
+            <LayoutPages></LayoutPages>
         </Provider>
     </StrictMode>,
 )
