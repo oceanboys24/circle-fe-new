@@ -29,7 +29,6 @@ export default function SideBarRight() {
                         <Text as="span" fontWeight="bold" color="white">400</Text>
                         <Text as="span" color="gray.400"> Followers</Text>
                     </Text>
-
                 </Stack>
             </Stack>
             <Stack bgColor="#272726" rounded="lg" p="3">
