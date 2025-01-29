@@ -4,7 +4,8 @@ import {Avatar} from "@/components/ui/avatar"
 export default function SideBarRight() {
     return (
 
-        <Flex direction="column" gap="4" height="100vh" width="60vw" bgColor="#1c1d1c" p="10">
+        <Flex direction="column" gap="4" height="100vh" width="60vw" bgColor="#1c1d1c" p="10" minW="sm"
+        >
             <Stack bgColor="#272726" p="4" rounded="lg">
                 <Heading>My Profile</Heading>
                 <Image src="./public/cover.svg" fontSize="40px" rounded="lg"/>

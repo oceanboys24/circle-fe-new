@@ -3,9 +3,9 @@ import {Button, Flex, Heading, Icon, Image, Stack, Text} from "@chakra-ui/react"
 
 export default function SidebarLeft() {
     return (
-        <Flex width="40vw" bgColor="#1c1d1c" direction="column">
+        <Flex width="auto" bgColor="#1c1d1c" direction="column" minW="sm">
             <Heading size="7xl" color="#04a41f" textAlign="center">circle</Heading>
-            <Flex direction="column" justify="space-between" p="1" height="100vh">
+            <Flex direction="column" p="1">
                 <Flex direction="column" p="5" px="10" gap="3">
                     <Stack direction="row" _hover={{bg: "#333333", rounded: "lg"}} p="3">
                         <Icon fontSize="45px">
@@ -43,8 +43,6 @@ export default function SidebarLeft() {
                     </Stack>
                 </Flex>
             </Flex>
-
-
         </Flex>
     )
 }
