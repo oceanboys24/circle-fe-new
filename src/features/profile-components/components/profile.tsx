@@ -6,12 +6,12 @@ export default function Profile() {
     return (
         <Stack p="4">
             <Flex gap="1">
-                <Avatar src="line-arrow-left.svg" size="xs" rounded="lg" bgColor="#09090b"/>
+                <Avatar src="./src/assets/line-arrow-left.svg" size="xs" rounded="lg" bgColor="#09090b"/>
                 <Heading>Profile</Heading>
             </Flex>
-            <Image src="./public/cover.svg" fontSize="40px" rounded="lg"/>
+            <Image src="./src/assets/cover.svg" fontSize="40px" rounded="lg"/>
             <Flex justify="space-between" h="100px">
-                <Avatar src="./public/tyler.png" size="4xl"
+                <Avatar src="./src/assets/tyler.png" size="4xl"
                         bottom="50px" left="30px"/>
                 <ModalEdit/>
             </Flex>

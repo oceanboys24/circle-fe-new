@@ -4,7 +4,7 @@ import {Avatar} from "@/components/ui/avatar.tsx";
 export default function UserStatus() {
     return (
         <Flex p="5" borderBottomWidth="2px">
-            <Avatar src="./public/tyler.png" size="xl"/>
+            <Avatar src="./src/assets/tyler.svg" size="xl"/>
             <Flex direction="column" pl="3" gap="3">
                 <Flex textStyle="md" direction="row" gap="3">
                     <Text as="span" color="white">Drs. Fuad</Text>
@@ -24,11 +24,11 @@ export default function UserStatus() {
                 </Flex>
                 <Flex direction="row" gap="5">
                     <Flex gap="1">
-                        <Image src="./public/heart.svg"/>
+                        <Image src="./src/assets/heart.svg"/>
                         <Text>46</Text>
                     </Flex>
                     <Flex gap="1">
-                        <Image src="./public/message-text.svg"/>
+                        <Image src="./src/assets/message-text.svg"/>
                         <Text>405 Replies</Text>
                     </Flex>
                 </Flex>

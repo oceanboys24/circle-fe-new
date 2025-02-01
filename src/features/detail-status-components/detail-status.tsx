@@ -8,7 +8,7 @@ export default function DetailStatus() {
     return (
         <Flex w="full" direction="column" gap="3">
             <Flex gap="1" p="5">
-                <Avatar src="line-arrow-left.svg" size="xs" rounded="lg" bgColor="#09090b"/>
+                <Avatar src="./src/assets/line-arrow-left.svg" size="xs" rounded="lg" bgColor="#09090b"/>
                 <Heading fontWeight="bold" fontSize="3xl" color="#d2d2d2">Status</Heading>
             </Flex>
             <UserStatus/>

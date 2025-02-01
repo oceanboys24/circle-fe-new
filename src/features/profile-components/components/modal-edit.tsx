@@ -23,9 +23,9 @@ export default function ModalEdit() {
                     <DialogTitle color="#d2d2d2">Edit Profile</DialogTitle>
                 </DialogHeader>
                 <DialogBody>
-                    <Image src="./public/cover.svg" fontSize="40px" rounded="lg"/>
+                    <Image src="./src/assets/cover.svg" fontSize="40px" rounded="lg"/>
                     <Flex justify="space-between" h="100px">
-                        <Avatar src="./public/avatar.svg" size="4xl"
+                        <Avatar src="./src/assets/avatar.svg" size="4xl"
                                 bottom="50px" left="30px"/>
                     </Flex>
                     <Stack direction="column" gap="1" p="1" position="relative" mt="-10">

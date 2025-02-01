@@ -5,7 +5,7 @@ export default function Logout() {
         <Flex justify="center" rounded="xl">
             <Stack direction="row" _hover={{bg: "#333333", rounded: "lg"}} p="3">
                 <Icon fontSize="45px">
-                    <Image src="./public/logout.svg" fontSize="40px"/>
+                    <Image src="./src/assets/logout.svg" fontSize="40px"/>
                 </Icon>
                 <Text p="1" fontWeight="bold">Logout</Text>
             </Stack>

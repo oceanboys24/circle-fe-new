@@ -5,9 +5,9 @@ export default function ProfileSidebarRight() {
     return (
         <Stack bgColor="#272726" p="4" rounded="lg">
             <Heading>My Profile</Heading>
-            <Image src="./public/cover.svg" fontSize="40px" rounded="lg"/>
+            <Image src="./src/assets/cover.svg" fontSize="40px" rounded="lg"/>
             <Flex justify="space-between" h="100px">
-                <Avatar src="./public/avatar.svg" size="4xl"
+                <Avatar src="./src/assets/avatar.svg" size="4xl"
                         bottom="50px" left="30px"/>
                 <Button variant="outline" color="white" borderColor="white" rounded="4xl" flexShrink={0}>Edit
                     Profile</Button>

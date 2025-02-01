@@ -5,7 +5,7 @@ export default function StatusPostImage() {
     return (
         <Flex direction="column" p="4" gap="3" borderBottomWidth="2px">
             <Flex>
-                <Avatar src="./public/avatar2.svg" size="xl"/>
+                <Avatar src="./src/assets/avatar2.svg" size="xl"/>
                 <Flex direction="column" pl="3" gap="3">
                     <Flex textStyle="md" direction="row" gap="3">
                         <Text as="span" color="white">Lamar Jackson</Text>
@@ -15,14 +15,14 @@ export default function StatusPostImage() {
                     <Text>
                         Game Day Chiefs vs Ravens
                     </Text>
-                    <Image src="./public/dummy.png" rounded="lg" fit="contain"/>
+                    <Image src="./src/assets/dummy.png" rounded="lg" fit="contain"/>
                     <Flex direction="row" gap="5">
                         <Flex gap="1">
-                            <Image src="./public/heart.svg"/>
+                            <Image src="./src/assets/heart.svg"/>
                             <Text>46</Text>
                         </Flex>
                         <Flex gap="1">
-                            <Image src="./public/message-text.svg"/>
+                            <Image src="./src/assets/message-text.svg"/>
                             <Text>405 Replies</Text>
                         </Flex>
                     </Flex>

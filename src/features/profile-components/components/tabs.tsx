@@ -21,15 +21,15 @@ export default function TabsUserProfile() {
                 </Tabs.Content>
                 <Tabs.Content value="media" w="full">
                     <Grid templateColumns="repeat(3, 1fr)" gap="6">
-                        <Image h="full" w="full" src="./public/dummy-1.jpg"/>
-                        <Image h="full" w="full" src="./public/dummy-1.jpg"/>
-                        <Image h="full" w="full" src="./public/dummy-1.jpg"/>
-                        <Image h="full" w="full" src="./public/dummy-1.jpg"/>
-                        <Image h="full" w="full" src="./public/dummy-1.jpg"/>
-                        <Image h="full" w="full" src="./public/dummy-1.jpg"/>
-                        <Image h="full" w="full" src="./public/dummy-1.jpg"/>
-                        <Image h="full" w="full" src="./public/dummy-1.jpg"/>
-                        <Image h="full" w="full" src="./public/dummy-1.jpg"/>
+                        <Image h="full" w="full" src="./src/assets/dummy-1.jpg"/>
+                        <Image h="full" w="full" src="./src/assets/dummy-1.jpg"/>
+                        <Image h="full" w="full" src="./src/assets/dummy-1.jpg"/>
+                        <Image h="full" w="full" src="./src/assets/dummy-1.jpg"/>
+                        <Image h="full" w="full" src="./src/assets/dummy-1.jpg"/>
+                        <Image h="full" w="full" src="./src/assets/dummy-1.jpg"/>
+                        <Image h="full" w="full" src="./src/assets/dummy-1.jpg"/>
+                        <Image h="full" w="full" src="./src/assets/dummy-1.jpg"/>
+                        <Image h="full" w="full" src="./src/assets/dummy-1.jpg"/>
                     </Grid>
                 </Tabs.Content>
             </Tabs.Root>
