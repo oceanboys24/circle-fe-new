@@ -17,13 +17,13 @@ export default function StatusPostImage() {
                     </Text>
                     <Image src="./src/assets/dummy.png" rounded="lg" fit="contain"/>
                     <Flex direction="row" gap="5">
-                        <Flex gap="1">
-                            <Image src="./src/assets/heart.svg"/>
-                            <Text>46</Text>
+                        <Flex gap="1" alignItems="center">
+                            <Image src="./src/assets/heart.svg" w="30px"/>
+                            <Text>46 Likes</Text>
                         </Flex>
-                        <Flex gap="1">
-                            <Image src="./src/assets/message-text.svg"/>
-                            <Text>405 Replies</Text>
+                        <Flex gap="1" alignItems="center">
+                            <Image src="./src/assets/message-text.svg" w="30px"/>
+                            <Text>212 Replies</Text>
                         </Flex>
                     </Flex>
                 </Flex>

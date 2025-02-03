@@ -1,12 +1,16 @@
 import {Flex, Heading, Image, Stack, Text} from "@chakra-ui/react";
 import {Avatar} from "@/components/ui/avatar.tsx";
 import ModalEdit from "@/features/profile-components/components/modal-edit.tsx";
+import {NavLink} from "react-router-dom";
 
 export default function Profile() {
     return (
         <Stack p="4">
             <Flex gap="1">
-                <Avatar src="./src/assets/line-arrow-left.svg" size="xs" rounded="lg" bgColor="#09090b"/>
+                <NavLink to="/">
+                    <Avatar src="./src/assets/line-arrow-left.svg" size="xs" rounded="lg" bgColor="#09090b"
+                            _hover={{bg: "#333333", rounded: "lg"}}/>
+                </NavLink>
                 <Heading>Profile</Heading>
             </Flex>
             <Image src="./src/assets/cover.svg" fontSize="40px" rounded="lg"/>

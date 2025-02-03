@@ -1,5 +1,5 @@
 import {Flex, Grid, Image, Tabs} from "@chakra-ui/react";
-import UserPost from "@/features/profile-components/components/user-post.tsx";
+import StatusPost from "@/features/home-components/components/status-post.tsx";
 
 export default function TabsUserProfile() {
     return (
@@ -14,9 +14,9 @@ export default function TabsUserProfile() {
                     </Tabs.Trigger>
                 </Tabs.List>
                 <Tabs.Content value="post" w="full">
-                    <UserPost/>
-                    <UserPost/>
-                    <UserPost/>
+                    <StatusPost/>
+                    <StatusPost/>
+                    <StatusPost/>
 
                 </Tabs.Content>
                 <Tabs.Content value="media" w="full">

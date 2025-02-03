@@ -8,6 +8,7 @@ import SearchPages from "@/features/search-components/search.tsx";
 import FollowsPages from "@/features/follows-components/follows.tsx";
 import HomePages from "@/routes/home.tsx";
 import HomeBar from "@/features/home-components/HomeBar.tsx";
+import NotFoundPage from "@/routes/404.tsx";
 
 
 const router = createBrowserRouter([
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
     {
         path: "/reset-password",
         element: <ResetPasswordPages/>
+    },
+    {
+        path: "*",
+        element: <NotFoundPage/>
     }
 ])
 

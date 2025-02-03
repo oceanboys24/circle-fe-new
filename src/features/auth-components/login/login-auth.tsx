@@ -19,7 +19,7 @@ export default function LoginAuth() {
                 <Link href="#" color="green" fontWeight="medium" alignSelf="end">
                     Forgot Password?
                 </Link>
-                <Button type="submit" size="xl" colorPalette="green" rounded="4xl" fontSize='2xl'>Create</Button>
+                <Button type="submit" size="xl" colorPalette="green" rounded="4xl" fontSize='2xl'>Login</Button>
                 <Text>
                     Don't have an account yet? <Link href="#" color="green" fontWeight="medium">Create
                     Account</Link>

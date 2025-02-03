@@ -8,7 +8,7 @@ export default function StatusPost() {
                 <Avatar src="./src/assets/avatar2.svg" size="xl"/>
                 <Flex direction="column" pl="3" gap="3">
                     <Flex textStyle="md" direction="row" gap="3">
-                        <Text as="span" color="white">Drs. Roesdi Amba</Text>
+                        <Text as="span" color="white" fontWeight="semibold">Drs. Roesdi Amba</Text>
                         <Text as="span" color="gray.400"> @oceanboys </Text>
                         <Text as="span" color="gray.400">• 6h</Text>
                     </Flex>
@@ -19,13 +19,13 @@ export default function StatusPost() {
                         survived not only five centuries, but also the leap into electronic
                     </Text>
                     <Flex direction="row" gap="5">
-                        <Flex gap="1">
-                            <Image src="./src/assets/heart.svg"/>
+                        <Flex gap="1" alignItems="center">
+                            <Image src="./src/assets/heart.svg" w="30px"/>
                             <Text>46</Text>
                         </Flex>
-                        <Flex gap="1">
-                            <Image src="./src/assets/message-text.svg"/>
-                            <Text>405 Replies</Text>
+                        <Flex gap="1" alignItems="center">
+                            <Image src="./src/assets/message-text.svg" w="30px"/>
+                            <Text>212 Replies</Text>
                         </Flex>
                     </Flex>
                 </Flex>

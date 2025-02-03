@@ -34,7 +34,7 @@ export default function MainMenu() {
                     {({isActive}) => (
                         <Stack direction="row" _hover={{bg: "#333333", rounded: "lg"}} p="3">
                             <Icon fontSize="45px">
-                                <Image src={isActive ? "./src/assets/heart-bold.svg" : "./src/assets/heart.svg"}
+                                <Image src={isActive ? "./src/assets/heart-bold.svg" : "./src/assets/heart-menu.svg"}
                                        fontSize="40px"/>
                             </Icon>
                             <Text p="1" fontWeight="bold">Follows</Text>
@@ -48,12 +48,10 @@ export default function MainMenu() {
                                 <Image src={isActive ? "./src/assets/profile-bold.svg" : "./src/assets/profile.svg"}
                                        fontSize="40px"/>
                             </Icon>
-                            <Text p="1" fontWeight="bold">Follows</Text>
+                            <Text p="1" fontWeight="bold">Profile</Text>
                         </Stack>
                     )}
                 </NavLink>
-
-
                 <Button type="submit" size="xl" colorPalette="green" rounded="4xl" fontSize='2xl'>Create
                     Post</Button>
             </Flex>
