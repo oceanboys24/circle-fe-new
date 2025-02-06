@@ -1,32 +1,24 @@
 import {Button, Flex, Text} from "@chakra-ui/react";
 import {Avatar} from "@/components/ui/avatar.tsx";
+import { DataSuggestionFollow } from "@/features/home/sidebar/utils/suggestion";
 
-export function Followers() {
-    return (
-        <Flex gap="3" justifyContent="space-between">
-            <Avatar src="./src/assets/avatar.svg" size="xl"/>
-            <Flex direction="column" marginEnd="auto">
-                <Text>Kendrick Lamar</Text>
-                <Text textStyle="xs" color="#5a5a5b">@champagnepapi</Text>
-            </Flex>
-            <Button variant="outline" color="#747475" borderColor="#747475" rounded="4xl" w="120px"
-            >
-                Following</Button>
-        </Flex>
-    )
-}
 
-export function Following() {
+
+
+export function SuggestionFollowLoop() {
     return (
-        <Flex gap="3" justifyContent="space-between">
-            <Avatar src="./src/assets/avatar.svg" size="xl"/>
+        DataSuggestionFollow.map(({name,username,image,isFollowing}, index) => (
+            <Flex gap="3" justifyContent="space-between" key={index}>
+            <Avatar src={image} size="xl"/>
             <Flex direction="column" marginEnd="auto">
-                <Text>Kendrick Lamar</Text>
-                <Text textStyle="xs" color="#5a5a5b">@champagnepapi</Text>
+                <Text>{name}</Text>
+                <Text textStyle="xs" color="#5a5a5b">@{username}</Text>
             </Flex>
-            <Button variant="outline" color="white" borderColor="white" rounded="4xl"
+            <Button variant="outline" style={{color: isFollowing ? "#747475" : "white",borderColor: isFollowing ? "#747475" : "white"}} rounded="4xl"
             >
-                Following</Button>
+                {isFollowing ? "Following" : "Follow"}</Button>
         </Flex>
+        ))
+
     )
 }

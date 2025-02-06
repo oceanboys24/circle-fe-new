@@ -1,0 +1,117 @@
+import {
+  Box,
+  Button,
+  Flex,
+  Stack,
+  Image,
+  Input,
+  Textarea,
+} from "@chakra-ui/react";
+import { Avatar } from "@/components/ui/avatar.tsx";
+import InputPostArea from "@/features/home/main/components/input-post/create-post.tsx";
+import { useRef, useState } from "react";
+import PreviewImage from "@/features/home/main/components/input-post/preview-image.tsx";
+import InputImageButton from "@/features/home/main/components/input-post/button-image.tsx";
+import { CloseButton } from "@/components/ui/close-button.tsx";
+import {
+  DialogActionTrigger,
+  DialogBackdrop,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogRoot,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+export default function InputPost() {
+  const [image, setImage] = useState<string | null>(null);
+  const inputFileImage = useRef<HTMLInputElement>(null);
+
+  function onClick() {
+    inputFileImage.current?.click();
+  }
+
+  return (
+    <DialogRoot size="lg">
+      <Flex direction="column" borderBottomWidth="2px">
+        <Box display="flex" flexDirection="row" p="4" gap="4" w="full">
+          <Avatar src="./src/assets/avatar2.svg" size="xl" />
+
+          <DialogTrigger asChild>
+            <Flex w="100vw">
+              <InputPostArea />
+            </Flex>
+          </DialogTrigger>
+
+          <InputImageButton setImage={setImage} />
+          <Button
+            type="submit"
+            size="md"
+            colorPalette="green"
+            rounded="4xl"
+            fontSize="xl"
+            p="5"
+            justifyContent="center"
+          >
+            Post
+          </Button>
+        </Box>
+        <Stack w="xs" alignSelf="center" p="2">
+          <PreviewImage image={image} />
+          {image && (
+            <CloseButton
+              onClick={() => setImage(null)}
+              position="absolut"
+              top={2}
+              right={2}
+              border="xs"
+            />
+          )}
+        </Stack>
+      </Flex>
+      <DialogBackdrop />
+      <DialogContent rounded="lg">
+      <DialogCloseTrigger  bg="bg" />
+        <DialogBody p="5">
+          <Flex justify="center" align="start" flexShrink={0}>
+            <Box p="2.5">
+            <Avatar
+              alignSelf="center"
+              src="./src/assets/avatar2.svg"
+              size="md"
+            />
+            </Box>
+            
+            <Textarea
+              autoresize
+              maxH="30vh"
+              placeholder="What is Happening?!"
+              variant="flushed"
+              p="4"
+              textStyle="lg"
+              minW="xs"
+              borderBottom="none"
+              _focus={{ borderBottom: "none", boxShadow: "none" }}
+            />
+          </Flex>
+        </DialogBody>
+        <DialogFooter justifyContent="space-between" >
+          <DialogActionTrigger asChild>
+            <Flex alignSelf="start">
+              <Button variant={"ghost"} onClick={onClick}>
+                <Image src="./src/assets/gallery-add.svg" />
+              </Button>
+              <input type="file" hidden ref={inputFileImage} />
+            </Flex>
+          </DialogActionTrigger>
+          <Button bgColor="#04A51E" color="white" rounded="full" p="4">
+            Post
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </DialogRoot>
+  );
+}

@@ -1,4 +1,4 @@
-import {Flex} from "@chakra-ui/react";
+import {Flex, Grid} from "@chakra-ui/react";
 import {ReactNode} from "react";
 
 interface LayoutPagesProps {
@@ -7,8 +7,8 @@ interface LayoutPagesProps {
 
 export default function LayoutMain({children}: LayoutPagesProps) {
     return (
-        <Flex height="100vh" width="100vw" bgColor="black" overflowY="auto">
+        <Grid templateColumns="repeat(4,1fr)" >
             {children}
-        </Flex>
+        </Grid>
     )
 }

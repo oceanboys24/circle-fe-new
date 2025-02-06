@@ -1,4 +1,4 @@
-import LoginAuth from "@/features/auth-components/login/login-auth.tsx";
+import LoginAuth from "@/features/auth/login/login-auth.tsx";
 import LayoutPages from "@/layout/layout-auth.tsx";
 import {Toaster} from "@/components/ui/toaster.tsx";
 

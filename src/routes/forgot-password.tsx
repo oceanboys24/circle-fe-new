@@ -1,5 +1,5 @@
 import LayoutPages from "@/layout/layout-auth.tsx";
-import ForgotPassword from "@/features/auth-components/forgot-password/forgot-password.tsx"
+import ForgotPassword from "@/features/auth/forgot-password/forgot-password.tsx"
 
 export default function ForgotPasswordAuthPages() {
     return (

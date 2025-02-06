@@ -3,12 +3,13 @@ import ForgotPasswordPages from "@/routes/forgot-password.tsx";
 import LoginAuthPages from "@/routes/login.tsx";
 import RegisterAuthPages from "@/routes/register.tsx";
 import ResetPasswordPages from "@/routes/reset-password.tsx";
-import ProfileBar from "@/features/profile-components/profile-bar.tsx";
-import SearchPages from "@/features/search-components/search.tsx";
-import FollowsPages from "@/features/follows-components/follows.tsx";
+import ProfileBar from "@/features/home/profile/profile-bar";
+import SearchPages from "@/features/home/search/search";
+import FollowsPages from "@/features/home/follows/follows";
 import HomePages from "@/routes/home.tsx";
-import HomeBar from "@/features/home-components/HomeBar.tsx";
+import HomeBar from "@/features/home/main/HomeBar";
 import NotFoundPage from "@/routes/404.tsx";
+import DetailStatus from "@/features/home/detail-status/detail-status";
 
 
 const router = createBrowserRouter([
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
             {index: true, element: <HomeBar/>},
             {path: "profile", element: <ProfileBar/>},
             {path: "search", element: <SearchPages/>},
+            {path: "detail-status", element: <DetailStatus/>},
             {path: "follows", element: <FollowsPages/>}
         ]
     },
