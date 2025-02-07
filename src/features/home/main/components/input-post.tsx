@@ -4,7 +4,6 @@ import {
   Flex,
   Stack,
   Image,
-  Input,
   Textarea,
 } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
@@ -20,9 +19,7 @@ import {
   DialogCloseTrigger,
   DialogContent,
   DialogFooter,
-  DialogHeader,
   DialogRoot,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 
@@ -35,11 +32,10 @@ export default function InputPost() {
   }
 
   return (
-    <DialogRoot size="lg">
-      <Flex direction="column" borderBottomWidth="2px">
+    <DialogRoot size="lg" >
+      <Flex direction="column" borderBottomWidth="2px" >
         <Box display="flex" flexDirection="row" p="4" gap="4" w="full">
           <Avatar src="./src/assets/avatar2.svg" size="xl" />
-
           <DialogTrigger asChild>
             <Flex w="100vw">
               <InputPostArea />

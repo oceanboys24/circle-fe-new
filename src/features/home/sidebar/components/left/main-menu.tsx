@@ -1,4 +1,4 @@
-import { Button, Flex, Icon, Image, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, Image, Stack, Text } from "@chakra-ui/react";
 import { NavLink, useLocation } from "react-router-dom";
 import { NavListMenu } from "../../utils/form-menu";
 import HeadingSideBarLeft from "./heading";
@@ -9,11 +9,10 @@ export default function MainMenu() {
       <HeadingSideBarLeft />
       <Flex direction="column" p="5" px="10" gap="3">
         {NavListMenu.map(({ label, logo, path }, index) => (
-          <NavLink to={path}>
+          <NavLink to={path} key={index}>
             <Stack
               direction="row"
               _hover={{ bg: "#333333", rounded: "lg" }}
-              key={index}
               p="3"
             >
               <Icon fontSize="45px">
@@ -29,15 +28,20 @@ export default function MainMenu() {
           </NavLink>
         ))}
 
-        <Button
-          type="submit"
-          size="xl"
-          colorPalette="green"
-          rounded="4xl"
-          fontSize="2xl"
-        >
-          Create Post
-        </Button>
+        <Box p="2" display={"flex"} justifyContent="center">
+          <Button
+            alignSelf="center"
+            type="submit"
+            size="xl"
+            colorPalette="green"
+            rounded="4xl"
+            fontSize="2xl"
+            w="full"
+            maxW="300px"
+          >
+            <Text fontSize={{ md: 25 }}>Create Post</Text>
+          </Button>
+        </Box>
       </Flex>
     </Flex>
   );

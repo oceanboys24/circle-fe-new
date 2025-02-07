@@ -7,7 +7,7 @@ export default function StatusPost() {
     <Flex direction="column" p="4" gap="3" borderBottomWidth="2px">
       {DataTweetDummy.map(
         ({ name, username, avatar, tweet, likes, replies }, index) => (
-          <Flex key={index}>
+          <Flex key={index} >
             <Avatar src={avatar} size="xl" />
             <Flex direction="column" pl="3" gap="3">
               <Flex textStyle="md" direction="row" gap="3">

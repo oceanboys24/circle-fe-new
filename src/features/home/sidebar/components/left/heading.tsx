@@ -1,11 +1,14 @@
-import {Heading} from "@chakra-ui/react";
-import {NavLink} from "react-router-dom";
+import { Button, Flex, Heading, MenuContent, MenuItem, MenuRoot, MenuTrigger } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 
 export default function HeadingSideBarLeft() {
-    return (
-        <NavLink to="/">
-            <Heading size="7xl" color="#04a41f" textAlign="center">circle</Heading>
-        </NavLink>
-
-    )
+  return (
+    <Flex pl="10">
+      <NavLink to="/">
+        <Heading size="7xl" color="#04a41f" textAlign="start">
+          circle
+        </Heading>
+      </NavLink>
+    </Flex>
+  );
 }

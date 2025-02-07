@@ -18,7 +18,7 @@ export default function InputImageButton({setImage}: InputImageProps) {
     }
     return (
         <Box as="label" cursor="pointer">
-            <Avatar src="./src/assets/gallery-add.svg" shape="square" bgColor="#09090b" _hover={{opacity: 0.8}}>
+            <Avatar src="./src/assets/gallery-add.svg" shape="square" bgColor="transparent" _hover={{opacity: 0.8}}>
                 <input type="file" hidden onChange={handleImageChange}/>
             </Avatar>
         </Box>

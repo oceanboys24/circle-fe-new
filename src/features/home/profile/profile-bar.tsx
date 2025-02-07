@@ -5,7 +5,7 @@ import Profile from "@/features/home/profile/components/profile.tsx";
 
 export default function ProfileBar() {
     return (
-        <GridItem colSpan={2}>
+        <GridItem colSpan={{base : 4, md:2}} overflow={"hidden"}>
             <Profile/>
             <TabsUserProfile/>
         </GridItem>
