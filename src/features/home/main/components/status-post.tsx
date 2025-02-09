@@ -1,43 +1,71 @@
-import { Flex, Image, Text } from "@chakra-ui/react";
+import { BoxProps, Flex, Image, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
-import { DataTweetDummy } from "../utils/dummy";
+import { useNavigate } from "react-router-dom";
+import { Post } from "../utils/post";
+import { useReducer } from "react";
 
-export default function StatusPost() {
+interface CardThreadProps extends BoxProps {
+  postData: Post;
+}
+
+export default function StatusPost({ postData }: CardThreadProps) {
+  const navigate = useNavigate();
+  const [, forcedUpdate] = useReducer((state) => state + 1, 0);
+
+  function onClickCard() {
+    navigate(`/detail-status/${postData.id}`);
+  }
+
   return (
     <Flex direction="column">
-      {DataTweetDummy.map(
-        ({ name, username, avatar, tweet, likes, replies }, index) => (
-          <Flex key={index} borderBottomWidth={"2px"}  p="4" gap="3" >
-            <Avatar src={avatar} size="xl" />
-            <Flex direction="column" pl="3" gap="3">
-              <Flex textStyle="md" direction="row" gap="3">
-                <Text as="span" color="white" fontWeight="semibold">
-                  {name}
-                </Text>
-                <Text as="span" color="gray.400">
-                    @{username}
-                </Text>
-                <Text as="span" color="gray.400">
-                  • 6h
-                </Text>
-              </Flex>
-              <Text>
-              {tweet}
-              </Text>
-              <Flex direction="row" gap="5">
-                <Flex gap="1" alignItems="center">
-                  <Image src="./src/assets/heart.svg" w="30px" />
-                  <Text>{likes}</Text>
-                </Flex>
-                <Flex gap="1" alignItems="center">
-                  <Image src="./src/assets/message-text.svg" w="30px" />
-                  <Text>{replies} Replies</Text>
-                </Flex>
-              </Flex>
+      <Flex key={postData.id} borderBottomWidth={"2px"} p="4" gap="3">
+        <Avatar src={postData.user.avatarUrl} size="xl" />
+        <Flex direction="column" pl="3">
+          <Flex textStyle="md" direction="row" gap="3">
+            <Text as="span" color="white" fontWeight="semibold">
+              {postData.user.fullName}
+            </Text>
+            <Text as="span" color="gray.400">
+              @{postData.user.username}
+            </Text>
+            <Text as="span" color="gray.400">
+              • 6h
+            </Text>
+          </Flex>
+          <Flex
+            mt={"2"}
+            mb={"2"}
+            p={"0.5"}
+            cursor={"pointer"}
+            _hover={{ backgroundColor: "#333333" }}
+            onClick={onClickCard}
+          >
+            <Text>{postData.content}</Text>
+          </Flex>
+
+          <Flex direction="row" gap="5">
+            <Flex gap="1" alignItems="center">
+              <Image
+                src={
+                  postData.isLiked
+                    ? "/src/assets/heart-fill.svg"
+                    : "/src/assets/heart.svg"
+                }
+                cursor={"pointer"}
+                onClick={() => {
+                  postData.isLiked = !postData.isLiked;
+                  forcedUpdate();
+                }}
+              />
+              <Text>{postData.likesCount}</Text>
+            </Flex>
+            <Flex gap="1" alignItems="center">
+              <Image src="/src/assets/message-text.svg" w="30px" />
+              <Text>{postData.repliesCount} Replies</Text>
             </Flex>
           </Flex>
-        )
-      )}
+        </Flex>
+      </Flex>
     </Flex>
   );
 }

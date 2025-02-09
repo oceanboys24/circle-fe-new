@@ -15,8 +15,10 @@ import { Avatar } from "@/components/ui/avatar.tsx";
 import ModalEdit from "@/features/home/profile/components/modal-edit.tsx";
 import { NavLink } from "react-router-dom";
 import { MdMenu } from "react-icons/md";
+import { userSession } from "@/utils/dummy-data/userSession";
 
 export default function Profile() {
+  
   return (
     <Stack p="4" overflow="hidden">
       <Box p="4" display={"flex"} justifyContent="space-between" >
@@ -65,10 +67,10 @@ export default function Profile() {
           </MenuRoot>
         </Flex>
       </Box>
-      <Image src="./src/assets/cover.svg" fontSize="40px" rounded="lg" />
+      <Image src={userSession.backgroundUrl} maxH={"200px"} fontSize="40px" rounded="lg" />
       <Flex justify="space-between" h="100px">
         <Avatar
-          src="./src/assets/tyler.png"
+          src={userSession.avatarUrl}
           size="4xl"
           bottom="50px"
           left="30px"
@@ -76,24 +78,23 @@ export default function Profile() {
         <ModalEdit />
       </Flex>
       <Stack direction="column" gap="1" p="1" position="relative" mt="-14">
-        <Heading>Tyler, The Creator</Heading>
+        <Heading>{userSession.fullName}</Heading>
         <Text textStyle="md" color="#5a5a5b">
-          @tylerokonma
+          @{userSession.username}
         </Text>
         <Text>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          indusenturies, but also the leap into electronic typesetting
+         {userSession.bio}
         </Text>
         <Text textStyle="md">
           <Text as="span" fontWeight="bold" color="white">
-            291
+            {userSession.followingsCount}
           </Text>
           <Text as="span" color="gray.400">
             {" "}
             Following{" "}
           </Text>
           <Text as="span" fontWeight="bold" color="white">
-            400
+           {userSession.followersCount}
           </Text>
           <Text as="span" color="gray.400">
             {" "}

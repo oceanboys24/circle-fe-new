@@ -23,6 +23,7 @@ import {
   DialogRoot,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { userSession } from "@/utils/dummy-data/userSession";
 
 export default function InputPost() {
   const [image, setImage] = useState<string | null>(null);
@@ -37,7 +38,7 @@ export default function InputPost() {
     <DialogRoot size="lg">
       <Flex direction="column" borderBottomWidth="2px">
         <Box display="flex" flexDirection="row" p="4" gap="4" w="full">
-          <Avatar src="./src/assets/avatar2.svg" size="xl" />
+          <Avatar src={userSession.avatarUrl} size="xl" />
           <DialogTrigger asChild>
             <Flex w="100vw">
               <InputPostArea />

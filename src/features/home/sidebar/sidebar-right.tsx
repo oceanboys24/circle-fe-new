@@ -12,7 +12,6 @@ export default function SidebarRight() {
       maxW="xl"
       position="sticky"
       top={0}
-     
     >
       <Flex gap={"5"} direction="column"  p="10" w="full" >
         <ProfileSidebarRight />

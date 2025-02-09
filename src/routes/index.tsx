@@ -20,7 +20,7 @@ const router = createBrowserRouter([
             {index: true, element: <HomeBar/>},
             {path: "profile", element: <ProfileBar/>},
             {path: "search", element: <SearchPages/>},
-            {path: "detail-status", element: <DetailStatus/>},
+            {path: "detail-status/:id", element: <DetailStatus/>},
             {path: "follows", element: <FollowsPages/>}
         ]
     },
