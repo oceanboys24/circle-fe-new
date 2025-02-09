@@ -5,6 +5,7 @@ import {
   Stack,
   Image,
   Textarea,
+  Float,
 } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import InputPostArea from "@/features/home/main/components/input-post/create-post.tsx";
@@ -27,13 +28,14 @@ export default function InputPost() {
   const [image, setImage] = useState<string | null>(null);
   const inputFileImage = useRef<HTMLInputElement>(null);
 
-  function onClick() {
+  function onClick(event : React.MouseEvent<HTMLButtonElement>) {
+    event.stopPropagation()
     inputFileImage.current?.click();
   }
 
   return (
-    <DialogRoot size="lg" >
-      <Flex direction="column" borderBottomWidth="2px" >
+    <DialogRoot size="lg">
+      <Flex direction="column" borderBottomWidth="2px">
         <Box display="flex" flexDirection="row" p="4" gap="4" w="full">
           <Avatar src="./src/assets/avatar2.svg" size="xl" />
           <DialogTrigger asChild>
@@ -41,7 +43,6 @@ export default function InputPost() {
               <InputPostArea />
             </Flex>
           </DialogTrigger>
-
           <InputImageButton setImage={setImage} />
           <Button
             type="submit"
@@ -55,32 +56,32 @@ export default function InputPost() {
             Post
           </Button>
         </Box>
-        <Stack w="xs" alignSelf="center" p="2">
+        <Stack w="xs" alignSelf="center" p="2" position={"relative"} display={image ? "flex": "none"}>
           <PreviewImage image={image} />
           {image && (
-            <CloseButton
-              onClick={() => setImage(null)}
-              position="absolut"
-              top={2}
-              right={2}
-              border="xs"
-            />
+            <Float>
+              <CloseButton
+                onClick={() => setImage(null)}
+                variant={"solid"}
+                rounded={"full"}
+                size={"xs"}
+              />
+            </Float>
           )}
         </Stack>
       </Flex>
       <DialogBackdrop />
       <DialogContent rounded="lg">
-      <DialogCloseTrigger  bg="bg" />
+        <DialogCloseTrigger bg="bg" />
         <DialogBody p="5">
           <Flex justify="center" align="start" flexShrink={0}>
             <Box p="2.5">
-            <Avatar
-              alignSelf="center"
-              src="./src/assets/avatar2.svg"
-              size="md"
-            />
+              <Avatar
+                alignSelf="center"
+                src="./src/assets/avatar2.svg"
+                size="md"
+              />
             </Box>
-            
             <Textarea
               autoresize
               maxH="30vh"
@@ -94,13 +95,13 @@ export default function InputPost() {
             />
           </Flex>
         </DialogBody>
-        <DialogFooter justifyContent="space-between" >
+        <DialogFooter justifyContent="space-between">
           <DialogActionTrigger asChild>
             <Flex alignSelf="start">
-              <Button variant={"ghost"} onClick={onClick}>
+              <Button variant={"ghost"} onClick={onClick} >
                 <Image src="./src/assets/gallery-add.svg" />
               </Button>
-              <input type="file" hidden ref={inputFileImage} />
+              <input type="file" hidden ref={inputFileImage} onClick={(e) => e.stopPropagation()} />
             </Flex>
           </DialogActionTrigger>
           <Button bgColor="#04A51E" color="white" rounded="full" p="4">

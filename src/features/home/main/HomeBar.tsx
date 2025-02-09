@@ -7,7 +7,7 @@ import HeadingHome from "@/features/home/main/components/heading.tsx";
 export default function HomeBar() {
     return (
         <GridItem colSpan={{base: 4, md: 2}} >
-            <Stack w="full" overflow="hidden">
+            <Stack w="full" overflow="hidden"  borderLeftWidth="2px" borderRightWidth="2px">
                 <HeadingHome/>
                 <InputPost/>
                 <StatusPost/>

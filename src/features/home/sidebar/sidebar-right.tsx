@@ -8,11 +8,11 @@ export default function SidebarRight() {
     <GridItem
       colSpan={1}
       height="100vh"
-      width="60vw"
       display={{base: "none", md: "block"}}
       maxW="xl"
       position="sticky"
       top={0}
+     
     >
       <Flex gap={"5"} direction="column"  p="10" w="full" >
         <ProfileSidebarRight />

@@ -1,7 +1,5 @@
 import {
   Box,
-  BoxProps,
-  Flex,
   Icon,
   Image,
   Stack,
