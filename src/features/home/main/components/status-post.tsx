@@ -16,10 +16,14 @@ export default function StatusPost({ postData }: CardThreadProps) {
     navigate(`/detail-status/${postData.id}`);
   }
 
+  function onClickAvatar() {
+    navigate(`/profile-user/${postData.id}`)
+  }
+
   return (
     <Flex direction="column">
       <Flex key={postData.id} borderBottomWidth={"2px"} p="4" gap="3">
-        <Avatar src={postData.user.avatarUrl} size="xl" />
+        <Avatar src={postData.user.avatarUrl} size="xl" cursor={"pointer"} onClick={onClickAvatar}/>
         <Flex direction="column" pl="3">
           <Flex textStyle="md" direction="row" gap="3">
             <Text as="span" color="white" fontWeight="semibold">

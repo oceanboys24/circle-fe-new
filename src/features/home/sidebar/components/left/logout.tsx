@@ -18,7 +18,7 @@ export default function Logout() {
           p="3"
         >
           <Icon fontSize="45px">
-            <Image src="./src/assets/logout.svg" fontSize="40px" />
+            <Image src="/src/assets/logout.svg" fontSize="40px" />
           </Icon>
           <Text p="1" fontWeight="bold">
             Logout
