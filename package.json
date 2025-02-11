@@ -25,11 +25,12 @@
     "react-remove-scroll-bar": "^2.3.8",
     "react-router-dom": "^7.1.4",
     "use-debounce": "^10.0.4",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
-    "@types/react": "^19.0.8",
+    "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.17.0",

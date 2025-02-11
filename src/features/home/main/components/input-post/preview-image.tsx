@@ -1,18 +1,15 @@
-import {Image} from "@chakra-ui/react";
+import useImageStore from "@/store/image";
+import { Image } from "@chakra-ui/react";
 
-
-interface imagePreviewProps {
-    image: string | null
-}
-
-export default function PreviewImage({image}: imagePreviewProps) {
-    return (
+export default function PreviewImage() {
+  const { image } = useImageStore();
+  return (
+    <>
+      {image && (
         <>
-            {image && (
-                <>
-                    <Image src={image} rounded="lg"/>
-                </>
-            )}
+          <Image src={image} rounded="lg" />
         </>
-    )
+      )}
+    </>
+  );
 }

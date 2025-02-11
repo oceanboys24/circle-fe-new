@@ -24,13 +24,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { userSession } from "@/utils/dummy-data/userSession";
+import useImageStore from "@/store/image";
 
 export default function InputPost() {
-  const [image, setImage] = useState<string | null>(null);
+  const { image, setImage } = useImageStore();
   const inputFileImage = useRef<HTMLInputElement>(null);
 
-  function onClick(event : React.MouseEvent<HTMLButtonElement>) {
-    event.stopPropagation()
+  function onClick(event: React.MouseEvent<HTMLButtonElement>) {
+    event.stopPropagation();
     inputFileImage.current?.click();
   }
 
@@ -44,7 +45,7 @@ export default function InputPost() {
               <InputPostArea />
             </Flex>
           </DialogTrigger>
-          <InputImageButton setImage={setImage} />
+          <InputImageButton  />
           <Button
             type="submit"
             size="md"
@@ -57,8 +58,14 @@ export default function InputPost() {
             Post
           </Button>
         </Box>
-        <Stack w="xs" alignSelf="center" p="2" position={"relative"} display={image ? "flex": "none"}>
-          <PreviewImage image={image} />
+        <Stack
+          w="xs"
+          alignSelf="center"
+          p="2"
+          position={"relative"}
+          display={image ? "flex" : "none"}
+        >
+          <PreviewImage />
           {image && (
             <Float>
               <CloseButton
@@ -99,10 +106,15 @@ export default function InputPost() {
         <DialogFooter justifyContent="space-between">
           <DialogActionTrigger asChild>
             <Flex alignSelf="start">
-              <Button variant={"ghost"} onClick={onClick} >
+              <Button variant={"ghost"} onClick={onClick}>
                 <Image src="./src/assets/gallery-add.svg" />
               </Button>
-              <input type="file" hidden ref={inputFileImage} onClick={(e) => e.stopPropagation()} />
+              <input
+                type="file"
+                hidden
+                ref={inputFileImage}
+                onClick={(e) => e.stopPropagation()}
+              />
             </Flex>
           </DialogActionTrigger>
           <Button bgColor="#04A51E" color="white" rounded="full" p="4">
