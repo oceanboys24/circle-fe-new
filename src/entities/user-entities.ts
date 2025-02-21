@@ -1,8 +1,9 @@
 export interface UserEntity {
-    fullName: string;
-    username: string;
-    email: string;
-    password: string;
-    createdAt: Date;
-    updatedAt: Date;
+  id: string;
+  email: string;
+  fullName: string;
+  userName: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

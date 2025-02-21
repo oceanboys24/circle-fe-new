@@ -1,4 +1,4 @@
-import { Post } from "@/features/home/main/utils/post";
+import { Post } from "@/features/home/home/utils/post";
 
 export const postDatas: Post[] = [
   {

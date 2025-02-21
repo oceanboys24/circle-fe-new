@@ -8,10 +8,10 @@ import {
   Float,
 } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
-import InputPostArea from "@/features/home/main/components/input-post/create-post.tsx";
-import { useRef, useState } from "react";
-import PreviewImage from "@/features/home/main/components/input-post/preview-image.tsx";
-import InputImageButton from "@/features/home/main/components/input-post/button-image.tsx";
+import InputPostArea from "@/features/home/home/components/input-post/create-post";
+import { useRef } from "react";
+import PreviewImage from "@/features/home/home/components/input-post/preview-image";
+import InputImageButton from "@/features/home/home/components/input-post/button-image";
 import { CloseButton } from "@/components/ui/close-button.tsx";
 import {
   DialogActionTrigger,
@@ -45,7 +45,7 @@ export default function InputPost() {
               <InputPostArea />
             </Flex>
           </DialogTrigger>
-          <InputImageButton  />
+          <InputImageButton />
           <Button
             type="submit"
             size="md"

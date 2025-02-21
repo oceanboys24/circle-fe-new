@@ -1,14 +1,11 @@
-import {Flex} from "@chakra-ui/react";
-import {ReactNode} from "react";
+import { Flex } from "@chakra-ui/react";
+import { Outlet } from "react-router-dom";
 
-interface LayoutPagesProps {
-    children: ReactNode;
-}
-
-export default function LayoutPages({children}: LayoutPagesProps) {
-    return (
-        <Flex height="100vh" width="100vw" bgColor="black" justify="center">
-            {children}
-        </Flex>
-    )
+export default function AuthLayout() {
+ 
+  return (
+    <Flex height="100vh" width="100vw" bgColor="black" justify="center">
+      <Outlet />
+    </Flex>
+  );
 }

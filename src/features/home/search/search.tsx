@@ -21,7 +21,6 @@ export default function SearchPages() {
     .trim()
     .includes(searchTextDebounce!.toLowerCase().trim())
   )
-  console.log(filteredUser)
   return (
     <GridItem colSpan={{ base: 4, md: 2 }}>
       <Flex direction="column">

@@ -3,10 +3,11 @@ import { Avatar } from "@/components/ui/avatar.tsx";
 import { useLocation } from "react-router-dom";
 import { userSession } from "@/utils/dummy-data/userSession";
 import ModalEdit from "@/features/home/profile/components/modal-edit";
+import { useAuthStore } from "@/store/useAuth";
 
 export default function ProfileSidebarRight() {
   const { pathname } = useLocation();
-  const dataSession = userSession;
+  const { fullName, userName } = useAuthStore((state) => state.user);
 
   return (
     <Stack
@@ -17,14 +18,14 @@ export default function ProfileSidebarRight() {
     >
       <Heading>My Profile</Heading>
       <Image
-        src={dataSession.backgroundUrl}
+        // src={user.profile.bannerUrl ?? " "}
         maxH={"100px"}
         fontSize="40px"
         rounded="lg"
       />
       <Flex justify="space-between" h="100px">
         <Avatar
-          src={dataSession.avatarUrl}
+          // src={user.profile.avatarUrl ?? " "}
           size="4xl"
           bottom="50px"
           left="30px"
@@ -32,21 +33,21 @@ export default function ProfileSidebarRight() {
         <ModalEdit />
       </Flex>
       <Stack direction="column" gap="1" p="1" position="relative" mt="-14">
-        <Heading>{dataSession.fullName}</Heading>
+        <Heading>{fullName}</Heading>
         <Text textStyle="md" color="#5a5a5b">
-          @{dataSession.username}
+          @{userName}
         </Text>
-        <Text>{dataSession.bio}</Text>
+        {/* <Text>{user.profile.bio}</Text> */}
         <Text textStyle="md">
           <Text as="span" fontWeight="bold" color="white">
-            {dataSession.followingsCount}
+            121
           </Text>
           <Text as="span" color="gray.400">
             {" "}
             Following{" "}
           </Text>
           <Text as="span" fontWeight="bold" color="white">
-            {dataSession.followersCount}
+            12
           </Text>
           <Text as="span" color="gray.400">
             {" "}

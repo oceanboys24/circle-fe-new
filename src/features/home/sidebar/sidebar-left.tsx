@@ -1,6 +1,7 @@
 import { Flex, GridItem } from "@chakra-ui/react";
 import MainMenu from "@/features/home/sidebar/components/left/main-menu.tsx";
 import Logout from "@/features/home/sidebar/components/left/logout.tsx";
+import { Toaster } from "@/components/ui/toaster.tsx";
 
 export default function SidebarLeft() {
   return (
@@ -11,8 +12,7 @@ export default function SidebarLeft() {
       position="sticky"
       top={0}
       display={{ base: "none", md: "block" }}
-      w={{md: "100%"}}
-      
+      w={{ md: "100%" }}
     >
       <Flex direction="column" justify="space-between" h={"full"} p={"5"}>
         {/*Main Menu*/}

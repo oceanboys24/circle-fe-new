@@ -1,18 +1,12 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Icon,
-  Image,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, Image, Stack, Text } from "@chakra-ui/react";
 import { NavLink, useLocation } from "react-router-dom";
 import { NavListMenu } from "../../utils/form-menu";
 import HeadingSideBarLeft from "./heading";
+
+
 export default function MainMenu() {
   const { pathname } = useLocation();
-
+ 
   return (
     <Flex direction="column" p="1">
       <HeadingSideBarLeft />
@@ -52,11 +46,13 @@ export default function MainMenu() {
             fontSize="2xl"
             w={{ sm: "200px", lg: "full" }}
             maxW="300px"
+            
           >
             <Text fontSize={{ sm: 25, lg: 25 }}>Create Post</Text>
           </Button>
         </Box>
       </Flex>
+      
     </Flex>
   );
 }

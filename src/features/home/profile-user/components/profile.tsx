@@ -16,14 +16,14 @@ import { Avatar } from "@/components/ui/avatar.tsx";
 import { NavLink } from "react-router-dom";
 import { MdMenu } from "react-icons/md";
 import { userSession } from "@/utils/dummy-data/userSession";
-import { Post } from "../../main/utils/post";
+import { Post } from "../../home/utils/post";
 import { useReducer } from "react";
 interface ProfileDetailProps extends BoxProps {
-  postData : Post
+  postData: Post;
 }
 
-export default function ProfileUser({postData} : ProfileDetailProps) {
-  const [, forceUpdate] = useReducer((state) => state + 1, 0)
+export default function ProfileUser({ postData }: ProfileDetailProps) {
+  const [, forceUpdate] = useReducer((state) => state + 1, 0);
   return (
     <Stack p="4" overflow="hidden">
       <Box p="4" display={"flex"}>
@@ -73,7 +73,7 @@ export default function ProfileUser({postData} : ProfileDetailProps) {
         </Flex>
       </Box>
       <Image
-        src='https://api.dicebear.com/9.x/glass/svg?seed=Muhammad Alfiandi Rizki'
+        src="https://api.dicebear.com/9.x/glass/svg?seed=Muhammad Alfiandi Rizki"
         maxH={"200px"}
         fontSize="40px"
         rounded="lg"
@@ -85,11 +85,16 @@ export default function ProfileUser({postData} : ProfileDetailProps) {
           bottom="50px"
           left="30px"
         />
-        <Button variant={"outline"} borderColor={"white"} rounded={"full"} onClick={() => {
-          postData.isLiked = !postData.isLiked
-          forceUpdate()
-        }}>
-         {postData.isLiked ? 'Follow': 'Unfollow'}
+        <Button
+          variant={"outline"}
+          borderColor={"white"}
+          rounded={"full"}
+          onClick={() => {
+            postData.isLiked = !postData.isLiked;
+            forceUpdate();
+          }}
+        >
+          {postData.isLiked ? "Follow" : "Unfollow"}
         </Button>
       </Flex>
       <Stack direction="column" gap="1" p="1" position="relative" mt="-14">

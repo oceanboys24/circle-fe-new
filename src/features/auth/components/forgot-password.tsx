@@ -9,7 +9,6 @@ export default function ForgotPassword() {
         resolver: zodResolver(forgotPasswordSchema)
     })
 
-
     return (
         <Stack width="md" gap="7" mt="20">
             <Stack>

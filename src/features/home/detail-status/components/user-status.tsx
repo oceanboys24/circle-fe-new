@@ -1,6 +1,6 @@
 import { BoxProps, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
-import { Post } from "../../main/utils/post";
+import { Post } from "../../home/utils/post";
 import { Link } from "react-router-dom";
 import { useReducer } from "react";
 
@@ -51,7 +51,11 @@ export default function UserStatus({ postData }: ChardStatusDetailProps) {
         <Flex direction="row" gap="5">
           <Flex gap="1">
             <Image
-              src={postData.isLiked ? "/src/assets/heart-fill.svg" : "/src/assets/heart.svg"}
+              src={
+                postData.isLiked
+                  ? "/src/assets/heart-fill.svg"
+                  : "/src/assets/heart.svg"
+              }
               cursor={"pointer"}
               onClick={() => {
                 postData.isLiked = !postData.isLiked;

@@ -1,6 +1,6 @@
 import { BoxProps, Card, Flex, Image, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
-import { Post, Reply } from "../../main/utils/post";
+import { Post, Reply } from "../../home/utils/post";
 import { useReducer } from "react";
 
 interface CardReplyProps extends BoxProps {

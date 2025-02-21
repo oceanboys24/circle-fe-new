@@ -13,8 +13,7 @@ export default function RegisterAuth() {
     const navigate = useNavigate()
 
     function onSubmit(data: registerSchemaDTO) {
-        console.log(data);
-
+    
         navigate({pathname: "/login"})
     }
 
@@ -31,7 +30,7 @@ export default function RegisterAuth() {
                         <Field.ErrorText>{errors.fullName?.message}</Field.ErrorText>
                     </Field.Root>
                     <Field.Root invalid={!!errors.username?.message}>
-                        <Input placeholder="username" size="xl" {...register("username")} rounded="lg"/>
+                        <Input placeholder="Username" size="xl" {...register("username")} rounded="lg"/>
                         <Field.ErrorText>{errors.username?.message}</Field.ErrorText>
                     </Field.Root>
                     <Field.Root invalid={!!errors.email?.message}>

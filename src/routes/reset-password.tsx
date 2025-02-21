@@ -1,10 +1,10 @@
-import ResetPassword from "@/features/auth/reset-password/reset-password.tsx";
+import ResetPassword from "@/features/auth/components/reset-password";
 import LayoutPages from "@/layout/layout-auth.tsx";
 
 export default function ResetPasswordPages() {
-    return (
-        <LayoutPages>
-            <ResetPassword/>
-        </LayoutPages>
-    )
+  return (
+    <>
+      <ResetPassword />
+    </>
+  );
 }
