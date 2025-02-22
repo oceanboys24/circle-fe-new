@@ -8,29 +8,21 @@ import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { Navigate } from "react-router-dom";
 
+
 export default function HomeRoute() {
   const { setUser, user } = useAuthStore();
-  const {  } = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["CheckAuthToken"],
     queryFn: async () => {
-      const token = Cookies.get("token");
-      const response = await axiosInstance.post(
-        "/v1/auth/check",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
+      const response = await axiosInstance.post("/v1/auth/check", {});
       setUser(response.data.data);
       return response.data;
     },
+    enabled: !!Cookies.get("token"),
   });
 
-  if (!user) return <Navigate to={"/login"} />;
-  
+  if (!isLoading && !user?.id) return <Navigate to={"/login"} />;
+
   return (
     <ProtectedLayout>
       <SidebarLeft />
