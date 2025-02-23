@@ -5,11 +5,13 @@ import {
   Float,
   Image,
   Input,
+  Spinner,
   Stack,
 } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import useInputThread from "../hooks/useInputThread";
 import { CloseButton } from "@/components/ui/close-button";
+import { useAuthStore } from "@/store/useAuth";
 
 export default function InputThread() {
   const {
@@ -19,14 +21,26 @@ export default function InputThread() {
     handlePreview,
     previewURL,
     setPreviewURL,
+    isPending,
+    restRegisterImages,
+    registerImagesOnChange,
+    registerImagesRef,
+    inputFileRef,
+    setValue,
   } = useInputThread();
+  const userLogin = useAuthStore((state) => state.user);
 
   return (
-    
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex direction="column" borderBottomWidth="2px">
         <Box display="flex" flexDirection="row" p="4" gap="4" w="full">
-          <Avatar src={""} size="xl" />
+          <Avatar
+            src={
+              userLogin?.profile?.avatarUrl ??
+              "https://api.dicebear.com/9.x/bottts/svg"
+            }
+            size="xl"
+          />
 
           <Flex w="100vw">
             <Input
@@ -53,8 +67,15 @@ export default function InputThread() {
               <input
                 type="file"
                 hidden
-                {...register("imageContent")}
-                onChange={handlePreview}
+                {...restRegisterImages}
+                onChange={(e) => {
+                  handlePreview(e);
+                  registerImagesOnChange(e);
+                }}
+                ref={(e) => {
+                  registerImagesRef(e);
+                  inputFileRef.current = e;
+                }}
               />
             </Avatar>
           </Box>
@@ -66,8 +87,9 @@ export default function InputThread() {
             fontSize="xl"
             p="5"
             justifyContent="center"
+            disabled={isPending ? true : false}
           >
-            Post
+            {isPending ? <Spinner /> : "Post"}
           </Button>
         </Box>
         <Stack
@@ -87,7 +109,10 @@ export default function InputThread() {
           {previewURL && (
             <Float>
               <CloseButton
-                onClick={() => setPreviewURL(null)}
+                onClick={() => {
+                  setPreviewURL(null);
+                  setValue("imageContent", new DataTransfer().files);
+                }}
                 variant={"solid"}
                 rounded={"full"}
                 size={"xs"}

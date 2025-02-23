@@ -26,10 +26,20 @@ export default function ThreadPost({ thread }: CardThreadProps) {
   return (
     <Flex direction="column">
       <Flex key={thread.id} borderBottomWidth={"2px"} p="4" gap="3">
-        <Avatar src={""} size="xl" cursor={"pointer"} onClick={onClickAvatar} />
+        <Avatar
+          src={
+            thread?.user?.profile?.avatarUrl ??
+            "https://api.dicebear.com/9.x/bottts/svg"
+          }
+          size="xl"
+          cursor={"pointer"}
+          onClick={onClickAvatar}
+        />
         <Flex direction="column" pl="3">
           <Flex textStyle="md" direction="row" gap="3">
-            <Text as="span" color="white" fontWeight="semibold"></Text>
+            <Text as="span" color="white" fontWeight="semibold">
+              {thread.user.fullName}
+            </Text>
             <Text as="span" color="gray.400">
               @{thread.user.userName}
             </Text>
@@ -44,11 +54,10 @@ export default function ThreadPost({ thread }: CardThreadProps) {
             cursor={"pointer"}
             _hover={{ backgroundColor: "#333333" }}
             onClick={onClickCard}
-            
           >
             <Text>{thread.content}</Text>
           </Flex>
-          <Flex   >
+          <Flex>
             <Image
               src={thread.imageContent}
               maxW={"xs"}
@@ -56,7 +65,7 @@ export default function ThreadPost({ thread }: CardThreadProps) {
               alignSelf={"center"}
             />
           </Flex>
-          <Flex direction="row" gap="5" >
+          <Flex direction="row" gap="5">
             <Flex gap="1" alignItems="center">
               <Image src="/src/assets/heart.svg" cursor={"pointer"} />
               <Text>100</Text>

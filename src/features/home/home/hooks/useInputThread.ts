@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/config/axios";
 import { useForm } from "react-hook-form";
 import { toaster } from "@/components/ui/toaster";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type FormInputs = {
   content: string;
@@ -11,7 +11,14 @@ type FormInputs = {
 
 export default function useInputThread() {
   const [previewURL, setPreviewURL] = useState<string | null>(null);
-  const { handleSubmit, register, reset } = useForm<FormInputs>();
+  const { handleSubmit, register, reset, setValue } = useForm<FormInputs>();
+  const queryClient = useQueryClient();
+  const inputFileRef = useRef<HTMLInputElement | null>(null);
+  const {
+    ref: registerImagesRef,
+    onChange: registerImagesOnChange,
+    ...restRegisterImages
+  } = register("imageContent");
 
   const { mutateAsync: UploadImage } = useMutation({
     mutationKey: ["Upload"],
@@ -40,7 +47,7 @@ export default function useInputThread() {
   });
 
   // Create Thread
-  const { mutateAsync: CreateThread } = useMutation({
+  const { mutateAsync: CreateThread, isPending } = useMutation({
     mutationKey: ["CreateThread"],
     mutationFn: async (data: { imageContent?: string; content: string }) => {
       const response = await axiosInstance.post("/v1/threads", data);
@@ -55,6 +62,9 @@ export default function useInputThread() {
       });
     },
     onSuccess: async (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["Threads"],
+      });
       toaster.create({
         title: data.message,
         type: "success",
@@ -62,6 +72,9 @@ export default function useInputThread() {
       });
     },
   });
+  function onClickFile() {
+    inputFileRef?.current?.click();
+  }
 
   function handlePreview(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files) {
@@ -89,6 +102,21 @@ export default function useInputThread() {
 
     await CreateThread(ThreadData);
     reset();
+    setPreviewURL(null);
   };
-  return { register, onSubmit, handleSubmit, handlePreview, previewURL,setPreviewURL };
+  return {
+    register,
+    onSubmit,
+    handleSubmit,
+    handlePreview,
+    previewURL,
+    setPreviewURL,
+    isPending,
+    restRegisterImages,
+    onClickFile,
+    registerImagesOnChange,
+    registerImagesRef,
+    inputFileRef,
+    setValue,
+  };
 }
