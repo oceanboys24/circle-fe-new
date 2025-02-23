@@ -80,7 +80,7 @@ export default function ProfileUser({ postData }: ProfileDetailProps) {
       />
       <Flex justify="space-between" h="100px">
         <Avatar
-          src={postData.user.avatarUrl}
+          src=""
           size="4xl"
           bottom="50px"
           left="30px"

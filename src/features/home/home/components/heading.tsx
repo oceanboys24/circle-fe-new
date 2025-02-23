@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 export default function HeadingHome() {
   return (
     <Box p="4" display={"flex"} justifyContent="space-between">
-      <Heading fontSize="4xl" color="gray.400">
+      <Heading fontSize="4xl" color="gray.400" >
         Home
       </Heading>
       

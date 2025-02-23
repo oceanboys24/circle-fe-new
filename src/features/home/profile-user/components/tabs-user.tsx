@@ -1,6 +1,4 @@
-import { postDatas } from "@/utils/dummy-data/postList";
 import { Flex, Tabs, Grid, Image } from "@chakra-ui/react";
-import StatusPost from "../../home/components/status-post";
 
 export default function TabsProfileUser() {
   return (
@@ -15,9 +13,9 @@ export default function TabsProfileUser() {
           </Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="post" w="full">
-          {postDatas.map((postData) => (
+          {/* {postDatas.map((postData) => (
             <StatusPost postData={postData} key={postData.id} />
-          ))}
+          ))} */}
         </Tabs.Content>
         <Tabs.Content value="media" w="full">
           <Grid templateColumns="repeat(3, 1fr)" gap="6">
