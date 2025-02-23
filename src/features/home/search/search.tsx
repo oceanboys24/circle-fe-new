@@ -1,26 +1,42 @@
-import { Flex, GridItem, Image, Input } from "@chakra-ui/react";
+import { Flex, GridItem, Image, Input, Spinner } from "@chakra-ui/react";
 import { InputGroup } from "@/components/ui/input-group.tsx";
 import SearchLogoOutine from "@/assets/user-search-outline.svg";
 import { useDebounce } from "use-debounce";
 import SearchCard from "./search-card";
 import MenuSearch from "./menu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { searchUserDatas } from "@/utils/dummy-data/userSearch";
 import NotFoundSearch from "./not-found-search";
+import { useQuery } from "@tanstack/react-query";
+import { SearchUser } from "./types/user-search";
+import { axiosInstance } from "@/config/axios";
 
 export default function SearchPages() {
   const [searchText, setSearchText] = useState<string>("");
-  const [searchTextDebounce] = useDebounce(searchText, 1000);
+  const [searchTextDebounce] = useDebounce(searchText, 500);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchText(e.target.value);
   }
-  const filteredUser = searchUserDatas.filter((searchUserData) => 
-    searchUserData.fullName
-    .toLowerCase()
-    .trim()
-    .includes(searchTextDebounce!.toLowerCase().trim())
-  )
+  const {
+    data: users,
+    isLoading,
+    refetch,
+  } = useQuery<SearchUser[]>({
+    queryKey: ["Search-Users"],
+    queryFn: async () => {
+      const response = await axiosInstance.get(
+        `/v1/auth/users?search=${searchTextDebounce}`
+      );
+      return response.data;
+    },
+    enabled: !!searchTextDebounce,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [searchTextDebounce, refetch]);
+
   return (
     <GridItem colSpan={{ base: 4, md: 2 }}>
       <Flex direction="column">
@@ -44,15 +60,14 @@ export default function SearchPages() {
           </Flex>
         </Flex>
         <Flex gap={"5"} direction={"column"}>
-          { filteredUser.length > 0 ? (
-            filteredUser.map((searchUserData) => (
-              <SearchCard
-                searchUserData={searchUserData}
-                key={searchUserData.id}
-              />
-            ))
+          {isLoading ? (
+            <Spinner />
           ) : (
-            <NotFoundSearch text={searchText as string} />
+            <>
+              {users?.map((user) => (
+                <SearchCard searchUserData={user} key={user.id} />
+              ))}
+            </>
           )}
         </Flex>
       </Flex>

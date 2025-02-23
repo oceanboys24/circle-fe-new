@@ -118,5 +118,6 @@ export default function useInputThread() {
     registerImagesRef,
     inputFileRef,
     setValue,
+    reset,
   };
 }
