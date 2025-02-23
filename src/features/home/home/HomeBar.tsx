@@ -1,8 +1,6 @@
 import { GridItem, Spinner, Stack, Text } from "@chakra-ui/react";
 import InputPost from "@/features/home/home/components/input-thread";
-import StatusPost from "@/features/home/home/components/thread-post";
 import HeadingHome from "@/features/home/home/components/heading";
-import { postDatas } from "@/utils/dummy-data/postList";
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/config/axios";
 import { ThreadEntities } from "@/entities/thread-entities";

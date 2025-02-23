@@ -1,12 +1,28 @@
-import { Box, Button, Flex, Image, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Float,
+  Image,
+  Input,
+  Stack,
+} from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import useInputThread from "../hooks/useInputThread";
+import { CloseButton } from "@/components/ui/close-button";
 
 export default function InputThread() {
-  const { register, onSubmit, handleSubmit, handlePreview, previewURL } =
-    useInputThread();
+  const {
+    register,
+    onSubmit,
+    handleSubmit,
+    handlePreview,
+    previewURL,
+    setPreviewURL,
+  } = useInputThread();
 
   return (
+    
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex direction="column" borderBottomWidth="2px">
         <Box display="flex" flexDirection="row" p="4" gap="4" w="full">
@@ -54,12 +70,31 @@ export default function InputThread() {
             Post
           </Button>
         </Box>
-        <Image
-          objectFit={"contain"}
-          maxHeight={"300px"}
-          maxWidth={"300px"}
-          src={previewURL ?? ""}
-        />
+        <Stack
+          w="xs"
+          alignSelf="center"
+          p="2"
+          position={"relative"}
+          display={previewURL ? "flex" : "none"}
+        >
+          <Image
+            objectFit="contain"
+            maxHeight="300px"
+            maxWidth="300px"
+            src={previewURL ?? ""}
+            borderRadius="md"
+          />
+          {previewURL && (
+            <Float>
+              <CloseButton
+                onClick={() => setPreviewURL(null)}
+                variant={"solid"}
+                rounded={"full"}
+                size={"xs"}
+              />
+            </Float>
+          )}
+        </Stack>
       </Flex>
     </form>
   );

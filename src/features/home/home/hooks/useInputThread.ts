@@ -10,7 +10,7 @@ type FormInputs = {
 };
 
 export default function useInputThread() {
-    const [previewURL, setPreviewURL] = useState<string | null>(null);
+  const [previewURL, setPreviewURL] = useState<string | null>(null);
   const { handleSubmit, register, reset } = useForm<FormInputs>();
 
   const { mutateAsync: UploadImage } = useMutation({
@@ -79,16 +79,16 @@ export default function useInputThread() {
       formData.append("imageContent", data.imageContent[0]);
 
       const uploadResult = await UploadImage(formData);
-      imageUrl = uploadResult?.data; 
+      imageUrl = uploadResult?.data;
     }
 
     const ThreadData: { imageContent?: string; content: string } = {
       content: data.content,
-      ...(imageUrl ? { imageContent: imageUrl } : {}), 
+      ...(imageUrl ? { imageContent: imageUrl } : {}),
     };
 
     await CreateThread(ThreadData);
     reset();
   };
-  return { register, onSubmit, handleSubmit, handlePreview, previewURL };
+  return { register, onSubmit, handleSubmit, handlePreview, previewURL,setPreviewURL };
 }

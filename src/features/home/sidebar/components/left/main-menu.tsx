@@ -36,7 +36,7 @@ export default function MainMenu() {
           </NavLink>
         ))}
 
-        <Box p="2" display={"flex"} justifyContent="center">
+        {/* <Box p="2" display={"flex"} justifyContent="center">
           <Button
             alignSelf="center"
             type="submit"
@@ -50,7 +50,7 @@ export default function MainMenu() {
           >
             <Text fontSize={{ sm: 25, lg: 25 }}>Create Post</Text>
           </Button>
-        </Box>
+        </Box> */}
       </Flex>
       
     </Flex>

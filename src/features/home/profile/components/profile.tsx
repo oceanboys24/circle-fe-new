@@ -16,12 +16,13 @@ import ModalEdit from "@/features/home/profile/components/modal-edit.tsx";
 import { NavLink } from "react-router-dom";
 import { MdMenu } from "react-icons/md";
 import { userSession } from "@/utils/dummy-data/userSession";
+import { useAuthStore } from "@/store/useAuth";
 
 export default function Profile() {
-  
+  const userLogin = useAuthStore((state) => state.user);
   return (
     <Stack p="4" overflow="hidden">
-      <Box p="4" display={"flex"} justifyContent="space-between" >
+      <Box p="4" display={"flex"} justifyContent="space-between">
         <NavLink to="/">
           <Avatar
             src="./src/assets/line-arrow-left.svg"
@@ -67,24 +68,35 @@ export default function Profile() {
           </MenuRoot>
         </Flex>
       </Box>
-      <Image src={userSession.backgroundUrl} maxH={"200px"} fontSize="40px" rounded="lg" />
+      <Image
+        src={
+          userLogin?.profile?.bannerUrl
+            ? userLogin.profile.bannerUrl
+            : "https://api.dicebear.com/9.x/glass/svg"
+        }
+        maxH={"200px"}
+        fontSize="40px"
+        rounded="lg"
+      />
       <Flex justify="space-between" h="100px">
         <Avatar
-          src={userSession.avatarUrl}
+          src={
+            userLogin?.profile?.avatarUrl ??
+            "https://api.dicebear.com/9.x/bottts/svg"
+          }
           size="4xl"
           bottom="50px"
           left="30px"
         />
+
         <ModalEdit />
       </Flex>
       <Stack direction="column" gap="1" p="1" position="relative" mt="-14">
-        <Heading>{userSession.fullName}</Heading>
+        <Heading>{userLogin.fullName}</Heading>
         <Text textStyle="md" color="#5a5a5b">
-          @{userSession.username}
+          @{userLogin.userName}
         </Text>
-        <Text>
-         {userSession.bio}
-        </Text>
+        <Text>{userLogin.profile ? userLogin.profile.bio : "Lorem Ipsum"}</Text>
         <Text textStyle="md">
           <Text as="span" fontWeight="bold" color="white">
             {userSession.followingsCount}
@@ -94,7 +106,7 @@ export default function Profile() {
             Following{" "}
           </Text>
           <Text as="span" fontWeight="bold" color="white">
-           {userSession.followersCount}
+            {userSession.followersCount}
           </Text>
           <Text as="span" color="gray.400">
             {" "}

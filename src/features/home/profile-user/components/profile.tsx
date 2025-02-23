@@ -15,15 +15,13 @@ import {
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { NavLink } from "react-router-dom";
 import { MdMenu } from "react-icons/md";
-import { userSession } from "@/utils/dummy-data/userSession";
-import { Post } from "../../home/utils/post";
-import { useReducer } from "react";
+import { UserProfileDetailEntitiy } from "@/entities/profile-details";
 interface ProfileDetailProps extends BoxProps {
-  postData: Post;
+  profileData: UserProfileDetailEntitiy;
 }
 
-export default function ProfileUser({ postData }: ProfileDetailProps) {
-  const [, forceUpdate] = useReducer((state) => state + 1, 0);
+export default function ProfileUser({ profileData }: ProfileDetailProps) {
+  
   return (
     <Stack p="4" overflow="hidden">
       <Box p="4" display={"flex"}>
@@ -36,7 +34,7 @@ export default function ProfileUser({ postData }: ProfileDetailProps) {
             _hover={{ backgroundColor: "#333333" }}
           />
         </NavLink>
-        <Heading fontSize="3xl">{postData.user.fullName}</Heading>
+        <Heading fontSize="3xl">{profileData.fullName}</Heading>
         <Flex position={"relative"} zIndex={"1000"}>
           <MenuRoot>
             <MenuTrigger asChild>
@@ -89,20 +87,16 @@ export default function ProfileUser({ postData }: ProfileDetailProps) {
           variant={"outline"}
           borderColor={"white"}
           rounded={"full"}
-          onClick={() => {
-            postData.isLiked = !postData.isLiked;
-            forceUpdate();
-          }}
         >
-          {postData.isLiked ? "Follow" : "Unfollow"}
+         Follow
         </Button>
       </Flex>
       <Stack direction="column" gap="1" p="1" position="relative" mt="-14">
-        <Heading>{postData.user.fullName}</Heading>
+        <Heading>{profileData.fullName}</Heading>
         <Text textStyle="md" color="#5a5a5b">
-          @{postData.user.username}
+          @{profileData.userName}
         </Text>
-        <Text>{postData.content}</Text>
+        <Text>{profileData.profile?.bio}</Text>
         <Text textStyle="md">
           <Text as="span" fontWeight="bold" color="white">
             100

@@ -2,14 +2,15 @@ import { BoxProps, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { Post } from "../../home/utils/post";
 import { Link } from "react-router-dom";
-import { useReducer } from "react";
+import { ThreadEntities } from "@/entities/thread-entities";
+import { ThreadDetails } from "../types/thread-detail-types";
 
 interface ChardStatusDetailProps extends BoxProps {
-  postData: Post;
+  detailThread: ThreadDetails;
 }
 
-export default function UserStatus({ postData }: ChardStatusDetailProps) {
-  const [, forcedUpdate] = useReducer((state) => state + 1, 0);
+export default function UserStatus({ detailThread }: ChardStatusDetailProps) {
+  
   return (
     <Flex p="5" borderBottomWidth="2px" direction={"column"}>
       <Flex gap="1" p={"3"}>
@@ -30,17 +31,24 @@ export default function UserStatus({ postData }: ChardStatusDetailProps) {
       </Flex>
       <Flex direction="column" pl="3" gap="3">
         <Flex textStyle="md" direction="row" gap="3">
-          <Avatar src={postData.user.avatarUrl} size="xl" />
+          <Avatar  src={
+            detailThread?.user?.profile?.avatarUrl ??
+            "https://api.dicebear.com/9.x/bottts/svg"
+          } size="xl" />
           <Flex direction={"column"}>
             <Text as="span" color="white">
-              {postData.user.fullName}
+              {detailThread.user.fullName}
             </Text>
             <Text as="span" color="gray.400">
-              @{postData.user.username}
+              @{detailThread.user.userName}
             </Text>
           </Flex>
         </Flex>
-        <Text>{postData.content}</Text>
+        <Text>{detailThread.content}</Text>
+
+        <Flex>
+          <Image src={detailThread.imageContent ?? ""}/>
+        </Flex>
         <Flex gap="1">
           <Text color="gray.400">11:40PM</Text>
           <Text as="span" color="gray.400">
@@ -51,22 +59,10 @@ export default function UserStatus({ postData }: ChardStatusDetailProps) {
         <Flex direction="row" gap="5">
           <Flex gap="1">
             <Image
-              src={
-                postData.isLiked
-                  ? "/src/assets/heart-fill.svg"
-                  : "/src/assets/heart.svg"
-              }
+              src="/src/assets/love.svg"
               cursor={"pointer"}
-              onClick={() => {
-                postData.isLiked = !postData.isLiked;
-                forcedUpdate();
-              }}
             />
-            <Text>{postData.likesCount}</Text>
-          </Flex>
-          <Flex gap="1">
-            <Image src="/src/assets/message-text.svg" />
-            <Text>{postData.repliesCount} Replies</Text>
+            <Text alignSelf={"center"}>768</Text>
           </Flex>
         </Flex>
       </Flex>

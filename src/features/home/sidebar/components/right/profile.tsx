@@ -7,7 +7,7 @@ import { useAuthStore } from "@/store/useAuth";
 
 export default function ProfileSidebarRight() {
   const { pathname } = useLocation();
-  const { fullName, userName } = useAuthStore((state) => state.user);
+  const userLogin = useAuthStore((state) => state.user);
 
   return (
     <Stack
@@ -18,14 +18,22 @@ export default function ProfileSidebarRight() {
     >
       <Heading>My Profile</Heading>
       <Image
-        // src={user.profile.bannerUrl ?? " "}
+        src={
+          userLogin?.profile?.bannerUrl
+            ? userLogin.profile.bannerUrl
+            : "https://api.dicebear.com/9.x/glass/svg"
+        }
         maxH={"100px"}
+        minH={"100px"}
         fontSize="40px"
         rounded="lg"
       />
       <Flex justify="space-between" h="100px">
         <Avatar
-          // src={user.profile.avatarUrl ?? " "}
+          src={
+            userLogin?.profile?.avatarUrl ??
+            "https://api.dicebear.com/9.x/bottts/svg"
+          }
           size="4xl"
           bottom="50px"
           left="30px"
@@ -33,9 +41,9 @@ export default function ProfileSidebarRight() {
         <ModalEdit />
       </Flex>
       <Stack direction="column" gap="1" p="1" position="relative" mt="-14">
-        <Heading>{fullName}</Heading>
+        <Heading>{userLogin.fullName}</Heading>
         <Text textStyle="md" color="#5a5a5b">
-          @{userName}
+          @{userLogin.userName}
         </Text>
         {/* <Text>{user.profile.bio}</Text> */}
         <Text textStyle="md">
