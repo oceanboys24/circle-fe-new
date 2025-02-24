@@ -3,9 +3,6 @@ import { useForm } from "react-hook-form";
 import {
   forgotPasswordDTO,
   forgotPasswordSchema,
-  loginSchemaDTO,
-  registerSchema,
-  registerSchemaDTO,
 } from "@/utils/schema/auth-schema.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";

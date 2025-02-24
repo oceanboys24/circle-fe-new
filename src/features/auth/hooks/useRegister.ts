@@ -48,15 +48,8 @@ export default function useRegister() {
   });
 
   async function onSubmit(data: registerSchemaDTO) {
-    try {
-      await mutateAsync(data);
-      reset();
-    } catch (error) {
-      toaster.create({
-        title: "Something went wrong!",
-        type: "error",
-      });
-    }
+    await mutateAsync(data);
+    reset();
   }
   return { handleSubmit, onSubmit, errors, isPending, register };
 }

@@ -68,13 +68,14 @@ export default function HomeBar() {
         ))}
       </Stack>
       <PaginationRoot
+        size={"lg"}
         count={total ?? 0}
         page={page}
         onPageChange={(e) => setPage(e.page)}
       >
-        <HStack>
-          <PaginationPrevTrigger />
-          <PaginationItems />
+        <HStack justifyContent={'center'}>
+          <PaginationPrevTrigger/>
+          <PaginationItems  />
           <PaginationNextTrigger />
         </HStack>
       </PaginationRoot>

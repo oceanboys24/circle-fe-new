@@ -11,7 +11,6 @@ import useForgotPassword from "../hooks/useForgotPassword";
 export default function ForgotPassword() {
   const { errors, register, onSubmit, handleSubmit, isPending } =
     useForgotPassword();
-  console.log(register('email'));
   return (
     <Stack width="md" gap="7" mt="20">
       <Stack>
