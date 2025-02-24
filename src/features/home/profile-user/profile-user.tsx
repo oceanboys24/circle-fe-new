@@ -1,15 +1,12 @@
 import { GridItem, Spinner, Text } from "@chakra-ui/react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ProfileUser from "./components/profile";
 import TabsProfileUser from "./components/tabs-user";
 import { axiosInstance } from "@/config/axios";
 import { useQuery } from "@tanstack/react-query";
-import { useAuthStore } from "@/store/useAuth";
-import { useEffect } from "react";
 
 export default function ProfileUserPage() {
   const { id } = useParams();
- 
   const {
     data: detailData,
     isLoading,

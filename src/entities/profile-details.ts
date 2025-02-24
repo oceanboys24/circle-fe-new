@@ -16,6 +16,7 @@ export interface UserProfileDetailEntitiy {
   userName: string;
   createdAt: string;
   updatedAt: string;
+  isFollow : boolean;
   thread: ThreadDetailsEntity[];
   followers: any[]; 
   following: any[];

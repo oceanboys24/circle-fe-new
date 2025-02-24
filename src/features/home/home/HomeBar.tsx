@@ -1,21 +1,50 @@
-import { GridItem, Spinner, Stack, Text } from "@chakra-ui/react";
+import {
+  GridItem,
+  HStack,
+  Spinner,
+  Stack,
+  TagStartElement,
+  Text,
+} from "@chakra-ui/react";
 import InputPost from "@/features/home/home/components/input-thread";
 import HeadingHome from "@/features/home/home/components/heading";
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/config/axios";
 import { ThreadEntities } from "@/entities/thread-entities";
 import ThreadPost from "@/features/home/home/components/thread-post";
+import {
+  PaginationItems,
+  PaginationNextTrigger,
+  PaginationPrevTrigger,
+  PaginationRoot,
+} from "@/components/ui/pagination";
+import { useState } from "react";
 
 export default function HomeBar() {
+  const [page, setPage] = useState<number>(1);
+  const limit = 10;
+
   const {
     data: threads = [],
     isLoading,
     isError,
   } = useQuery<ThreadEntities[]>({
-    queryKey: ["Threads"],
+    queryKey: ["Threads", page],
     queryFn: async () => {
-      const response = await axiosInstance.get("/v1/threads", {});
+      const response = await axiosInstance.get(
+        `/v1/threads?page=${page}&limit=${limit}`
+      );
       return response.data.data;
+    },
+  });
+
+  const { data: total } = useQuery<number>({
+    queryKey: ["Total"],
+    queryFn: async () => {
+      const response = await axiosInstance.get(
+        `/v1/threads?page=${page}&limit=${limit}`
+      );
+      return response.data.count;
     },
   });
 
@@ -38,6 +67,17 @@ export default function HomeBar() {
           <ThreadPost thread={thread} key={thread.id} />
         ))}
       </Stack>
+      <PaginationRoot
+        count={total ?? 0}
+        page={page}
+        onPageChange={(e) => setPage(e.page)}
+      >
+        <HStack>
+          <PaginationPrevTrigger />
+          <PaginationItems />
+          <PaginationNextTrigger />
+        </HStack>
+      </PaginationRoot>
     </GridItem>
   );
 }

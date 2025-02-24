@@ -4,7 +4,6 @@ export type ThreadDetails = {
   id: string;
   content: string;
   imageContent: string;
-  likes: string;
   replies?: Reply[];
   user: UserProfile;
   likesCount: number;

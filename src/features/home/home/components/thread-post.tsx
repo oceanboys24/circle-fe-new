@@ -37,7 +37,6 @@ export default function ThreadPost({ thread }: CardThreadProps) {
     mutationKey: ["Likes"],
     mutationFn: async (data: { threadId: string; userId: string }) => {
       const response = await axiosInstance.delete("/v1/likes", { data });
-      console.log(response.data);
       return response.data;
     },
   });
@@ -100,14 +99,7 @@ export default function ThreadPost({ thread }: CardThreadProps) {
                 gap={"4px"}
                 onClick={isLiked ? onClickUnlike : onClickLike}
               >
-                <Image
-                  src={
-                    isLiked
-                      ? "/src/assets/heart-bold.svg"
-                      : "/src/assets/heart.svg"
-                  }
-                  width={"27px"}
-                />
+                <Image src={isLiked ? "/src/assets/heart-bold.svg" : "/src/assets/heart.svg"} width={"27px"} />
                 <Text>{thread.likesCount}</Text>
               </Button>
               <Text>100</Text>

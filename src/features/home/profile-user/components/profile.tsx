@@ -16,12 +16,56 @@ import { Avatar } from "@/components/ui/avatar.tsx";
 import { NavLink } from "react-router-dom";
 import { MdMenu } from "react-icons/md";
 import { UserProfileDetailEntitiy } from "@/entities/profile-details";
+import { useAuthStore } from "@/store/useAuth";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { axiosInstance } from "@/config/axios";
 interface ProfileDetailProps extends BoxProps {
   profileData: UserProfileDetailEntitiy;
 }
 
+type FollowsPayload = {
+  followingId: string;
+  userId: string;
+};
+
 export default function ProfileUser({ profileData }: ProfileDetailProps) {
-  
+  const [isFollow, setIsFollow] = useState(profileData.isFollow);
+
+  const { user } = useAuthStore();
+  const { mutateAsync: LikeMutate } = useMutation({
+    mutationKey: ["Follow"],
+    mutationFn: async (data: FollowsPayload) => {
+      const response = await axiosInstance.post("/v1/follows/follow", data);
+     
+      return response.data;
+    },
+  });
+
+  async function onClickFollow() {
+    setIsFollow(true);
+    const followingId = profileData.id;
+    const userId = user.id;
+
+    await LikeMutate({ followingId: followingId, userId: userId });
+  }
+
+  const { mutateAsync: UnlikeMutate } = useMutation({
+    mutationKey: ["Unfollow"],
+    mutationFn: async (data: FollowsPayload) => {
+      const response = await axiosInstance.post("/v1/follows/unfollow", data);
+      
+      return response.data;
+    },
+  });
+
+  async function onClickUnfollow() {
+    setIsFollow(false);
+    const profileId = profileData.id;
+    const userId = user.id;
+
+    await UnlikeMutate({ followingId : profileId, userId });
+  }
   return (
     <Stack p="4" overflow="hidden">
       <Box p="4" display={"flex"}>
@@ -71,14 +115,20 @@ export default function ProfileUser({ profileData }: ProfileDetailProps) {
         </Flex>
       </Box>
       <Image
-        src="https://api.dicebear.com/9.x/glass/svg?seed=Muhammad Alfiandi Rizki"
+        src={
+          profileData.profile?.bannerUrl ??
+          "https://api.dicebear.com/9.x/glass/svg"
+        }
         maxH={"200px"}
         fontSize="40px"
         rounded="lg"
       />
       <Flex justify="space-between" h="100px">
         <Avatar
-          src=""
+          src={
+            profileData.profile?.avatarUrl ??
+            "https://api.dicebear.com/9.x/bottts/svg"
+          }
           size="4xl"
           bottom="50px"
           left="30px"
@@ -87,8 +137,9 @@ export default function ProfileUser({ profileData }: ProfileDetailProps) {
           variant={"outline"}
           borderColor={"white"}
           rounded={"full"}
+          onClick={isFollow ? onClickUnfollow : onClickFollow}
         >
-         Follow
+          {isFollow ? "Followed" : "Follow"}
         </Button>
       </Flex>
       <Stack direction="column" gap="1" p="1" position="relative" mt="-14">
