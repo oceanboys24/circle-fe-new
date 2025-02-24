@@ -15,7 +15,6 @@ export default function HomeBar() {
     queryKey: ["Threads"],
     queryFn: async () => {
       const response = await axiosInstance.get("/v1/threads", {});
-      console.log(response.data.data);
       return response.data.data;
     },
   });

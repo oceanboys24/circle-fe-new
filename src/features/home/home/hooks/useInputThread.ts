@@ -72,6 +72,7 @@ export default function useInputThread() {
       });
     },
   });
+  
   function onClickFile() {
     inputFileRef?.current?.click();
   }

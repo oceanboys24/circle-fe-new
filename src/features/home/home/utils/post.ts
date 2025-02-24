@@ -1,6 +1,6 @@
 export type UserPost = {
   fullName: string;
-  username: string;
+  userName: string;
   avatarUrl: string;
 };
 
@@ -8,8 +8,9 @@ export type Reply = {
   id: string;
   user: UserPost;
   content: string;
+  contentImage: string;
   likesCount: number;
-  replyCount : number,
+  replyCount: number;
   createdAt: Date;
 };
 

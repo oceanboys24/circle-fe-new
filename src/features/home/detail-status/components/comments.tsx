@@ -15,25 +15,32 @@ export default function Comments({
   replyData,
   postData,
 }: CardReplyProps & ChardStatusDetailProps) {
-  const [, forcedUpdate] = useReducer((state) => state + 1, 0);
   return (
     <Flex direction="column" p="4" gap="3" borderBottomWidth="2px">
       <Flex>
-        <Avatar src={replyData.user.avatarUrl} size="xl" />
+        <Avatar src={postData.user.avatarUrl} size="xl" />
         <Flex direction="column" pl="3" gap="3">
           <Flex textStyle="md" direction="row" gap="3">
             <Text as="span" color="white">
-              {replyData.user.fullName}
+              {postData.user.fullName}
             </Text>
             <Text as="span" color="gray.400">
               {" "}
-              @{replyData.user.username}{" "}
+              @{postData.user.userName}
             </Text>
             <Text as="span" color="gray.400">
               • 6h
             </Text>
           </Flex>
           <Text>{replyData.content}</Text>
+          <Flex>
+            <Image
+              src={replyData.contentImage}
+              maxW={"xs"}
+              maxH={"xs"}
+              alignSelf={"center"}
+            />
+          </Flex>
           <Flex direction="row" gap="5">
             <Flex gap="1">
               <Image
@@ -43,10 +50,6 @@ export default function Comments({
                     : "/src/assets/heart.svg"
                 }
                 cursor={"pointer"}
-                onClick={() => {
-                  postData.isLiked = !postData.isLiked;
-                  forcedUpdate();
-                }}
               />
               <Text>{replyData.likesCount}</Text>
             </Flex>
