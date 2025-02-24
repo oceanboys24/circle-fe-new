@@ -30,20 +30,17 @@ type FollowsPayload = {
 };
 
 export default function ProfileUser({ profileData }: ProfileDetailProps) {
-  const [isFollow, setIsFollow] = useState(profileData.isFollow);
-
   const { user } = useAuthStore();
   const { mutateAsync: LikeMutate } = useMutation({
     mutationKey: ["Follow"],
     mutationFn: async (data: FollowsPayload) => {
       const response = await axiosInstance.post("/v1/follows/follow", data);
-     
+
       return response.data;
     },
   });
 
   async function onClickFollow() {
-    setIsFollow(true);
     const followingId = profileData.id;
     const userId = user.id;
 
@@ -54,18 +51,18 @@ export default function ProfileUser({ profileData }: ProfileDetailProps) {
     mutationKey: ["Unfollow"],
     mutationFn: async (data: FollowsPayload) => {
       const response = await axiosInstance.post("/v1/follows/unfollow", data);
-      
+
       return response.data;
     },
   });
 
   async function onClickUnfollow() {
-    setIsFollow(false);
     const profileId = profileData.id;
     const userId = user.id;
 
-    await UnlikeMutate({ followingId : profileId, userId });
+    await UnlikeMutate({ followingId: profileId, userId });
   }
+
   return (
     <Stack p="4" overflow="hidden">
       <Box p="4" display={"flex"}>
@@ -137,9 +134,9 @@ export default function ProfileUser({ profileData }: ProfileDetailProps) {
           variant={"outline"}
           borderColor={"white"}
           rounded={"full"}
-          onClick={isFollow ? onClickUnfollow : onClickFollow}
+          onClick={profileData.isFollow ? onClickUnfollow : onClickFollow}
         >
-          {isFollow ? "Followed" : "Follow"}
+          {profileData.isFollow  ? "Followed" : "Follow"}
         </Button>
       </Flex>
       <Stack direction="column" gap="1" p="1" position="relative" mt="-14">

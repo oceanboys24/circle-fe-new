@@ -1,5 +1,4 @@
 import {
-    AvatarRoot,
   Box,
   Button,
   defineStyle,
@@ -21,12 +20,43 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog.tsx";
 import { Avatar } from "@/components/ui/avatar.tsx";
-import { userSession } from "@/utils/dummy-data/userSession";
+import { useAuthStore } from "@/store/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { axiosInstance } from "@/config/axios";
+import { useState } from "react";
+
+interface EditProfile {
+  fullName: string;
+  userName: string;
+  bio: string;
+}
 
 export default function ModalEdit() {
-  const {fullName,username,followersCount,followingsCount,avatarUrl,backgroundUrl,bio} = userSession;
+  const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuthStore();
+  const { handleSubmit, register, reset } = useForm<EditProfile>();
+  const { mutateAsync: EditProfileMutate } = useMutation({
+    mutationKey: ["EditProject"],
+    mutationFn: async (form?: EditProfile) => {
+      const response = await axiosInstance.patch("/v1/profile", form);
+      return response.data;
+    },
+  });
+
+  const onSubmit = async (data: EditProfile) => {
+    const ProfileData: EditProfile = {
+      bio: data.bio,
+      fullName: data.fullName,
+      userName: data.userName,
+    };
+
+    await EditProfileMutate(ProfileData);
+    reset();
+    setIsOpen(false);
+  };
   return (
-    <DialogRoot>
+    <DialogRoot open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
           variant="outline"
@@ -39,41 +69,74 @@ export default function ModalEdit() {
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle color="#d2d2d2">Edit Profile</DialogTitle>
-        </DialogHeader>
-        <DialogBody>
-          <Image src={backgroundUrl} maxH={"100px"} minW={"464px"}  fontSize="40px" rounded="lg" />
-          <Flex justify="space-between" h="100px">
-            <Avatar
-              src={avatarUrl}
-              size="4xl"
-              bottom="50px"
-              left="30px"
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogHeader>
+            <DialogTitle color="#d2d2d2">Edit Profile</DialogTitle>
+          </DialogHeader>
+          <DialogBody>
+            <Image
+              src={
+                user.profile?.bannerUrl ??
+                "https://api.dicebear.com/9.x/glass/svg"
+              }
+              maxH={"100px"}
+              minW={"464px"}
+              fontSize="40px"
+              rounded="lg"
             />
-          </Flex>
-          <Stack direction="column" gap="1" p="1" position="relative" mt="-10">
-            <Field.Root gap="4">
-              <Box pos="relative" w="full">
-                <Input className="peer" value={fullName} placeholder="" />
-                <Field.Label css={floatingStyles}>Name</Field.Label>
-              </Box>
-              <Box pos="relative" w="full">
-                <Input className="peer" value={username} placeholder="" />
-                <Field.Label css={floatingStyles}>Username</Field.Label>
-              </Box>
-              <Box pos="relative" w="full">
-                <Textarea className="peer" value={bio} autoresize placeholder="" />
-                <Field.Label css={floatingStyles}>Bio</Field.Label>
-              </Box>
-            </Field.Root>
-          </Stack>
-        </DialogBody>
-        <DialogFooter>
-          <Button bgColor="#04a51e" color="white" rounded="2xl">
-            Save
-          </Button>
-        </DialogFooter>
+            <Flex justify="space-between" h="100px">
+              <Avatar
+                src={
+                  user.profile?.avatarUrl ??
+                  "https://api.dicebear.com/9.x/bottts/svg"
+                }
+                size="4xl"
+                bottom="50px"
+                left="30px"
+              />
+            </Flex>
+            <Stack
+              direction="column"
+              gap="1"
+              p="1"
+              position="relative"
+              mt="-10"
+            >
+              <Field.Root gap="4">
+                <Box pos="relative" w="full">
+                  <Input
+                    className="peer"
+                    placeholder=""
+                    {...register("fullName")}
+                  />
+                  <Field.Label css={floatingStyles}>Name</Field.Label>
+                </Box>
+                <Box pos="relative" w="full">
+                  <Input
+                    className="peer"
+                    placeholder=""
+                    {...register("userName")}
+                  />
+                  <Field.Label css={floatingStyles}>Username</Field.Label>
+                </Box>
+                <Box pos="relative" w="full">
+                  <Textarea
+                    {...register("bio")}
+                    className="peer"
+                    autoresize
+                    placeholder=""
+                  />
+                  <Field.Label css={floatingStyles}>Bio</Field.Label>
+                </Box>
+              </Field.Root>
+            </Stack>
+          </DialogBody>
+          <DialogFooter>
+            <Button bgColor="#04a51e" color="white" rounded="2xl" type="submit">
+              Save
+            </Button>
+          </DialogFooter>
+        </form>
         <DialogCloseTrigger />
       </DialogContent>
     </DialogRoot>

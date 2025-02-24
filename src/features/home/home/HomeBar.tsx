@@ -34,6 +34,7 @@ export default function HomeBar() {
       const response = await axiosInstance.get(
         `/v1/threads?page=${page}&limit=${limit}`
       );
+  
       return response.data.data;
     },
   });

@@ -36,7 +36,7 @@ export default function ThreadPost({ thread }: CardThreadProps) {
   const { mutateAsync: UnlikeMutate } = useMutation({
     mutationKey: ["Likes"],
     mutationFn: async (data: { threadId: string; userId: string }) => {
-      const response = await axiosInstance.delete("/v1/likes", { data });
+      const response = await axiosInstance.delete( `/v1/likes/${data.threadId}`);
       return response.data;
     },
   });
