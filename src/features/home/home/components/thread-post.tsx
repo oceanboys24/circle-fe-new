@@ -1,4 +1,4 @@
-import { BoxProps, Button, Flex, Image, Text } from "@chakra-ui/react";
+import { BoxProps, Button, Flex, Image, Spinner, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/useAuth";
@@ -18,6 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { toaster } from "@/components/ui/toaster";
 
 interface CardThreadProps extends BoxProps {
   thread: ThreadDetails;
@@ -70,15 +71,24 @@ export default function ThreadPost({ thread }: CardThreadProps) {
     await UnlikeMutate({ threadId, userId });
   }
 
-  const { mutateAsync: DeleteThread } = useMutation({
-    mutationKey: ["Delete Threads"],
-    mutationFn: async (data: { threadId: string; userId: string }) => {
-      const response = await axiosInstance.delete(
-        `/v1/threads/${data.threadId}`
-      );
-      return response.data;
-    },
-  });
+  const { mutateAsync: DeleteThread, isPending: isPendingDelete } = useMutation(
+    {
+      mutationKey: ["Delete Threads"],
+      mutationFn: async (data: { threadId: string; userId: string }) => {
+        const response = await axiosInstance.delete(
+          `/v1/threads/${data.threadId}`
+        );
+        return response.data;
+      },
+      onSuccess: () => {
+        toaster.create({
+          title: "Success Delete",
+          type: "success",
+          duration: 3000,
+        });
+      },
+    }
+  );
 
   async function onClickDelete() {
     setIsLiked(false);
@@ -142,12 +152,13 @@ export default function ThreadPost({ thread }: CardThreadProps) {
                       variant="subtle"
                       size="sm"
                       colorPalette={"red"}
+                      disabled={isPendingDelete ? true : false}
                       onClick={async () => {
                         onClickDelete();
                         setOpen(false);
                       }}
                     >
-                      Delete
+                      {isPendingDelete ? <Spinner /> : "Post"}
                     </Button>
                   </DialogFooter>
                   <DialogCloseTrigger />

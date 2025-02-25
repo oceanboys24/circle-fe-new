@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { toaster } from "@/components/ui/toaster";
 import { useRef, useState } from "react";
 
-type FormInputs = {
+export type FormInputs = {
   content: string;
   imageContent: FileList;
 };

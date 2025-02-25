@@ -12,6 +12,7 @@ import { Avatar } from "@/components/ui/avatar.tsx";
 import useInputThread from "../hooks/useInputThread";
 import { CloseButton } from "@/components/ui/close-button";
 import { useAuthStore } from "@/store/useAuth";
+import InputContent from "./input";
 
 export default function InputThread() {
   const {
@@ -43,16 +44,7 @@ export default function InputThread() {
           />
 
           <Flex w="100vw">
-            <Input
-              placeholder="What is Happening?!"
-              variant="flushed"
-              p="4"
-              textStyle="lg"
-              minW="xs"
-              {...register("content")}
-              borderBottom="none"
-              _focus={{ borderBottom: "none", boxShadow: "none" }}
-            />
+            <InputContent register={register} />
           </Flex>
 
           <Box as="label" cursor="pointer" display={"flex"}>
@@ -79,6 +71,7 @@ export default function InputThread() {
               />
             </Avatar>
           </Box>
+          
           <Button
             type="submit"
             size="md"
