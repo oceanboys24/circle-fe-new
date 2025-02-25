@@ -25,31 +25,115 @@ import { useAuthStore } from "@/store/useAuth";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "@/config/axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { toaster } from "@/components/ui/toaster";
 
 interface EditProfile {
   fullName: string;
   userName: string;
   bio: string;
+  avatarUrl?: string;
+  bannerUrl?: string;
 }
 
 export default function ModalEdit() {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuthStore();
   const { handleSubmit, register, reset } = useForm<EditProfile>();
+  const inputFileRef = useRef<HTMLInputElement | null>(null);
+
+  const {
+    ref: registerImagesRef,
+    onChange: registerImagesOnChange,
+    ...restRegisterImages
+  } = register("avatarUrl");
+
+  const {
+    ref: registerImages2Ref,
+    onChange: registerImages2OnChange,
+    ...restRegisterImages2
+  } = register("bannerUrl");
+
+  const { mutateAsync: UploadImage } = useMutation({
+    mutationKey: ["Upload"],
+    mutationFn: async (formData?: FormData) => {
+      if (!formData) return null;
+      const response = await axiosInstance.post(
+        "/v1/upload/edit-profile",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      return response.data;
+    },
+    onError: (error: any) => {
+      const errorMessage = error.response?.data?.message;
+      toaster.create({
+        title: errorMessage,
+        type: "error",
+        duration: 3000,
+      });
+    },
+    onSuccess: async (data) => {
+      toaster.create({
+        title: data.message,
+        type: "success",
+        duration: 3000,
+      });
+    },
+  });
+
   const { mutateAsync: EditProfileMutate } = useMutation({
     mutationKey: ["EditProject"],
     mutationFn: async (form?: EditProfile) => {
       const response = await axiosInstance.patch("/v1/profile", form);
       return response.data;
     },
+    onError: (error: any) => {
+      toaster.create({
+        title: "Error Edit Profile",
+        type: "error",
+        duration: 3000,
+      });
+    },
+    onSuccess: async (data) => {
+      toaster.create({
+        title: "Sucess Edit Profile",
+        type: "success",
+        duration: 3000,
+      });
+    },
   });
 
   const onSubmit = async (data: EditProfile) => {
+    let imageUrl: string | undefined = undefined;
+    let imageUrl2: string | undefined = undefined;
+
+    if (data.avatarUrl && data.avatarUrl.length > 0) {
+      const formData = new FormData();
+      formData.append("avatarUrl", data.avatarUrl[0]);
+
+      const uploadResult = await UploadImage(formData);
+      imageUrl = uploadResult?.responseData.avatarUrl;
+    }
+
+    if (data.bannerUrl && data.bannerUrl.length > 0) {
+      const formData = new FormData();
+      formData.append("bannerUrl", data.bannerUrl[0]);
+
+      const uploadResult2 = await UploadImage(formData);
+  
+      imageUrl2 = uploadResult2?.responseData.bannerUrl;
+    }
+
     const ProfileData: EditProfile = {
       bio: data.bio,
       fullName: data.fullName,
       userName: data.userName,
+      avatarUrl: imageUrl,
+      bannerUrl: imageUrl2,
     };
 
     await EditProfileMutate(ProfileData);
@@ -86,6 +170,8 @@ export default function ModalEdit() {
               rounded="lg"
             />
             <Box
+              cursor="pointer"
+              as="label"
               marginLeft="205px"
               marginTop="-70px"
               position={"absolute"}
@@ -96,7 +182,18 @@ export default function ModalEdit() {
                 width={"50px"}
                 backgroundColor={"transparent"}
               />
-              <input type="file" hidden />
+              <input
+                type="file"
+                hidden
+                {...restRegisterImages2}
+                onChange={(e) => {
+                  registerImages2OnChange(e);
+                }}
+                ref={(e) => {
+                  registerImages2Ref(e);
+                  inputFileRef.current = e;
+                }}
+              />
             </Box>
             <Flex justify="space-between" h="100px">
               <Avatar
@@ -109,6 +206,8 @@ export default function ModalEdit() {
                 left="30px"
               />
               <Box
+                cursor="pointer"
+                as="label"
                 marginLeft="65px"
                 marginTop="-15px"
                 position={"absolute"}
@@ -119,7 +218,18 @@ export default function ModalEdit() {
                   width={"30px"}
                   backgroundColor={"transparent"}
                 />
-                <input type="file" hidden />
+                <input
+                  type="file"
+                  hidden
+                  {...restRegisterImages}
+                  onChange={(e) => {
+                    registerImagesOnChange(e);
+                  }}
+                  ref={(e) => {
+                    registerImagesRef(e);
+                    inputFileRef.current = e;
+                  }}
+                />
               </Box>
             </Flex>
             <Stack
