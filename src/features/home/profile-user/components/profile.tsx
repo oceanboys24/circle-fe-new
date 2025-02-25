@@ -16,52 +16,14 @@ import { Avatar } from "@/components/ui/avatar.tsx";
 import { NavLink } from "react-router-dom";
 import { MdMenu } from "react-icons/md";
 import { UserProfileDetailEntitiy } from "@/entities/profile-details";
-import { useAuthStore } from "@/store/useAuth";
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { axiosInstance } from "@/config/axios";
+import useFollows from "../hooks/useFollows";
+
 interface ProfileDetailProps extends BoxProps {
   profileData: UserProfileDetailEntitiy;
 }
 
-type FollowsPayload = {
-  followingId: string;
-  userId: string;
-};
-
 export default function ProfileUser({ profileData }: ProfileDetailProps) {
-  const { user } = useAuthStore();
-  const { mutateAsync: LikeMutate } = useMutation({
-    mutationKey: ["Follow"],
-    mutationFn: async (data: FollowsPayload) => {
-      const response = await axiosInstance.post("/v1/follows/follow", data);
-
-      return response.data;
-    },
-  });
-
-  async function onClickFollow() {
-    const followingId = profileData.id;
-    const userId = user.id;
-
-    await LikeMutate({ followingId: followingId, userId: userId });
-  }
-
-  const { mutateAsync: UnlikeMutate } = useMutation({
-    mutationKey: ["Unfollow"],
-    mutationFn: async (data: FollowsPayload) => {
-      const response = await axiosInstance.post("/v1/follows/unfollow", data);
-
-      return response.data;
-    },
-  });
-
-  async function onClickUnfollow() {
-    const profileId = profileData.id;
-    const userId = user.id;
-
-    await UnlikeMutate({ followingId: profileId, userId });
-  }
+  const { onClickFollow, onClickUnfollow } = useFollows(profileData);
 
   return (
     <Stack p="4" overflow="hidden">
@@ -127,6 +89,8 @@ export default function ProfileUser({ profileData }: ProfileDetailProps) {
             "https://api.dicebear.com/9.x/bottts/svg"
           }
           size="4xl"
+          w={"100px"}
+          h={"100px"}
           bottom="50px"
           left="30px"
         />
@@ -136,7 +100,7 @@ export default function ProfileUser({ profileData }: ProfileDetailProps) {
           rounded={"full"}
           onClick={profileData.isFollow ? onClickUnfollow : onClickFollow}
         >
-          {profileData.isFollow  ? "Followed" : "Follow"}
+          {profileData.isFollow ? "Followed" : "Follow"}
         </Button>
       </Flex>
       <Stack direction="column" gap="1" p="1" position="relative" mt="-14">

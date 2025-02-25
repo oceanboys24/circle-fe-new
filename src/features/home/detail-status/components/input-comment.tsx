@@ -1,4 +1,4 @@
-import { Button, Input, Stack, Image, Float } from "@chakra-ui/react";
+import { Button, Input, Stack, Image, Float, Flex } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import {
   FileUploadRoot,
@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useRef, useState } from "react";
 import { CloseButton } from "@/components/ui/close-button";
+import { useAuthStore } from "@/store/useAuth";
 
 type FormInputs = {
   content: string;
@@ -20,6 +21,7 @@ type FormInputs = {
 };
 export default function InputComment() {
   const [previewURL, setPreviewURL] = useState<string | null>(null);
+  const { user } = useAuthStore();
   const queryClient = useQueryClient();
   const { handleSubmit, register, reset, setValue } = useForm<FormInputs>();
   const inputFileRef = useRef<HTMLInputElement | null>(null);
@@ -34,9 +36,13 @@ export default function InputComment() {
     mutationKey: ["Upload-Comment"],
     mutationFn: async (formData?: FormData) => {
       if (!formData) return null;
-      const response = await axiosInstance.post("/v1/upload/comment", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const response = await axiosInstance.post(
+        "/v1/upload/comment",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
       return response.data;
     },
     onError: (error: any) => {
@@ -44,13 +50,6 @@ export default function InputComment() {
       toaster.create({
         title: errorMessage,
         type: "error",
-        duration: 3000,
-      });
-    },
-    onSuccess: async (data) => {
-      toaster.create({
-        title: data.message,
-        type: "success",
         duration: 3000,
       });
     },
@@ -77,10 +76,10 @@ export default function InputComment() {
     },
     onSuccess: async (data) => {
       queryClient.invalidateQueries({
-        queryKey: ["Comment"],
+        queryKey: ["Thread-Detail"],
       });
       toaster.create({
-        title: data.message,
+        title: "Success Create",
         type: "success",
         duration: 3000,
       });
@@ -122,8 +121,8 @@ export default function InputComment() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack direction="row" p="4" borderBottomWidth="2px">
-        <Avatar src={userSession.avatarUrl} size="xl" />
+      <Stack direction="row" p="4">
+        <Avatar src={user.profile.avatarUrl ?? " "} size="xl" />
         <Input
           placeholder="Type your reply!"
           variant="flushed"
@@ -136,7 +135,7 @@ export default function InputComment() {
           w="auto"
           {...restRegisterImages}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            handlePreview(e); 
+            handlePreview(e);
             registerImagesOnChange(e);
           }}
           ref={(e) => {
@@ -166,34 +165,36 @@ export default function InputComment() {
           Reply
         </Button>
       </Stack>
-      <Stack
-        w="xs"
-        alignSelf="center"
-        p="2"
-        position={"relative"}
-        display={previewURL ? "flex" : "none"}
-      >
-        <Image
-          objectFit="contain"
-          maxHeight="300px"
-          maxWidth="300px"
-          src={previewURL ?? ""}
-          borderRadius="md"
-        />
-        {previewURL && (
-          <Float>
-            <CloseButton
-              onClick={() => {
-                setPreviewURL(null);
-                setValue("contentImage", new DataTransfer().files);
-              }}
-              variant={"solid"}
-              rounded={"full"}
-              size={"xs"}
-            />
-          </Float>
-        )}
-      </Stack>
+      <Flex w={"full"} justify={"center"}>
+        <Stack
+          w="xs"
+          justify={"center"}
+          p="2"
+          position={"relative"}
+          display={previewURL ? "flex" : "none"}
+        >
+          <Image
+            objectFit="contain"
+            maxHeight="300px"
+            maxWidth="300px"
+            src={previewURL ?? ""}
+            borderRadius="md"
+          />
+          {previewURL && (
+            <Float>
+              <CloseButton
+                onClick={() => {
+                  setPreviewURL(null);
+                  setValue("contentImage", new DataTransfer().files);
+                }}
+                variant={"solid"}
+                rounded={"full"}
+                size={"xs"}
+              />
+            </Float>
+          )}
+        </Stack>
+      </Flex>
     </form>
   );
 }

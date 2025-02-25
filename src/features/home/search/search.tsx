@@ -10,27 +10,29 @@ import NotFoundSearch from "./not-found-search";
 import { useQuery } from "@tanstack/react-query";
 import { SearchUser } from "./types/user-search";
 import { axiosInstance } from "@/config/axios";
+import { useAuthStore } from "@/store/useAuth";
 
 export default function SearchPages() {
   const [searchText, setSearchText] = useState<string>("");
   const [searchTextDebounce] = useDebounce(searchText, 500);
-
+  const { user } = useAuthStore();
+  
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchText(e.target.value);
   }
   const {
-    data: users,
+    data: users = [],
     isLoading,
     refetch,
   } = useQuery<SearchUser[]>({
-    queryKey: ["Search-Users"],
+    queryKey: ["Search-Users", searchTextDebounce],
     queryFn: async () => {
       const response = await axiosInstance.get(
         `/v1/auth/users?q=${searchTextDebounce}`
       );
       return response.data;
     },
-    enabled: !!searchTextDebounce,
+    enabled: !!searchTextDebounce && searchTextDebounce !== user.userName,
   });
 
   useEffect(() => {

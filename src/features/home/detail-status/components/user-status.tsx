@@ -1,11 +1,9 @@
 import { BoxProps, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
-import { Post } from "../../home/utils/post";
 import { Link } from "react-router-dom";
-import { ThreadEntities } from "@/entities/thread-entities";
 import { ThreadDetails } from "../types/thread-detail-types";
 import convertToWIB from "@/utils/formatdate";
-import useLikeUnlike from "../../home/hooks/useLikesThread";
+import useLikeUnlikeComment from "../hooks/useLikeComment";
 
 interface ChardStatusDetailProps extends BoxProps {
   detailThread: ThreadDetails;
@@ -13,9 +11,9 @@ interface ChardStatusDetailProps extends BoxProps {
 
 export default function UserStatus({ detailThread }: ChardStatusDetailProps) {
   const { isLiked, onClickLike, onClickUnlike } =
-  useLikeUnlike(detailThread);
+    useLikeUnlikeComment(detailThread);
   return (
-    <Flex p="5" borderBottomWidth="2px" direction={"column"} >
+    <Flex p="5" borderBottomWidth="2px" direction={"column"}>
       <Flex gap="1" p={"3"}>
         <Flex gap={"2"}>
           <Link to={"/"}>
@@ -54,8 +52,9 @@ export default function UserStatus({ detailThread }: ChardStatusDetailProps) {
 
         <Flex justify={"center"}>
           <Image
+            w={"200px"}
             src={detailThread.imageContent ?? ""}
-            maxW={"sm"}
+            maxW={"xs"}
             rounded={"sm"}
           />
         </Flex>

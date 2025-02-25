@@ -76,6 +76,7 @@ export default function Profile() {
             : "https://api.dicebear.com/9.x/glass/svg"
         }
         maxH={"200px"}
+
         fontSize="40px"
         rounded="lg"
       />
@@ -86,6 +87,8 @@ export default function Profile() {
             "https://api.dicebear.com/9.x/bottts/svg"
           }
           size="4xl"
+          w={"100px"}
+          h={"100px"}
           bottom="50px"
           left="30px"
         />

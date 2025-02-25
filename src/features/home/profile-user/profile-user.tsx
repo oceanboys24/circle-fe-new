@@ -20,8 +20,6 @@ export default function ProfileUserPage() {
     enabled: !!id,
   });
 
-  console.log(detailData)
-
   if (isLoading) return <Spinner />;
   
   if (isError) return <Text color="red.500">Failed Get Data</Text>;

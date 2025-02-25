@@ -29,12 +29,12 @@ export default function HomeBar() {
     isLoading,
     isError,
   } = useQuery<ThreadEntities[]>({
-    queryKey: ["Threads"],
+    queryKey: ["Threads", page],
     queryFn: async () => {
       const response = await axiosInstance.get(
         `/v1/threads?page=${page}&limit=${limit}`
       );
-  
+
       return response.data.data;
     },
   });
@@ -42,15 +42,10 @@ export default function HomeBar() {
   const { data: total } = useQuery<number>({
     queryKey: ["Total"],
     queryFn: async () => {
-      const response = await axiosInstance.get(
-        `/v1/threads/all`
-      );
+      const response = await axiosInstance.get(`/v1/threads/all`);
       return response.data.data;
     },
   });
- 
-
-
 
   return (
     <GridItem colSpan={{ base: 4, md: 2 }}>
@@ -77,9 +72,9 @@ export default function HomeBar() {
         page={page}
         onPageChange={(e) => setPage(e.page)}
       >
-        <HStack justifyContent={'center'}>
-          <PaginationPrevTrigger/>
-          <PaginationItems  />
+        <HStack justifyContent={"center"}>
+          <PaginationPrevTrigger />
+          <PaginationItems />
           <PaginationNextTrigger />
         </HStack>
       </PaginationRoot>

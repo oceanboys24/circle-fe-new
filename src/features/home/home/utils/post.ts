@@ -11,7 +11,7 @@ export type Reply = {
   contentImage: string;
   likesCount: number;
   replyCount: number;
-  createdAt: Date;
+  reatedAt: string;
 };
 
 export type Post = {
@@ -22,5 +22,5 @@ export type Post = {
   repliesCount: number;
   replies?: Reply[];
   isLiked: boolean;
-  createdAt: Date;
+  createdAt: string;
 };

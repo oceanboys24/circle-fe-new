@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { ThreadDetails } from "../../detail-status/types/thread-detail-types";
+import { ThreadDetails } from "../types/thread-detail-types";
 import { axiosInstance } from "@/config/axios";
 import { useAuthStore } from "@/store/useAuth";
 
-export default function useLikeUnlike(thread: ThreadDetails) {
+export default function useLikeUnlikeComment(thread: ThreadDetails) {
   const [isLiked, setIsLiked] = useState(thread.isLiked);
   const queryClient = useQueryClient();
   const { user } = useAuthStore();
@@ -17,7 +17,7 @@ export default function useLikeUnlike(thread: ThreadDetails) {
 
     onSuccess: async () => {
       queryClient.invalidateQueries({
-        queryKey: ["Threads", "Thread-Detail"],
+        queryKey: ["Thread-Detail"],
       });
     },
   });
@@ -30,7 +30,7 @@ export default function useLikeUnlike(thread: ThreadDetails) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["Threads", "Thread-Detail"],
+        queryKey: ["Thread-Detail"],
       });
     },
   });
@@ -50,5 +50,5 @@ export default function useLikeUnlike(thread: ThreadDetails) {
     await UnlikeMutate({ threadId, userId });
   }
 
-  return { isLiked: thread.isLiked, onClickLike, onClickUnlike };
+  return { isLiked, onClickLike, onClickUnlike };
 }
