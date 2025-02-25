@@ -4,6 +4,7 @@ import {
   DialogActionTrigger,
   DialogBackdrop,
   Flex,
+  Float,
   Icon,
   Image,
   Spinner,
@@ -25,15 +26,26 @@ import {
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { useAuthStore } from "@/store/useAuth";
 import useInputThread from "@/features/home/home/hooks/useInputThread";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { CloseButton } from "@/components/ui/close-button";
 
 export default function MainMenu() {
   const { pathname } = useLocation();
   const [isOpen, setOpen] = useState<boolean>(false);
-
-  const { register, onSubmit, handleSubmit, isPending, reset } =
-    useInputThread();
-  const userLogin = useAuthStore((state) => state.user);
+  const {
+    register,
+    onSubmit,
+    handleSubmit,
+    handlePreview,
+    previewURL,
+    setPreviewURL,
+    isPending,
+    restRegisterImages,
+    registerImagesOnChange,
+    registerImagesRef,
+    inputFileRef,
+    setValue,
+  } = useInputThread();
 
   return (
     <DialogRoot
@@ -111,11 +123,21 @@ export default function MainMenu() {
               </Flex>
             </DialogBody>
             <DialogFooter justifyContent="space-between">
-              <Flex alignSelf="start">
-                <Button variant={"ghost"} cursor={"pointer"}>
-                  <Image src="./src/assets/gallery-add.svg" />
-                  <input type="file" hidden />
-                </Button>
+              <Flex alignSelf="start" as="label" cursor="pointer">
+                <Image src="./src/assets/gallery-add.svg" />
+                <input
+                  type="file"
+                  hidden
+                  {...restRegisterImages}
+                  onChange={(e) => {
+                    handlePreview(e);
+                    registerImagesOnChange(e);
+                  }}
+                  ref={(e) => {
+                    registerImagesRef(e);
+                    inputFileRef.current = e;
+                  }}
+                />
               </Flex>
               <Button
                 bgColor="#04A51E"
@@ -126,7 +148,6 @@ export default function MainMenu() {
                 onClick={async () => {
                   await handleSubmit(async (data) => {
                     await onSubmit(data);
-                    reset();
                     setOpen(false);
                   })();
                 }}
@@ -134,6 +155,34 @@ export default function MainMenu() {
               >
                 {isPending ? <Spinner /> : "Post"}
               </Button>
+              <Stack
+                w="xs"
+                alignSelf="center"
+                p="2"
+                position={"relative"}
+                display={previewURL ? "flex" : "none"}
+              >
+                <Image
+                  objectFit="contain"
+                  maxHeight="300px"
+                  maxWidth="300px"
+                  src={previewURL ?? ""}
+                  borderRadius="md"
+                />
+                {previewURL && (
+                  <Float>
+                    <CloseButton
+                      onClick={() => {
+                        setPreviewURL(null);
+                        setValue("imageContent", new DataTransfer().files);
+                      }}
+                      variant={"solid"}
+                      rounded={"full"}
+                      size={"xs"}
+                    />
+                  </Float>
+                )}
+              </Stack>
             </DialogFooter>
           </DialogContent>
         </Flex>

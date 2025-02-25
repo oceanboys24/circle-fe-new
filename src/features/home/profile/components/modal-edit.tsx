@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   defineStyle,
+  DialogActionTrigger,
   DialogRoot,
   Field,
   Flex,
@@ -56,7 +57,7 @@ export default function ModalEdit() {
     setIsOpen(false);
   };
   return (
-    <DialogRoot open={isOpen} onOpenChange={setIsOpen}>
+    <DialogRoot open={isOpen} onOpenChange={(state) => setIsOpen(state.open)}>
       <DialogTrigger asChild>
         <Button
           variant="outline"
@@ -84,6 +85,19 @@ export default function ModalEdit() {
               fontSize="40px"
               rounded="lg"
             />
+            <Box
+              marginLeft="205px"
+              marginTop="-70px"
+              position={"absolute"}
+              backgroundColor={"transparent"}
+            >
+              <Image
+                src="/public/add.svg"
+                width={"50px"}
+                backgroundColor={"transparent"}
+              />
+              <input type="file" hidden />
+            </Box>
             <Flex justify="space-between" h="100px">
               <Avatar
                 src={
@@ -94,6 +108,19 @@ export default function ModalEdit() {
                 bottom="50px"
                 left="30px"
               />
+              <Box
+                marginLeft="65px"
+                marginTop="-15px"
+                position={"absolute"}
+                backgroundColor={"transparent"}
+              >
+                <Image
+                  src="/public/add.svg"
+                  width={"30px"}
+                  backgroundColor={"transparent"}
+                />
+                <input type="file" hidden />
+              </Box>
             </Flex>
             <Stack
               direction="column"
@@ -132,12 +159,14 @@ export default function ModalEdit() {
             </Stack>
           </DialogBody>
           <DialogFooter>
+            <Button variant="outline" onClick={() => setIsOpen(false)}>
+              Cancel
+            </Button>
             <Button bgColor="#04a51e" color="white" rounded="2xl" type="submit">
               Save
             </Button>
           </DialogFooter>
         </form>
-        <DialogCloseTrigger />
       </DialogContent>
     </DialogRoot>
   );
