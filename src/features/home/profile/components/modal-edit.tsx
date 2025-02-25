@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/dialog.tsx";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { useAuthStore } from "@/store/useAuth";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "@/config/axios";
 import { useRef, useState } from "react";
@@ -53,6 +53,8 @@ export default function ModalEdit() {
     onChange: registerImages2OnChange,
     ...restRegisterImages2
   } = register("bannerUrl");
+
+  const queryClient = useQueryClient();
 
   const { mutateAsync: UploadImage } = useMutation({
     mutationKey: ["Upload"],
@@ -99,6 +101,9 @@ export default function ModalEdit() {
       });
     },
     onSuccess: async (data) => {
+      queryClient.invalidateQueries({
+        queryKey : ["Threads"]
+      })
       toaster.create({
         title: "Sucess Edit Profile",
         type: "success",
@@ -124,7 +129,7 @@ export default function ModalEdit() {
       formData.append("bannerUrl", data.bannerUrl[0]);
 
       const uploadResult2 = await UploadImage(formData);
-  
+
       imageUrl2 = uploadResult2?.responseData.bannerUrl;
     }
 
@@ -200,8 +205,9 @@ export default function ModalEdit() {
                 src={
                   user.profile?.avatarUrl ??
                   "https://api.dicebear.com/9.x/bottts/svg"
-                }
-                size="4xl"
+                } 
+               w={'100px'}
+               h={"100px"}
                 bottom="50px"
                 left="30px"
               />

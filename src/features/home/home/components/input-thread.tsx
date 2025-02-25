@@ -62,7 +62,7 @@ export default function InputThread() {
           >
             <DialogTrigger asChild>
               <Flex w="100vw">
-                <InputContent register={register} />
+                <InputContent  />
               </Flex>
             </DialogTrigger>
             <DialogBackdrop />
@@ -124,39 +124,40 @@ export default function InputThread() {
                 >
                   {isPending ? <Spinner /> : "Post"}
                 </Button>
-                <Stack
-                  w="xs"
-                  alignSelf="center"
-                  p="2"
-                  position={"relative"}
-                  display={previewURL ? "flex" : "none"}
-                >
-                  <Image
-                    objectFit="contain"
-                    maxHeight="300px"
-                    maxWidth="300px"
-                    src={previewURL ?? ""}
-                    borderRadius="md"
-                  />
-                  {previewURL && (
-                    <Float>
-                      <CloseButton
-                        onClick={() => {
-                          setPreviewURL(null);
-                          setValue("imageContent", new DataTransfer().files);
-                        }}
-                        variant={"solid"}
-                        rounded={"full"}
-                        size={"xs"}
-                      />
-                    </Float>
-                  )}
-                </Stack>
               </DialogFooter>
+              <Stack
+                w="xs"
+                alignSelf="center"
+                p="2"
+                position={"relative"}
+                display={previewURL ? "flex" : "none"}
+               
+              >
+                <Image
+                  objectFit="contain"
+                  maxHeight="300px"
+                  maxWidth="300px"
+                  src={previewURL ?? ""}
+                  borderRadius="md"
+                />
+                {previewURL && (
+                  <Float>
+                    <CloseButton
+                      onClick={() => {
+                        setPreviewURL(null);
+                        setValue("imageContent", new DataTransfer().files);
+                      }}
+                      variant={"solid"}
+                      rounded={"full"}
+                      size={"xs"}
+                    />
+                  </Float>
+                )}
+              </Stack>
             </DialogContent>
           </DialogRoot>
 
-          <Box as="label" cursor="pointer" display={"flex"}>
+          <Box display={"flex"}>
             <Avatar
               alignSelf={"center"}
               src="./src/assets/gallery-add.svg"
@@ -165,19 +166,7 @@ export default function InputThread() {
               bgColor="transparent"
               _hover={{ opacity: 0.8 }}
             >
-              <input
-                type="file"
-                hidden
-                {...restRegisterImages}
-                onChange={(e) => {
-                  handlePreview(e);
-                  registerImagesOnChange(e);
-                }}
-                ref={(e) => {
-                  registerImagesRef(e);
-                  inputFileRef.current = e;
-                }}
-              />
+              <input type="file" hidden />
             </Avatar>
           </Box>
 
@@ -189,39 +178,10 @@ export default function InputThread() {
             fontSize="xl"
             p="5"
             justifyContent="center"
-            disabled={isPending ? true : false}
           >
-            {isPending ? <Spinner /> : "Post"}
+            Post
           </Button>
         </Box>
-        <Stack
-          w="xs"
-          alignSelf="center"
-          p="2"
-          position={"relative"}
-          display={previewURL ? "flex" : "none"}
-        >
-          <Image
-            objectFit="contain"
-            maxHeight="300px"
-            maxWidth="300px"
-            src={previewURL ?? ""}
-            borderRadius="md"
-          />
-          {previewURL && (
-            <Float>
-              <CloseButton
-                onClick={() => {
-                  setPreviewURL(null);
-                  setValue("imageContent", new DataTransfer().files);
-                }}
-                variant={"solid"}
-                rounded={"full"}
-                size={"xs"}
-              />
-            </Float>
-          )}
-        </Stack>
       </Flex>
     </form>
   );

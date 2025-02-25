@@ -9,8 +9,8 @@ export type ThreadDetails = {
   likesCount: number;
   repliesCount: number;
   isLiked: boolean;
-  CreatedAt: Date;
-  UpdatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type UserPost = {

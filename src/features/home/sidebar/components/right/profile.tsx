@@ -28,15 +28,17 @@ export default function ProfileSidebarRight() {
         fontSize="40px"
         rounded="lg"
       />
-      <Flex justify="space-between" h="100px">
+      <Flex justify="space-between" h="100px" >
         <Avatar
           src={
             userLogin?.profile?.avatarUrl ??
             "https://api.dicebear.com/9.x/bottts/svg"
           }
-          size="4xl"
+          w={"100px"}
+          h={"100px"}
           bottom="50px"
           left="30px"
+          
         />
         <ModalEdit />
       </Flex>
@@ -45,7 +47,7 @@ export default function ProfileSidebarRight() {
         <Text textStyle="md" color="#5a5a5b">
           @{userLogin.userName}
         </Text>
-        {/* <Text>{user.profile.bio}</Text> */}
+        <Text>{userLogin.profile?.bio ?? " "}</Text>
         <Text textStyle="md">
           <Text as="span" fontWeight="bold" color="white">
             121

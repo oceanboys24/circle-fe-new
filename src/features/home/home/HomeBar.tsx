@@ -29,7 +29,7 @@ export default function HomeBar() {
     isLoading,
     isError,
   } = useQuery<ThreadEntities[]>({
-    queryKey: ["Threads", page],
+    queryKey: ["Threads"],
     queryFn: async () => {
       const response = await axiosInstance.get(
         `/v1/threads?page=${page}&limit=${limit}`
@@ -48,7 +48,7 @@ export default function HomeBar() {
       return response.data.data;
     },
   });
-  console.log(total)
+ 
 
 
 

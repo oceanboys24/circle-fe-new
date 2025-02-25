@@ -17,8 +17,10 @@ export default function ProfileUserPage() {
       const response = await axiosInstance.get(`/v1/users/${id}`);
       return response.data;
     },
-    enabled: !!id, //Only fetch if id exist
+    enabled: !!id,
   });
+
+  console.log(detailData)
 
   if (isLoading) return <Spinner />;
   

@@ -1,6 +1,26 @@
-import { Flex, Tabs, Grid, Image } from "@chakra-ui/react";
+import { axiosInstance } from "@/config/axios";
+import { Flex, Tabs, Grid, Image, Spinner } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
+import ThreadPost from "../../home/components/thread-post";
+import { useQuery } from "@tanstack/react-query";
 
 export default function TabsProfileUser() {
+  const { id } = useParams();
+  const { data: ThreadsAll, isLoading } = useQuery({
+    queryKey: ["Thread-User"],
+    queryFn: async () => {
+      const response = await axiosInstance.get("/v1/threads");
+
+      return response.data;
+    },
+  });
+
+  if (isLoading) return <Spinner />;
+  const userThreads =
+    ThreadsAll?.data?.filter((thread: any) => thread.user.id === id) || [];
+
+  const mediaThreads = userThreads.filter((thread: any) => thread.imageContent);
+
   return (
     <Flex>
       <Tabs.Root defaultValue="post" w="full">
@@ -13,16 +33,22 @@ export default function TabsProfileUser() {
           </Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="post" w="full">
-          {/* {postDatas.map((postData) => (
-            <StatusPost postData={postData} key={postData.id} />
-          ))} */}
+          {userThreads.map((thread: any) => (
+            <ThreadPost thread={thread} key={thread.id} />
+          ))}
         </Tabs.Content>
         <Tabs.Content value="media" w="full">
           <Grid templateColumns="repeat(3, 1fr)" gap="6">
-            <Image h="full" w="full" src="/src/assets/dummy-1.jpg" />
-            <Image h="full" w="full" src="/src/assets/dummy-1.jpg" />
-            <Image h="full" w="full" src="/src/assets/dummy-1.jpg" />
-            <Image h="full" w="full" src="/src/assets/dummy-1.jpg" />
+            {mediaThreads.map((thread: any) => {
+              return (
+                <Image
+                  h="full"
+                  w="full"
+                  key={thread.id}
+                  src={thread.imageContent}
+                />
+              );
+            })}
           </Grid>
         </Tabs.Content>
       </Tabs.Root>

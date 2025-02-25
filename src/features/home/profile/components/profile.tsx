@@ -20,6 +20,7 @@ import { useAuthStore } from "@/store/useAuth";
 
 export default function Profile() {
   const userLogin = useAuthStore((state) => state.user);
+  
   return (
     <Stack p="4" overflow="hidden">
       <Box p="4" display={"flex"} justifyContent="space-between">
@@ -99,14 +100,14 @@ export default function Profile() {
         <Text>{userLogin.profile ? userLogin.profile.bio : "Lorem Ipsum"}</Text>
         <Text textStyle="md">
           <Text as="span" fontWeight="bold" color="white">
-            {userSession.followingsCount}
+            {userLogin.following.length}
           </Text>
           <Text as="span" color="gray.400">
             {" "}
             Following{" "}
           </Text>
           <Text as="span" fontWeight="bold" color="white">
-            {userSession.followersCount}
+            {userLogin.followers.length}
           </Text>
           <Text as="span" color="gray.400">
             {" "}

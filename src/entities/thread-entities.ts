@@ -5,11 +5,10 @@ export interface ThreadEntities {
   content: string;
   imageContent: string;
   userId: string;
-  CreatedAt: Date;
-  UpdatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   user: UserEntity;
   likesCount: number;
   repliesCount: number;
   isLiked: boolean;
-
 }

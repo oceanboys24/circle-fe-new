@@ -26,7 +26,7 @@ export default function SearchPages() {
     queryKey: ["Search-Users"],
     queryFn: async () => {
       const response = await axiosInstance.get(
-        `/v1/auth/users?search=${searchTextDebounce}`
+        `/v1/auth/users?q=${searchTextDebounce}`
       );
       return response.data;
     },

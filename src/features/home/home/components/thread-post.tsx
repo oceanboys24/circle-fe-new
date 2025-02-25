@@ -19,6 +19,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toaster } from "@/components/ui/toaster";
+import useLikeUnlike from "../hooks/useLikesThread";
+import convertToWIB from "@/utils/formatdate";
 
 interface CardThreadProps extends BoxProps {
   thread: ThreadDetails;
@@ -26,54 +28,13 @@ interface CardThreadProps extends BoxProps {
 
 export default function ThreadPost({ thread }: CardThreadProps) {
   const { onClickAvatar, onClickCard } = useNavigateThread(thread);
-  const [isLiked, setIsLiked] = useState(thread.isLiked);
   const { user } = useAuthStore();
   const [isOpen, setOpen] = useState<boolean>(false);
-  const { mutateAsync: LikeMutate } = useMutation({
-    mutationKey: ["Likes"],
-    mutationFn: async (data: { threadId: string; userId: string }) => {
-      const response = await axiosInstance.post("/v1/likes", data);
-      console.log(response.data);
-      return response.data;
-    },
-  });
-
-  const { mutateAsync: DelteThread } = useMutation({
-    mutationKey: ["Likes"],
-    mutationFn: async (data: { threadId: string; userId: string }) => {
-      const response = await axiosInstance.post("/v1/likes", data);
-      console.log(response.data);
-      return response.data;
-    },
-  });
-
-  async function onClickLike() {
-    setIsLiked(true);
-    const threadId = thread.id;
-    const userId = user.id;
-
-    await LikeMutate({ threadId, userId });
-  }
-
-  const { mutateAsync: UnlikeMutate } = useMutation({
-    mutationKey: ["Likes"],
-    mutationFn: async (data: { threadId: string; userId: string }) => {
-      const response = await axiosInstance.delete(`/v1/likes/${data.threadId}`);
-      return response.data;
-    },
-  });
-
-  async function onClickUnlike() {
-    setIsLiked(false);
-    const threadId = thread.id;
-    const userId = user.id;
-
-    await UnlikeMutate({ threadId, userId });
-  }
+  const { isLiked, onClickLike, onClickUnlike } = useLikeUnlike(thread);
 
   const { mutateAsync: DeleteThread, isPending: isPendingDelete } = useMutation(
     {
-      mutationKey: ["Delete Threads"],
+      mutationKey: ["Delete-Threads"],
       mutationFn: async (data: { threadId: string; userId: string }) => {
         const response = await axiosInstance.delete(
           `/v1/threads/${data.threadId}`
@@ -91,7 +52,6 @@ export default function ThreadPost({ thread }: CardThreadProps) {
   );
 
   async function onClickDelete() {
-    setIsLiked(false);
     const threadId = thread.id;
     const userId = user.id;
 
@@ -125,7 +85,7 @@ export default function ThreadPost({ thread }: CardThreadProps) {
               @{thread.user.userName}
             </Text>
             <Text as="span" color="gray.400" marginEnd={"auto"}>
-              • 6h
+             {convertToWIB(thread.createdAt)}
             </Text>
             {user.id === thread.user.id && (
               <DialogRoot
@@ -166,19 +126,12 @@ export default function ThreadPost({ thread }: CardThreadProps) {
               </DialogRoot>
             )}
           </Flex>
-          <Flex
-            mt={"2"}
-            mb={"2"}
-            p={"0.5"}
-            cursor={"pointer"}
-            _hover={{ backgroundColor: "#333333" }}
-            onClick={onClickCard}
-          >
+          <Flex>
             <Text>{thread.content}</Text>
           </Flex>
-          <Flex>
+          <Flex justify={"center"}>
             <Image
-              src={thread.imageContent}
+              src={thread.imageContent ?? " "}
               maxW={"xs"}
               maxH={"xs"}
               alignSelf={"center"}
@@ -202,11 +155,17 @@ export default function ThreadPost({ thread }: CardThreadProps) {
                 />
                 <Text>{thread.likesCount}</Text>
               </Button>
-              <Text>100</Text>
             </Flex>
-            <Flex gap="1" alignItems="center">
+            <Flex
+              mt={"2"}
+              mb={"2"}
+              p={"0.5"}
+              cursor={"pointer"}
+              _hover={{ backgroundColor: "transparent" }}
+              onClick={onClickCard}
+            >
               <Image src="/src/assets/message-text.svg" w="30px" />
-              <Text>Replies</Text>
+              <Text>{thread.replies?.length}</Text>
             </Flex>
           </Flex>
         </Flex>

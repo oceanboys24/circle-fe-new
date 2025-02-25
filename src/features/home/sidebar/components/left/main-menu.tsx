@@ -31,6 +31,7 @@ import { CloseButton } from "@/components/ui/close-button";
 
 export default function MainMenu() {
   const { pathname } = useLocation();
+  const userLogin = useAuthStore((set) => set.user);
   const [isOpen, setOpen] = useState<boolean>(false);
   const {
     register,
@@ -102,11 +103,7 @@ export default function MainMenu() {
             <DialogBody p="5">
               <Flex justify="center" align="start" flexShrink={0}>
                 <Box p="2.5">
-                  <Avatar
-                    alignSelf="center"
-                    src="./src/assets/avatar2.svg"
-                    size="md"
-                  />
+                  <Avatar alignSelf="center" src={userLogin.profile?.avatarUrl ?? " "} size="md" />
                 </Box>
                 <Textarea
                   autoresize
@@ -155,35 +152,35 @@ export default function MainMenu() {
               >
                 {isPending ? <Spinner /> : "Post"}
               </Button>
-              <Stack
-                w="xs"
-                alignSelf="center"
-                p="2"
-                position={"relative"}
-                display={previewURL ? "flex" : "none"}
-              >
-                <Image
-                  objectFit="contain"
-                  maxHeight="300px"
-                  maxWidth="300px"
-                  src={previewURL ?? ""}
-                  borderRadius="md"
-                />
-                {previewURL && (
-                  <Float>
-                    <CloseButton
-                      onClick={() => {
-                        setPreviewURL(null);
-                        setValue("imageContent", new DataTransfer().files);
-                      }}
-                      variant={"solid"}
-                      rounded={"full"}
-                      size={"xs"}
-                    />
-                  </Float>
-                )}
-              </Stack>
             </DialogFooter>
+            <Stack
+              w="xs"
+              alignSelf="center"
+              p="2"
+              position={"relative"}
+              display={previewURL ? "flex" : "none"}
+            >
+              <Image
+                objectFit="contain"
+                maxHeight="300px"
+                maxWidth="300px"
+                src={previewURL ?? ""}
+                borderRadius="md"
+              />
+              {previewURL && (
+                <Float>
+                  <CloseButton
+                    onClick={() => {
+                      setPreviewURL(null);
+                      setValue("imageContent", new DataTransfer().files);
+                    }}
+                    variant={"solid"}
+                    rounded={"full"}
+                    size={"xs"}
+                  />
+                </Float>
+              )}
+            </Stack>
           </DialogContent>
         </Flex>
       </Flex>

@@ -144,7 +144,7 @@ export default function ProfileUser({ profileData }: ProfileDetailProps) {
         <Text textStyle="md" color="#5a5a5b">
           @{profileData.userName}
         </Text>
-        <Text>{profileData.profile?.bio}</Text>
+        <Text>{profileData?.profile?.bio ?? " "}</Text>
         <Text textStyle="md">
           <Text as="span" fontWeight="bold" color="white">
             100

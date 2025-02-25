@@ -3,8 +3,27 @@ import { UserEntity } from "@/entities/user-entities";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
+export type Followers = {
+  id: string;
+  followersId: string;
+  followingId: string;
+  followers: UserProfile;
+  createdAt: string;
+  updatedAt: string;
+};
+export type Following = {
+  id: string;
+  followersId: string;
+  followingId: string;
+  following: UserProfile;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type UserProfile = UserEntity & {
   profile: ProfileEntity;
+  followers: Followers[];
+  following: Following[];
 };
 
 type useAuthStore = {

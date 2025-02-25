@@ -1,15 +1,8 @@
 import { Input } from "@chakra-ui/react";
 import { UseFormRegister } from "react-hook-form";
 
-type FormInputs = {
-  content: string;
-  imageContent: FileList;
-};
-export default function InputContent({
-  register,
-}: {
-  register: UseFormRegister<FormInputs>;
-}) {
+
+export default function InputContent() {
   return (
     <Input
       placeholder="What is Happening?!"
@@ -17,7 +10,7 @@ export default function InputContent({
       p="4"
       textStyle="lg"
       minW="xs"
-      {...register("content")}
+      
       borderBottom="none"
       _focus={{ borderBottom: "none", boxShadow: "none" }}
     />

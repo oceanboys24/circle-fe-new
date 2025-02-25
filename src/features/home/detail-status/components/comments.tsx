@@ -44,18 +44,14 @@ export default function Comments({
           <Flex direction="row" gap="5">
             <Flex gap="1">
               <Image
-                src={
-                  postData.isLiked
-                    ? "/src/assets/heart-fill.svg"
-                    : "/src/assets/heart.svg"
-                }
+                // src={
+                //   replyData.isLiked
+                //     ? "/src/assets/heart-fill.svg"
+                //     : "/src/assets/heart.svg"
+                // }
                 cursor={"pointer"}
               />
               <Text>{replyData.likesCount}</Text>
-            </Flex>
-            <Flex gap="1">
-              <Image src="/src/assets/message-text.svg" />
-              <Text>{replyData.replyCount} Replies</Text>
             </Flex>
           </Flex>
         </Flex>
