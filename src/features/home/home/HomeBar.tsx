@@ -22,7 +22,7 @@ import { useState } from "react";
 
 export default function HomeBar() {
   const [page, setPage] = useState<number>(1);
-  const limit = 10;
+  const limit = 5;
 
   const {
     data: threads = [],
@@ -43,11 +43,14 @@ export default function HomeBar() {
     queryKey: ["Total"],
     queryFn: async () => {
       const response = await axiosInstance.get(
-        `/v1/threads?page=${page}&limit=${limit}`
+        `/v1/threads/all`
       );
-      return response.data.count;
+      return response.data.data;
     },
   });
+  console.log(total)
+
+
 
   return (
     <GridItem colSpan={{ base: 4, md: 2 }}>
