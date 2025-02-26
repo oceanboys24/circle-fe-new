@@ -111,14 +111,14 @@ export default function ProfileUser({ profileData }: ProfileDetailProps) {
         <Text>{profileData?.profile?.bio ?? " "}</Text>
         <Text textStyle="md">
           <Text as="span" fontWeight="bold" color="white">
-            100
+            {profileData.following.length ?? 0}
           </Text>
           <Text as="span" color="gray.400">
             {" "}
             Following{" "}
           </Text>
           <Text as="span" fontWeight="bold" color="white">
-            200
+            {profileData.followers.length ?? 0}
           </Text>
           <Text as="span" color="gray.400">
             {" "}

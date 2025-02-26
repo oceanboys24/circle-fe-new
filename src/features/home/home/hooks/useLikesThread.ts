@@ -17,7 +17,10 @@ export default function useLikeUnlike(thread: ThreadDetails) {
 
     onSuccess: async () => {
       queryClient.invalidateQueries({
-        queryKey: ["Threads", "Thread-Detail"],
+        queryKey: ["Threads"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["Thread-Detail"],
       });
     },
   });
@@ -30,7 +33,10 @@ export default function useLikeUnlike(thread: ThreadDetails) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["Threads", "Thread-Detail"],
+        queryKey: ["Threads"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["Thread-Detail"],
       });
     },
   });

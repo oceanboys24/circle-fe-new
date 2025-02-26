@@ -8,9 +8,7 @@ type FollowsPayload = {
   userId: string;
 };
 
-export default  function useFollows(
-  profileData: UserProfileDetailEntitiy
-) {
+export default function useFollows(profileData: UserProfileDetailEntitiy) {
   const { user } = useAuthStore();
 
   const queryClient = useQueryClient();
@@ -24,6 +22,9 @@ export default  function useFollows(
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["User-Detail"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["CheckAuthToken"],
       });
     },
   });
@@ -45,6 +46,9 @@ export default  function useFollows(
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["User-Detail"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["CheckAuthToken"],
       });
     },
   });
