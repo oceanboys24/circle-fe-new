@@ -1,7 +1,6 @@
 import { Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { useLocation } from "react-router-dom";
-import { userSession } from "@/utils/dummy-data/userSession";
 import ModalEdit from "@/features/home/profile/components/modal-edit";
 import { useAuthStore } from "@/store/useAuth";
 

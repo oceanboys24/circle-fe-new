@@ -1,5 +1,4 @@
 import { useAuthStore } from "@/store/useAuth";
-import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/config/axios";
 import { UserProfileDetailEntitiy } from "@/entities/profile-details";

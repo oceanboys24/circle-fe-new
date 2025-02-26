@@ -1,9 +1,7 @@
 import { Avatar } from "@/components/ui/avatar";
-import { BoxProps, Button, Flex, Text } from "@chakra-ui/react";
+import { BoxProps, Flex, Text } from "@chakra-ui/react";
 import { SearchUser } from "./types/user-search";
 import { useNavigate } from "react-router-dom";
-import useFollows from "../profile-user/hooks/useFollows";
-import { UserProfileDetailEntitiy } from "@/entities/profile-details";
 
 interface SearchUserDataProps extends BoxProps {
   searchUserData: SearchUser;

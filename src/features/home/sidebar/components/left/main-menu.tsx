@@ -1,7 +1,7 @@
 import {
   Box,
   Button,
-  DialogActionTrigger,
+  
   DialogBackdrop,
   Flex,
   Float,
@@ -26,7 +26,7 @@ import {
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { useAuthStore } from "@/store/useAuth";
 import useInputThread from "@/features/home/home/hooks/useInputThread";
-import { useRef, useState } from "react";
+import {  useState } from "react";
 import { CloseButton } from "@/components/ui/close-button";
 
 export default function MainMenu() {

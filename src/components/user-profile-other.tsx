@@ -1,9 +1,6 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { DataSuggestionFollow } from "@/features/home/sidebar/utils/suggestion";
-import { Followers, useAuthStore } from "@/store/useAuth";
-import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "@/config/axios";
 
 export function SuggestionFollowLoop() {
   return DataSuggestionFollow.map(

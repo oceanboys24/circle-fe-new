@@ -1,7 +1,6 @@
 import { Flex, GridItem } from "@chakra-ui/react";
 import MainMenu from "@/features/home/sidebar/components/left/main-menu.tsx";
 import Logout from "@/features/home/sidebar/components/left/logout.tsx";
-import { Toaster } from "@/components/ui/toaster.tsx";
 
 export default function SidebarLeft() {
   return (

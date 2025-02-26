@@ -2,7 +2,7 @@ import {
   Box,
   Button,
   defineStyle,
-  DialogActionTrigger,
+  
   DialogRoot,
   Field,
   Flex,
@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import {
   DialogBody,
-  DialogCloseTrigger,
+  
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -86,14 +86,14 @@ export default function ModalEdit() {
       const response = await axiosInstance.patch("/v1/profile", form);
       return response.data;
     },
-    onError: (error: any) => {
+    onError: () => {
       toaster.create({
         title: "Error Edit Profile",
         type: "error",
         duration: 3000,
       });
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["CheckAuthToken"],
       });

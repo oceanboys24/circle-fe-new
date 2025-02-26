@@ -1,4 +1,3 @@
-import { useAuthStore } from "@/store/useAuth";
 import { Flex } from "@chakra-ui/react";
 import { Navigate, Outlet } from "react-router-dom";
 import Cookies from "js-cookie";
