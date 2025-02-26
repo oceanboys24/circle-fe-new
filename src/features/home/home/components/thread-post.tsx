@@ -1,11 +1,8 @@
 import { BoxProps, Button, Flex, Image, Spinner, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
-import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/useAuth";
 import { ThreadDetails } from "../../detail-status/types/thread-detail-types";
 import useNavigateThread from "../hooks/useNavigateThread";
-import { useMutation } from "@tanstack/react-query";
-import { axiosInstance } from "@/config/axios";
 import { useState } from "react";
 import {
   DialogActionTrigger,
@@ -18,9 +15,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { toaster } from "@/components/ui/toaster";
 import useLikeUnlike from "../hooks/useLikesThread";
 import convertToWIB from "@/utils/formatdate";
+import useDeleteThread from "../hooks/useDeleteThread";
+import UserStatus from "../../detail-status/components/user-status";
+import InputComment from "../../detail-status/components/input-comment";
+import { data, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { axiosInstance } from "@/config/axios";
+import Comments from "../../detail-status/components/comments";
+import UserStatusModal from "./modal-thread";
+import InputCommentModal from "./modal-comment";
 
 interface CardThreadProps extends BoxProps {
   thread: ThreadDetails;
@@ -31,32 +36,17 @@ export default function ThreadPost({ thread }: CardThreadProps) {
   const { user } = useAuthStore();
   const [isOpen, setOpen] = useState<boolean>(false);
   const { isLiked, onClickLike, onClickUnlike } = useLikeUnlike(thread);
+  const { isPendingDelete, onClickDelete } = useDeleteThread(thread);
 
-  const { mutateAsync: DeleteThread, isPending: isPendingDelete } = useMutation(
-    {
-      mutationKey: ["Delete-Threads"],
-      mutationFn: async (data: { threadId: string; userId: string }) => {
-        const response = await axiosInstance.delete(
-          `/v1/threads/${data.threadId}`
-        );
-        return response.data;
-      },
-      onSuccess: () => {
-        toaster.create({
-          title: "Success Delete",
-          type: "success",
-          duration: 3000,
-        });
-      },
-    }
-  );
+  const { data: detailData } = useQuery({
+    queryKey: ["Thread-Detail", thread.id],
+    queryFn: async () => {
+      const response = await axiosInstance.get(`/v1/threads/${thread.id}`);
 
-  async function onClickDelete() {
-    const threadId = thread.id;
-    const userId = user.id;
-
-    await DeleteThread({ threadId, userId });
-  }
+      return response.data;
+    },
+    enabled: !!thread.id, //Only fetch if id exist
+  });
 
   return (
     <Flex direction="column">
@@ -85,7 +75,7 @@ export default function ThreadPost({ thread }: CardThreadProps) {
               @{thread.user.userName}
             </Text>
             <Text as="span" color="gray.400" marginEnd={"auto"}>
-             {convertToWIB(thread.createdAt)}
+              {convertToWIB(thread.createdAt)}
             </Text>
             {user.id === thread.user.id && (
               <DialogRoot
@@ -129,14 +119,47 @@ export default function ThreadPost({ thread }: CardThreadProps) {
           <Flex>
             <Text>{thread.content}</Text>
           </Flex>
-          <Flex justify={"center"}>
-            <Image
-              src={thread.imageContent ?? " "}
-              maxW={"xs"}
-              maxH={"xs"}
-              alignSelf={"center"}
-            />
-          </Flex>
+
+          <DialogRoot size={"full"}>
+            <DialogTrigger asChild>
+              <Flex justify={"center"} as="label" cursor={"pointer"}>
+                <Image
+                  src={thread.imageContent ?? undefined}
+                  maxW={"xs"}
+                  maxH={"xs"}
+                  alignSelf={"center"}
+                />
+              </Flex>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogBody>
+                <Flex h={"100vh"}>
+                  <Flex w={"full"} justify={"center"}>
+                    <Image
+                      src={thread.imageContent ?? undefined}
+                      maxW={"lg"}
+                      maxH={"lg"}
+                      alignSelf={"center"}
+                    />
+                  </Flex>
+                  <Flex direction={"column"} w={"full"}>
+                    <UserStatusModal detailThread={detailData!} />
+                    <InputCommentModal thread={thread} />
+                    {detailData?.replies?.map((reply: any) => (
+                      <Comments
+                        replyData={reply!}
+                        postData={detailData}
+                        key={reply.id}
+                      />
+                    ))}
+                  </Flex>
+                </Flex>
+              </DialogBody>
+              <DialogFooter></DialogFooter>
+              <DialogCloseTrigger />
+            </DialogContent>
+          </DialogRoot>
+
           <Flex direction="row" gap="5">
             <Flex gap="1" alignItems="center">
               <Button
