@@ -21,19 +21,17 @@ export default function FollowingTabs() {
   }
 
   return (
-   
     <Flex direction="column" p="4" gap="4">
-      {dataFollowing?.map((following : any) => (
+      {dataFollowing?.map((following: any) => (
         <Flex key={following.id} direction="column" gap="3">
           <Flex gap="3" justifyContent="space-between">
-            <Avatar src={following.avatarUrl || ""} size="xl" />
+            <Avatar src={following.profile?.avatarUrl ?? ""} size="xl" />
             <Flex direction="column" marginEnd="auto">
-            <Text>{following.fullName} </Text>
+              <Text>{following.fullName} </Text>
               <Text textStyle="xs" color="#5a5a5b">
                 @{following.userName}
               </Text>
             </Flex>
-           
           </Flex>
         </Flex>
       ))}

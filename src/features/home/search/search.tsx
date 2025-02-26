@@ -1,43 +1,12 @@
-import { Flex, GridItem, Image, Input, Spinner } from "@chakra-ui/react";
+import { Flex, GridItem, Image, Input, Spinner, Text } from "@chakra-ui/react";
 import { InputGroup } from "@/components/ui/input-group.tsx";
 import SearchLogoOutine from "@/assets/user-search-outline.svg";
-import { useDebounce } from "use-debounce";
 import SearchCard from "./search-card";
 import MenuSearch from "./menu";
-import { useEffect, useState } from "react";
-import { searchUserDatas } from "@/utils/dummy-data/userSearch";
-import NotFoundSearch from "./not-found-search";
-import { useQuery } from "@tanstack/react-query";
-import { SearchUser } from "./types/user-search";
-import { axiosInstance } from "@/config/axios";
-import { useAuthStore } from "@/store/useAuth";
+import useSearch from "./hooks/useSearch";
 
 export default function SearchPages() {
-  const [searchText, setSearchText] = useState<string>("");
-  const [searchTextDebounce] = useDebounce(searchText, 500);
-  const { user } = useAuthStore();
-  
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchText(e.target.value);
-  }
-  const {
-    data: users = [],
-    isLoading,
-    refetch,
-  } = useQuery<SearchUser[]>({
-    queryKey: ["Search-Users", searchTextDebounce],
-    queryFn: async () => {
-      const response = await axiosInstance.get(
-        `/v1/auth/users?q=${searchTextDebounce}`
-      );
-      return response.data;
-    },
-    enabled: !!searchTextDebounce && searchTextDebounce !== user.userName,
-  });
-
-  useEffect(() => {
-    refetch();
-  }, [searchTextDebounce, refetch]);
+  const { isLoading, filteredUsers, handleChange, searchText } = useSearch();
 
   return (
     <GridItem colSpan={{ base: 4, md: 2 }}>
@@ -64,9 +33,17 @@ export default function SearchPages() {
         <Flex gap={"5"} direction={"column"}>
           {isLoading ? (
             <Spinner />
+          ) : searchText.length === 0 ? (
+            <Text color="gray.500" textAlign="center">
+              Search People
+            </Text>
+          ) : filteredUsers.length === 0 ? (
+            <Text color="gray.500" textAlign="center">
+              Not Found {searchText}
+            </Text>
           ) : (
             <>
-              {users?.map((user) => (
+              {filteredUsers.map((user) => (
                 <SearchCard searchUserData={user} key={user.id} />
               ))}
             </>

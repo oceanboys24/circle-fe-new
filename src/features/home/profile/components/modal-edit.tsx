@@ -78,13 +78,6 @@ export default function ModalEdit() {
         duration: 3000,
       });
     },
-    onSuccess: async (data) => {
-      toaster.create({
-        title: data.message,
-        type: "success",
-        duration: 3000,
-      });
-    },
   });
 
   const { mutateAsync: EditProfileMutate } = useMutation({
@@ -102,8 +95,8 @@ export default function ModalEdit() {
     },
     onSuccess: async (data) => {
       queryClient.invalidateQueries({
-        queryKey : ["Threads"]
-      })
+        queryKey: ["Threads"],
+      });
       toaster.create({
         title: "Sucess Edit Profile",
         type: "success",
@@ -205,9 +198,9 @@ export default function ModalEdit() {
                 src={
                   user.profile?.avatarUrl ??
                   "https://api.dicebear.com/9.x/bottts/svg"
-                } 
-               w={'100px'}
-               h={"100px"}
+                }
+                w={"100px"}
+                h={"100px"}
                 bottom="50px"
                 left="30px"
               />

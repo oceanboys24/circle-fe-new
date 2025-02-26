@@ -50,14 +50,14 @@ export default function ProfileSidebarRight() {
         <Text>{userLogin.profile?.bio ?? " "}</Text>
         <Text textStyle="md">
           <Text as="span" fontWeight="bold" color="white">
-            121
+          {userLogin.following.length}
           </Text>
           <Text as="span" color="gray.400">
             {" "}
             Following{" "}
           </Text>
           <Text as="span" fontWeight="bold" color="white">
-            12
+          {userLogin.followers.length}
           </Text>
           <Text as="span" color="gray.400">
             {" "}

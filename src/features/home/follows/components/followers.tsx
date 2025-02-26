@@ -21,14 +21,14 @@ export default function FollowersTab() {
     }
 
     console.log(dataFollowers)
-  
+    
     return (
      
       <Flex direction="column" p="4" gap="4">
         {dataFollowers?.map((followers : any, index : number) => (
           <Flex key={index} direction="column" gap="3">
             <Flex gap="3" justifyContent="space-between">
-              <Avatar src={followers.avatarUrl || ""} size="xl" />
+              <Avatar src={followers.profile?.avatarUrl ?? ""} size="xl" />
               <Flex direction="column" marginEnd="auto">
               <Text>{followers.fullName} </Text>
                 <Text textStyle="xs" color="#5a5a5b">
