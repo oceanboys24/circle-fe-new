@@ -15,7 +15,6 @@ import { Avatar } from "@/components/ui/avatar.tsx";
 import ModalEdit from "@/features/home/profile/components/modal-edit.tsx";
 import { NavLink } from "react-router-dom";
 import { MdMenu } from "react-icons/md";
-import { userSession } from "@/utils/dummy-data/userSession";
 import { useAuthStore } from "@/store/useAuth";
 
 export default function Profile() {

@@ -93,9 +93,9 @@ export default function ModalEdit() {
         duration: 3000,
       });
     },
-    onSuccess: async (data) => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ["Threads"],
+        queryKey: ["CheckAuthToken"],
       });
       toaster.create({
         title: "Sucess Edit Profile",
