@@ -42,6 +42,7 @@ export default function InputThread() {
   } = useInputThread();
   const userLogin = useAuthStore((state) => state.user);
   const [isOpen, setOpen] = useState<boolean>(false);
+  
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -73,7 +74,10 @@ export default function InputThread() {
                   <Box p="2.5">
                     <Avatar
                       alignSelf="center"
-                      src="./src/assets/avatar2.svg"
+                      src={
+                        userLogin?.profile?.avatarUrl ??
+                        "https://api.dicebear.com/9.x/bottts/svg"
+                      }
                       size="md"
                     />
                   </Box>
