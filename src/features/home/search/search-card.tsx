@@ -2,9 +2,12 @@ import { Avatar } from "@/components/ui/avatar";
 import { BoxProps, Button, Flex, Text } from "@chakra-ui/react";
 import { SearchUser } from "./types/user-search";
 import { useNavigate } from "react-router-dom";
+import useFollows from "../profile-user/hooks/useFollows";
+import { UserProfileDetailEntitiy } from "@/entities/profile-details";
 
 interface SearchUserDataProps extends BoxProps {
   searchUserData: SearchUser;
+ 
 }
 
 export default function SearchCard({ searchUserData }: SearchUserDataProps) {
@@ -14,7 +17,6 @@ export default function SearchCard({ searchUserData }: SearchUserDataProps) {
     navigate(`/profile-user/${searchUserData.id}`);
   }
 
-  
   return (
     <Flex justify={"space-between"} key={searchUserData.id}>
       <Flex align={"center"}>
@@ -36,9 +38,6 @@ export default function SearchCard({ searchUserData }: SearchUserDataProps) {
         </Text>
       </Flex>
       <Flex align={"center"}>
-        <Button variant={"outline"} borderColor={"white"} rounded={"full"}>
-          Follow
-        </Button>
       </Flex>
     </Flex>
   );
