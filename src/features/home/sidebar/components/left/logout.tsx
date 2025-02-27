@@ -32,7 +32,7 @@ export default function Logout() {
         onClick={onLogout}
       >
         <Icon fontSize="45px">
-          <Image src="/public/logout.svg" fontSize="40px" />
+          <Image src="/logout.svg" fontSize="40px" />
         </Icon>
         <Text p="1" fontWeight="bold">
           Logout

@@ -121,7 +121,12 @@ export default function InputComment() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack direction="row" p="4">
-        <Avatar src={user.profile.avatarUrl ?? " "} size="xl" />
+        <Avatar
+          src={
+            user.profile?.avatarUrl ?? "https://api.dicebear.com/9.x/bottts/svg"
+          }
+          size="xl"
+        />
         <Input
           placeholder="Type your reply!"
           variant="flushed"

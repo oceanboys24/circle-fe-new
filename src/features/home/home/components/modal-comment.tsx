@@ -153,7 +153,7 @@ export default function InputCommentModal({
           <FileUploadTrigger>
             <Button size="xl" bgColor={"transparent"}>
               <Avatar
-                src="/src/assets/gallery-add.svg"
+                src="/gallery-add.svg"
                 size="md"
                 shape="square"
                 bgColor={"transparent"}
