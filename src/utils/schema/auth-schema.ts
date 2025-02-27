@@ -38,7 +38,6 @@ export const resetPasswordSchema = z
         path: ["confirmPassword"],
       });
     }
-  })
-  .transform(({ newPassword }) => ({ newPassword }));
+  });
 
 export type resetPasswordDTO = z.infer<typeof resetPasswordSchema>;

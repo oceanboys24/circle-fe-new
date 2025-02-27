@@ -1,7 +1,7 @@
-import { BoxProps, Card, Flex, Image, Text } from "@chakra-ui/react";
+import { BoxProps,  Flex, Image, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { Post, Reply } from "../../home/utils/post";
-import { useReducer } from "react";
+
 import { useAuthStore } from "@/store/useAuth";
 import FormatDate from "../../home/utils/formatDate";
 

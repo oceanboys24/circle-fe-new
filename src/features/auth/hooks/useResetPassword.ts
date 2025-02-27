@@ -5,7 +5,7 @@ import {
   resetPasswordSchema,
 } from "@/utils/schema/auth-schema.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { axiosInstance } from "@/config/axios";
 import { useMutation } from "@tanstack/react-query";
 
@@ -57,7 +57,8 @@ export default function useResetPassword() {
   });
 
   async function onSubmit(data: resetPasswordDTO) {
-    await mutateAsync(data);
+    const { confirmPassword, ...formData } = data;
+    await mutateAsync(formData);
     reset();
   }
   return { handleSubmit, onSubmit, errors, isPending, register };

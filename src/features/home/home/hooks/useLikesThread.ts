@@ -5,7 +5,7 @@ import { axiosInstance } from "@/config/axios";
 import { useAuthStore } from "@/store/useAuth";
 
 export default function useLikeUnlike(thread: ThreadDetails) {
-  const [isLiked, setIsLiked] = useState(thread.isLiked);
+  const [_, setIsLiked] = useState(thread.isLiked);
   const queryClient = useQueryClient();
   const { user } = useAuthStore();
   const { mutateAsync: LikeMutate } = useMutation({

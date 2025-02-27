@@ -4,7 +4,6 @@ import {
   FileUploadRoot,
   FileUploadTrigger,
 } from "@/components/ui/file-upload.tsx";
-import { userSession } from "@/utils/dummy-data/userSession";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/config/axios";
 import { toaster } from "@/components/ui/toaster";
@@ -74,7 +73,7 @@ export default function InputComment() {
         duration: 3000,
       });
     },
-    onSuccess: async (data) => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({
         queryKey: ["Thread-Detail"],
       });
@@ -146,7 +145,7 @@ export default function InputComment() {
           <FileUploadTrigger>
             <Button size="xl" bgColor={"transparent"}>
               <Avatar
-                src="/src/assets/gallery-add.svg"
+                src="/gallery-add.svg"
                 size="md"
                 shape="square"
                 bgColor={"transparent"}

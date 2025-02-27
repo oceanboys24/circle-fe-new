@@ -18,7 +18,7 @@ export default function UserStatus({ detailThread }: ChardStatusDetailProps) {
         <Flex gap={"2"}>
           <Link to={"/"}>
             <Avatar
-              src="/src/assets/line-arrow-left.svg"
+              src="/line-arrow-left.svg"
               size="xs"
               rounded="lg"
               bgColor="#09090b"
@@ -74,8 +74,8 @@ export default function UserStatus({ detailThread }: ChardStatusDetailProps) {
               <Image
                 src={
                   isLiked
-                    ? "/src/assets/heart-bold.svg"
-                    : "/src/assets/heart.svg"
+                    ? "/heart-bold.svg"
+                    : "/heart.svg"
                 }
                 width={"27px"}
               />

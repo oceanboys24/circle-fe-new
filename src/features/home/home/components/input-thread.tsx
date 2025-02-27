@@ -5,7 +5,6 @@ import {
   Flex,
   Float,
   Image,
-  Input,
   Spinner,
   Stack,
   Textarea,
@@ -97,7 +96,7 @@ export default function InputThread() {
               </DialogBody>
               <DialogFooter justifyContent="space-between">
                 <Flex alignSelf="start" as="label" cursor="pointer">
-                  <Image src="./src/assets/gallery-add.svg" />
+                  <Image src="/gallery-add.svg" />
                   <input
                     type="file"
                     hidden
@@ -164,7 +163,7 @@ export default function InputThread() {
           <Box display={"flex"}>
             <Avatar
               alignSelf={"center"}
-              src="./src/assets/gallery-add.svg"
+              src="/gallery-add.svg"
               size={"xs"}
               shape="square"
               bgColor="transparent"

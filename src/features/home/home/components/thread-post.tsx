@@ -18,9 +18,6 @@ import {
 import useLikeUnlike from "../hooks/useLikesThread";
 import convertToWIB from "@/utils/formatdate";
 import useDeleteThread from "../hooks/useDeleteThread";
-import UserStatus from "../../detail-status/components/user-status";
-import InputComment from "../../detail-status/components/input-comment";
-import { data, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/config/axios";
 import Comments from "../../detail-status/components/comments";
@@ -171,8 +168,8 @@ export default function ThreadPost({ thread }: CardThreadProps) {
                 <Image
                   src={
                     isLiked
-                      ? "/src/assets/heart-bold.svg"
-                      : "/src/assets/heart.svg"
+                      ? "/heart-bold.svg"
+                      : "/heart.svg"
                   }
                   width={"27px"}
                 />
@@ -187,7 +184,7 @@ export default function ThreadPost({ thread }: CardThreadProps) {
               _hover={{ backgroundColor: "transparent" }}
               onClick={onClickCard}
             >
-              <Image src="/src/assets/message-text.svg" w="30px" />
+              <Image src="/message-text.svg" w="30px" />
               <Text>{thread.replies?.length}</Text>
             </Flex>
           </Flex>

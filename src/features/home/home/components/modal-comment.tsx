@@ -4,12 +4,10 @@ import {
   FileUploadRoot,
   FileUploadTrigger,
 } from "@/components/ui/file-upload.tsx";
-import { userSession } from "@/utils/dummy-data/userSession";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/config/axios";
 import { toaster } from "@/components/ui/toaster";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import { useRef, useState } from "react";
 import { CloseButton } from "@/components/ui/close-button";
 import { useAuthStore } from "@/store/useAuth";
@@ -20,7 +18,12 @@ type FormInputs = {
   contentImage: FileList;
   threadId: string;
 };
-export default function InputCommentModal({ thread }) {
+
+export default function InputCommentModal({
+  thread,
+}: {
+  thread: ThreadDetails;
+}) {
   const [previewURL, setPreviewURL] = useState<string | null>(null);
   const { user } = useAuthStore();
   const queryClient = useQueryClient();
@@ -75,7 +78,7 @@ export default function InputCommentModal({ thread }) {
         duration: 3000,
       });
     },
-    onSuccess: async (data) => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({
         queryKey: ["Thread-Detail"],
       });

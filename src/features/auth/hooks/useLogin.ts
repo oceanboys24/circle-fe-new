@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { loginSchema, loginSchemaDTO } from "@/utils/schema/auth-schema.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useAuthStore, UserProfile } from "@/store/useAuth";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/store/useAuth";
 import { axiosInstance } from "@/config/axios";
 import Cookies from "js-cookie";
 import { toaster } from "@/components/ui/toaster";

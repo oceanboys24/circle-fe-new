@@ -1,7 +1,6 @@
 import { toaster } from "@/components/ui/toaster";
 import { useForm } from "react-hook-form";
 import {
-  loginSchemaDTO,
   registerSchema,
   registerSchemaDTO,
 } from "@/utils/schema/auth-schema.ts";

@@ -1,3 +1,4 @@
+
 export interface ProfileEntity {
   id: string;
   avatarUrl?: string | null;

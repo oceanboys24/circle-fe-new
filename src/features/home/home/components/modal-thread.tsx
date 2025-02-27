@@ -1,6 +1,5 @@
-import { BoxProps, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { BoxProps, Button, Flex, Image, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
-import { Link } from "react-router-dom";
 
 import convertToWIB from "@/utils/formatdate";
 import { ThreadDetails } from "../../detail-status/types/thread-detail-types";
@@ -52,8 +51,8 @@ export default function UserStatusModal({ detailThread }: ChardStatusDetailProps
               <Image
                 src={
                   isLiked
-                    ? "/src/assets/heart-bold.svg"
-                    : "/src/assets/heart.svg"
+                    ? "/heart-bold.svg"
+                    : "/heart.svg"
                 }
                 width={"27px"}
               />

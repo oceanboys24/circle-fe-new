@@ -25,7 +25,7 @@ export default function Profile() {
       <Box p="4" display={"flex"} justifyContent="space-between">
         <NavLink to="/">
           <Avatar
-            src="./src/assets/line-arrow-left.svg"
+            src="/line-arrow-left.svg"
             size="xs"
             rounded="lg"
             bgColor="transparent"

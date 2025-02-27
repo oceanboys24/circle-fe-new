@@ -176,7 +176,7 @@ export default function ModalEdit() {
               backgroundColor={"transparent"}
             >
               <Image
-                src="/public/add.svg"
+                src="/add.svg"
                 width={"50px"}
                 backgroundColor={"transparent"}
               />
@@ -213,7 +213,7 @@ export default function ModalEdit() {
                 backgroundColor={"transparent"}
               >
                 <Image
-                  src="/public/add.svg"
+                  src="/add.svg"
                   width={"30px"}
                   backgroundColor={"transparent"}
                 />

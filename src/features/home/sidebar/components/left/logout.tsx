@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/store/useAuth";
 import { Box, Icon, Image, Stack, Text } from "@chakra-ui/react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { toaster } from "@/components/ui/toaster";
 
@@ -32,7 +32,7 @@ export default function Logout() {
         onClick={onLogout}
       >
         <Icon fontSize="45px">
-          <Image src="/src/assets/logout.svg" fontSize="40px" />
+          <Image src="/public/logout.svg" fontSize="40px" />
         </Icon>
         <Text p="1" fontWeight="bold">
           Logout

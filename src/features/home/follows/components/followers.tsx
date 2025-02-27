@@ -1,7 +1,7 @@
 import { Avatar } from "@/components/ui/avatar";
 import { axiosInstance } from "@/config/axios";
 import { useAuthStore } from "@/store/useAuth";
-import { Button, Flex, Spinner,Text} from "@chakra-ui/react";
+import {  Flex, Spinner,Text} from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 
 export default function FollowersTab() {
