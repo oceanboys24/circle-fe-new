@@ -1,4 +1,4 @@
-import { BoxProps,  Flex, Image, Text } from "@chakra-ui/react";
+import { BoxProps, Flex, Image, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { Post, Reply } from "../../home/utils/post";
 
@@ -17,11 +17,16 @@ export default function Comments({
   replyData,
 }: CardReplyProps & ChardStatusDetailProps) {
   const { user } = useAuthStore();
-  
+
   return (
     <Flex direction="column" p="4" gap="3" borderBottomWidth="2px">
       <Flex>
-        <Avatar src={user.profile.avatarUrl ?? " "} size="xl" />
+        <Avatar
+          src={
+            user.profile?.avatarUrl ?? "https://api.dicebear.com/9.x/bottts/svg"
+          }
+          size="xl"
+        />
         <Flex direction="column" pl="3" gap="3">
           <Flex textStyle="md" direction="row" gap="3">
             <Text as="span" color="white">
@@ -32,7 +37,7 @@ export default function Comments({
               @{user.userName}
             </Text>
             <Text as="span" color="gray.400">
-              {FormatDate(replyData.reatedAt) }
+              {FormatDate(replyData.reatedAt)}
             </Text>
           </Flex>
           <Text>{replyData.content}</Text>

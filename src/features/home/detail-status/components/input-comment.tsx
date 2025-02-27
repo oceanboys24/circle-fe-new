@@ -1,4 +1,12 @@
-import { Button, Input, Stack, Image, Float, Flex } from "@chakra-ui/react";
+import {
+  Button,
+  Input,
+  Stack,
+  Image,
+  Float,
+  Flex,
+  Spinner,
+} from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import {
   FileUploadRoot,
@@ -31,7 +39,7 @@ export default function InputComment() {
     ...restRegisterImages
   } = register("contentImage");
 
-  const { mutateAsync: UploadImage } = useMutation({
+  const { mutateAsync: UploadImage, isPending: isPendingUpload } = useMutation({
     mutationKey: ["Upload-Comment"],
     mutationFn: async (formData?: FormData) => {
       if (!formData) return null;
@@ -55,7 +63,7 @@ export default function InputComment() {
   });
 
   // Create Thread
-  const { mutateAsync: CreateComment } = useMutation({
+  const { mutateAsync: CreateComment, isPending } = useMutation({
     mutationKey: ["CreateComment"],
     mutationFn: async (data: {
       imageContent?: string;
@@ -165,8 +173,9 @@ export default function InputComment() {
           rounded="4xl"
           fontSize="xl"
           p="5"
+          disabled={isPending || isPendingUpload}
         >
-          Reply
+          {isPending || isPendingUpload ? <Spinner /> : "Reply"}
         </Button>
       </Stack>
       <Flex w={"full"} justify={"center"}>
