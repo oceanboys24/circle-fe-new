@@ -38,10 +38,17 @@ export default function InputThread() {
     registerImagesRef,
     inputFileRef,
     setValue,
+    isPendingUpload,
   } = useInputThread();
   const userLogin = useAuthStore((state) => state.user);
   const [isOpen, setOpen] = useState<boolean>(false);
   
+  const handleButtonClick = async () => {
+    await handleSubmit(async (data) => {
+      await onSubmit(data);
+      setOpen(false);
+    })(); 
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -62,7 +69,7 @@ export default function InputThread() {
           >
             <DialogTrigger asChild>
               <Flex w="100vw">
-                <InputContent  />
+                <InputContent />
               </Flex>
             </DialogTrigger>
             <DialogBackdrop />
@@ -117,15 +124,10 @@ export default function InputThread() {
                   type="submit"
                   rounded="full"
                   p="4"
-                  onClick={async () => {
-                    await handleSubmit(async (data) => {
-                      await onSubmit(data);
-                      setOpen(false);
-                    })();
-                  }}
-                  disabled={isPending ? true : false}
+                  onClick={handleButtonClick}
+                  disabled={isPending || isPendingUpload }
                 >
-                  {isPending ? <Spinner /> : "Post"}
+                  {isPending || isPendingUpload ? <Spinner /> : "Post"}
                 </Button>
               </DialogFooter>
               <Stack
@@ -134,7 +136,6 @@ export default function InputThread() {
                 p="2"
                 position={"relative"}
                 display={previewURL ? "flex" : "none"}
-               
               >
                 <Image
                   objectFit="contain"

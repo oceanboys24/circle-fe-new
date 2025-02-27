@@ -20,7 +20,7 @@ export default function useInputThread() {
     ...restRegisterImages
   } = register("imageContent");
 
-  const { mutateAsync: UploadImage } = useMutation({
+  const { mutateAsync: UploadImage, isPending: isPendingUpload } = useMutation({
     mutationKey: ["Upload"],
     mutationFn: async (formData?: FormData) => {
       if (!formData) return null;
@@ -72,7 +72,7 @@ export default function useInputThread() {
       });
     },
   });
-  
+
   function onClickFile() {
     inputFileRef?.current?.click();
   }
@@ -119,6 +119,7 @@ export default function useInputThread() {
     registerImagesRef,
     inputFileRef,
     setValue,
+    isPendingUpload,
     reset,
   };
 }
