@@ -85,7 +85,7 @@ export default function Profile() {
             userLogin?.profile?.avatarUrl ??
             "https://api.dicebear.com/9.x/bottts/svg"
           }
-          size="4xl"
+          size="2xl"
           w={"100px"}
           h={"100px"}
           bottom="50px"
