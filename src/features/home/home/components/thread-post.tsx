@@ -105,7 +105,7 @@ export default function ThreadPost({ thread }: CardThreadProps) {
                         setOpen(false);
                       }}
                     >
-                      {isPendingDelete ? <Spinner /> : "Post"}
+                      {isPendingDelete ? <Spinner /> : "Delete"}
                     </Button>
                   </DialogFooter>
                   <DialogCloseTrigger />

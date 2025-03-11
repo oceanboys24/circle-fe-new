@@ -2,18 +2,17 @@ import {
   Box,
   Button,
   defineStyle,
-  
   DialogRoot,
   Field,
   Flex,
   Image,
   Input,
+  Spinner,
   Stack,
   Textarea,
 } from "@chakra-ui/react";
 import {
   DialogBody,
-  
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -41,12 +40,14 @@ export default function ModalEdit() {
   const { user } = useAuthStore();
   const { handleSubmit, register, reset } = useForm<EditProfile>();
   const inputFileRef = useRef<HTMLInputElement | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [preview2, setPreview2] = useState<string | null>(null);
 
   const {
     ref: registerImagesRef,
     onChange: registerImagesOnChange,
     ...restRegisterImages
-  } = register("avatarUrl");  
+  } = register("avatarUrl");
 
   const {
     ref: registerImages2Ref,
@@ -56,7 +57,7 @@ export default function ModalEdit() {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync: UploadImage } = useMutation({
+  const { mutateAsync: UploadImage, isPending : isPendingImage } = useMutation({
     mutationKey: ["Upload"],
     mutationFn: async (formData?: FormData) => {
       if (!formData) return null;
@@ -80,7 +81,7 @@ export default function ModalEdit() {
     },
   });
 
-  const { mutateAsync: EditProfileMutate } = useMutation({
+  const { mutateAsync: EditProfileMutate, isPending : isPendingEdit } = useMutation({
     mutationKey: ["EditProject"],
     mutationFn: async (form?: EditProfile) => {
       const response = await axiosInstance.patch("/v1/profile", form);
@@ -105,6 +106,20 @@ export default function ModalEdit() {
     },
   });
 
+  const handleImageChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: "avatarUrl" | "bannerUrl"
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      if (type == "avatarUrl") {
+        setPreview(url);
+      } else {
+        setPreview2(url);
+      }
+    }
+  };
 
   const onSubmit = async (data: EditProfile) => {
     let imageUrl: string | undefined = undefined;
@@ -160,8 +175,10 @@ export default function ModalEdit() {
           <DialogBody>
             <Image
               src={
-                user.profile?.bannerUrl ??
-                "https://api.dicebear.com/9.x/glass/svg"
+                preview2
+                  ? preview2
+                  : user.profile?.bannerUrl ??
+                    "https://api.dicebear.com/9.x/glass/svg"
               }
               maxH={"100px"}
               minW={"464px"}
@@ -187,6 +204,7 @@ export default function ModalEdit() {
                 {...restRegisterImages2}
                 onChange={(e) => {
                   registerImages2OnChange(e);
+                  handleImageChange(e, "bannerUrl");
                 }}
                 ref={(e) => {
                   registerImages2Ref(e);
@@ -197,14 +215,17 @@ export default function ModalEdit() {
             <Flex justify="space-between" h="100px">
               <Avatar
                 src={
-                  user.profile?.avatarUrl ??
-                  "https://api.dicebear.com/9.x/bottts/svg"
+                  preview
+                    ? preview
+                    : user.profile?.avatarUrl ??
+                      "https://api.dicebear.com/9.x/bottts/svg"
                 }
                 w={"100px"}
                 h={"100px"}
                 bottom="50px"
                 left="30px"
               />
+
               <Box
                 cursor="pointer"
                 as="label"
@@ -224,6 +245,7 @@ export default function ModalEdit() {
                   {...restRegisterImages}
                   onChange={(e) => {
                     registerImagesOnChange(e);
+                    handleImageChange(e, "avatarUrl");
                   }}
                   ref={(e) => {
                     registerImagesRef(e);
@@ -269,11 +291,16 @@ export default function ModalEdit() {
             </Stack>
           </DialogBody>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setIsOpen(false), setPreview(null), setPreview2(null);
+              }}
+            >
               Cancel
             </Button>
-            <Button bgColor="#04a51e" color="white" rounded="2xl" type="submit">
-              Save
+            <Button bgColor="#04a51e" color="white" rounded="2xl" type="submit"  disabled={isPendingEdit || isPendingImage}>
+               {isPendingEdit || isPendingImage ? <Spinner /> : "Save"}
             </Button>
           </DialogFooter>
         </form>
