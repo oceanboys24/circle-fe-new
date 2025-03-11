@@ -46,7 +46,7 @@ export default function ModalEdit() {
     ref: registerImagesRef,
     onChange: registerImagesOnChange,
     ...restRegisterImages
-  } = register("avatarUrl");
+  } = register("avatarUrl");  
 
   const {
     ref: registerImages2Ref,
@@ -104,6 +104,7 @@ export default function ModalEdit() {
       });
     },
   });
+
 
   const onSubmit = async (data: EditProfile) => {
     let imageUrl: string | undefined = undefined;

@@ -20,7 +20,6 @@ export default function FollowersTab() {
       isLoading ?? <Spinner />;
     }
 
-    console.log(dataFollowers)
     
     return (
      

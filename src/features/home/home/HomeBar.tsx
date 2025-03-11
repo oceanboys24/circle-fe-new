@@ -1,14 +1,7 @@
-import {
-  GridItem,
-  HStack,
-  Spinner,
-  Stack,
-  
-  Text,
-} from "@chakra-ui/react";
+import { GridItem, HStack, Spinner, Stack, Text } from "@chakra-ui/react";
 import InputPost from "@/features/home/home/components/input-thread";
 import HeadingHome from "@/features/home/home/components/heading";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/config/axios";
 import { ThreadEntities } from "@/entities/thread-entities";
 import ThreadPost from "@/features/home/home/components/thread-post";
@@ -18,12 +11,12 @@ import {
   PaginationPrevTrigger,
   PaginationRoot,
 } from "@/components/ui/pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function HomeBar() {
   const [page, setPage] = useState<number>(1);
-  const limit = 5;
-
+  const limit = 10;
+  const queryClient = useQueryClient();
   const {
     data: threads = [],
     isLoading,

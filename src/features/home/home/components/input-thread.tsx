@@ -42,26 +42,25 @@ export default function InputThread() {
   } = useInputThread();
   const userLogin = useAuthStore((state) => state.user);
   const [isOpen, setOpen] = useState<boolean>(false);
-  
+
   const handleButtonClick = async () => {
     await handleSubmit(async (data) => {
       await onSubmit(data);
       setOpen(false);
-    })(); 
+    })();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex direction="column" borderBottomWidth="2px">
-        <Box display="flex" flexDirection="row" p="4" gap="4" w="full">
-          <Avatar
-            src={
-              userLogin?.profile?.avatarUrl ??
-              "https://api.dicebear.com/9.x/bottts/svg"
-            }
-            size="xl"
-          />
-
+    <Flex direction="column" borderBottomWidth="2px">
+      <Box display="flex" flexDirection="row" p="4" gap="4" w="full">
+        <Avatar
+          src={
+            userLogin?.profile?.avatarUrl ??
+            "https://api.dicebear.com/9.x/bottts/svg"
+          }
+          size="xl"
+        />
+        <form onSubmit={handleSubmit(onSubmit)}>
           <DialogRoot
             size={"lg"}
             open={isOpen}
@@ -125,7 +124,7 @@ export default function InputThread() {
                   rounded="full"
                   p="4"
                   onClick={handleButtonClick}
-                  disabled={isPending || isPendingUpload }
+                  disabled={isPending || isPendingUpload}
                 >
                   {isPending || isPendingUpload ? <Spinner /> : "Post"}
                 </Button>
@@ -160,33 +159,33 @@ export default function InputThread() {
               </Stack>
             </DialogContent>
           </DialogRoot>
+        </form>
 
-          <Box display={"flex"}>
-            <Avatar
-              alignSelf={"center"}
-              src="/gallery-add.svg"
-              size={"xs"}
-              shape="square"
-              bgColor="transparent"
-              _hover={{ opacity: 0.8 }}
-            >
-              <input type="file" hidden />
-            </Avatar>
-          </Box>
-
-          <Button
-            type="submit"
-            size="md"
-            colorPalette="green"
-            rounded="4xl"
-            fontSize="xl"
-            p="5"
-            justifyContent="center"
+        <Box display={"flex"}>
+          <Avatar
+            alignSelf={"center"}
+            src="/gallery-add.svg"
+            size={"xs"}
+            shape="square"
+            bgColor="transparent"
+            _hover={{ opacity: 0.8 }}
           >
-            Post
-          </Button>
+            <input type="file" hidden />
+          </Avatar>
         </Box>
-      </Flex>
-    </form>
+
+        <Button
+          type="submit"
+          size="md"
+          colorPalette="green"
+          rounded="4xl"
+          fontSize="xl"
+          p="5"
+          justifyContent="center"
+        >
+          Post
+        </Button>
+      </Box>
+    </Flex>
   );
 }

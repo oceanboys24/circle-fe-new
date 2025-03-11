@@ -11,7 +11,7 @@ export type FormInputs = {
 
 export default function useInputThread() {
   const [previewURL, setPreviewURL] = useState<string | null>(null);
-  const { handleSubmit, register, reset, setValue } = useForm<FormInputs>();
+  const { handleSubmit, register, reset : resetContent, setValue } = useForm<FormInputs>();
   const queryClient = useQueryClient();
   const inputFileRef = useRef<HTMLInputElement | null>(null);
   const {
@@ -102,7 +102,7 @@ export default function useInputThread() {
     };
 
     await CreateThread(ThreadData);
-    reset();
+    resetContent();
     setPreviewURL(null);
   };
   return {
@@ -120,6 +120,6 @@ export default function useInputThread() {
     inputFileRef,
     setValue,
     isPendingUpload,
-    reset,
+    resetContent,
   };
 }
