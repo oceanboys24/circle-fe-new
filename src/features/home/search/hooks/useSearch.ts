@@ -3,7 +3,8 @@ import { useAuthStore } from "@/store/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { useDebounce } from "use-debounce";
-import { SearchUser } from "../types/user-search";
+
+import { UserProfileDetailEntitiy } from "@/entities/profile-details";
 
 export default function useSearch() {
   const [searchText, setSearchText] = useState<string>("");
@@ -17,7 +18,7 @@ export default function useSearch() {
     data: users = [],
     isLoading,
     refetch,
-  } = useQuery<SearchUser[]>({
+  } = useQuery<UserProfileDetailEntitiy[]>({
     queryKey: ["Search-Users", searchTextDebounce],
     queryFn: async () => {
       const response = await axiosInstance.get(
@@ -31,7 +32,7 @@ export default function useSearch() {
   useEffect(() => {
     refetch();
   }, [searchTextDebounce, refetch]);
-
+  
   const filteredUsers = users?.filter((u) => u.userName !== user.userName);
   return { isLoading, filteredUsers, handleChange, searchText };
 }

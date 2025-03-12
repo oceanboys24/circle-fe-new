@@ -25,6 +25,9 @@ export default function useFollows(profileData: UserProfileDetailEntitiy) {
       queryClient.invalidateQueries({
         queryKey: ["CheckAuthToken"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["Search-Users"],
+      });
     },
   });
 
@@ -48,6 +51,9 @@ export default function useFollows(profileData: UserProfileDetailEntitiy) {
       });
       queryClient.invalidateQueries({
         queryKey: ["CheckAuthToken"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["Search-Users"],
       });
     },
   });

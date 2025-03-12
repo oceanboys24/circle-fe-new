@@ -15,6 +15,7 @@ export default function FollowingTabs() {
       return response.data.data;
     },
   });
+  console.log(dataFollowing)
 
   {
     isLoading ?? <Spinner />;

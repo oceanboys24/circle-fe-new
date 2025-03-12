@@ -1,16 +1,18 @@
 import { Avatar } from "@/components/ui/avatar";
-import { BoxProps, Flex, Text } from "@chakra-ui/react";
-import { SearchUser } from "./types/user-search";
+import { BoxProps, Button, Flex, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import useFollows from "../profile-user/hooks/useFollows";
+import { UserProfileDetailEntitiy } from "@/entities/profile-details";
 
 interface SearchUserDataProps extends BoxProps {
-  searchUserData: SearchUser;
- 
+  searchUserData: UserProfileDetailEntitiy;
 }
 
 export default function SearchCard({ searchUserData }: SearchUserDataProps) {
   const navigate = useNavigate();
-  
+  const { onClickFollow, onClickUnfollow } = useFollows(searchUserData);
+
+
   function onClickAvatar() {
     navigate(`/profile-user/${searchUserData.id}`);
   }
@@ -36,6 +38,14 @@ export default function SearchCard({ searchUserData }: SearchUserDataProps) {
         </Text>
       </Flex>
       <Flex align={"center"}>
+        <Button
+          variant={"outline"}
+          borderColor={"white"}
+          rounded={"full"}
+          onClick={searchUserData.isFollow ? onClickUnfollow : onClickFollow}
+        >
+          {searchUserData.isFollow ? "Followed" : "Follow"}
+        </Button>
       </Flex>
     </Flex>
   );
