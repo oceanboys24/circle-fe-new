@@ -1,4 +1,16 @@
-import { BoxProps, Button, Flex, Image, Spinner, Text } from "@chakra-ui/react";
+import {
+  Box,
+  BoxProps,
+  Button,
+  DialogBackdrop,
+  Flex,
+  Float,
+  Image,
+  Spinner,
+  Stack,
+  Text,
+  Textarea,
+} from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { useAuthStore } from "@/store/useAuth";
 import { ThreadDetails } from "../../detail-status/types/thread-detail-types";
@@ -23,6 +35,8 @@ import { axiosInstance } from "@/config/axios";
 import Comments from "../../detail-status/components/comments";
 import UserStatusModal from "./modal-thread";
 import InputCommentModal from "./modal-comment";
+import { CloseButton } from "@/components/ui/close-button";
+import useEditThread from "../hooks/useEditThread";
 
 interface CardThreadProps extends BoxProps {
   thread: ThreadDetails;
@@ -32,6 +46,7 @@ export default function ThreadPost({ thread }: CardThreadProps) {
   const { onClickAvatar, onClickCard } = useNavigateThread(thread);
   const { user } = useAuthStore();
   const [isOpen, setOpen] = useState<boolean>(false);
+  const [isOpenEdit, setOpenEdit] = useState<boolean>(false);
   const { isLiked, onClickLike, onClickUnlike } = useLikeUnlike(thread);
   const { isPendingDelete, onClickDelete } = useDeleteThread(thread);
 
@@ -44,6 +59,29 @@ export default function ThreadPost({ thread }: CardThreadProps) {
     },
     enabled: !!thread.id, //Only fetch if id exist
   });
+
+  //Edit Threads
+  const {
+    register,
+    onSubmit,
+    handleSubmit,
+    handlePreview,
+    previewURL,
+    setPreviewURL,
+    isPendingEdit,
+    restRegisterImages,
+    registerImagesOnChange,
+    registerImagesRef,
+    inputFileRef,
+    setValue,
+  } = useEditThread(thread);
+
+  const handleButtonClick = async () => {
+    await handleSubmit(async (data) => {
+      await onSubmit(data);
+      setOpen(false);
+    })();
+  };
 
   return (
     <Flex direction="column">
@@ -74,6 +112,103 @@ export default function ThreadPost({ thread }: CardThreadProps) {
             <Text as="span" color="gray.400" marginEnd={"auto"}>
               {convertToWIB(thread.createdAt)}
             </Text>
+
+            {user.id === thread.user.id && (
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <DialogRoot
+                  size={"lg"}
+                  open={isOpenEdit}
+                  onOpenChange={(details) => setOpenEdit(details.open)}
+                >
+                  <DialogTrigger asChild>
+                    <Button size="sm" colorPalette={"orange"}>
+                      Edit Thread
+                    </Button>
+                  </DialogTrigger>
+                  <DialogBackdrop />
+                  <DialogContent rounded="lg">
+                    <DialogCloseTrigger bg="bg" />
+                    <DialogBody p="5">
+                      <Flex justify="center" align="start" flexShrink={0}>
+                        <Box p="2.5"></Box>
+                        <Textarea
+                          autoresize
+                          maxH="30vh"
+                          {...register("content")}
+                          placeholder="Edit Thread"
+                          variant="flushed"
+                          p="4"
+                          textStyle="lg"
+                          minW="xs"
+                          borderBottom="none"
+                          _focus={{ borderBottom: "none", boxShadow: "none" }}
+                        />
+                      </Flex>
+                    </DialogBody>
+                    <DialogFooter justifyContent="space-between">
+                      <Flex alignSelf="start" as="label" cursor="pointer">
+                        <Image src="/gallery-add.svg" />
+                        <input
+                          type="file"
+                          hidden
+                          {...restRegisterImages}
+                          onChange={(e) => {
+                            handlePreview(e);
+                            registerImagesOnChange(e);
+                          }}
+                          ref={(e) => {
+                            registerImagesRef(e);
+                            inputFileRef.current = e;
+                          }}
+                        />
+                      </Flex>
+                      <Button
+                        bgColor="#04A51E"
+                        color="white"
+                        type="submit"
+                        rounded="full"
+                        p="4"
+                        onClick={() => {
+                          handleButtonClick(), setOpenEdit(false);
+                        }}
+                        disabled={isPendingEdit}
+                      >
+                        {isPendingEdit ? <Spinner /> : "Edit Thread"}
+                      </Button>
+                    </DialogFooter>
+                    <Stack
+                      w="xs"
+                      alignSelf="center"
+                      p="2"
+                      position={"relative"}
+                      display={previewURL ? "flex" : "none"}
+                    >
+                      <Image
+                        objectFit="contain"
+                        maxHeight="300px"
+                        maxWidth="300px"
+                        src={previewURL ?? ""}
+                        borderRadius="md"
+                      />
+                      {previewURL && (
+                        <Float>
+                          <CloseButton
+                            onClick={() => {
+                              setPreviewURL(null);
+                              setValue("imageContent", new DataTransfer().files);
+                            }}
+                            variant={"solid"}
+                            rounded={"full"}
+                            size={"xs"}
+                          />
+                        </Float>
+                      )}
+                    </Stack>
+                  </DialogContent>
+                </DialogRoot>
+              </form>
+            )}
+
             {user.id === thread.user.id && (
               <DialogRoot
                 open={isOpen}
@@ -166,11 +301,7 @@ export default function ThreadPost({ thread }: CardThreadProps) {
                 onClick={isLiked ? onClickUnlike : onClickLike}
               >
                 <Image
-                  src={
-                    isLiked
-                      ? "/heart-bold.svg"
-                      : "/heart.svg"
-                  }
+                  src={isLiked ? "/heart-bold.svg" : "/heart.svg"}
                   width={"27px"}
                 />
                 <Text>{thread.likesCount}</Text>
