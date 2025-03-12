@@ -1,29 +1,30 @@
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { BoxProps, Button, Flex, Text } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
-import { DataSuggestionFollow } from "@/features/home/sidebar/utils/suggestion";
+import { UserProfileDetailEntitiy } from "@/entities/profile-details";
+import useFollowsSideBar from "@/features/home/sidebar/hooks/useFollowSidebar";
 
-export function SuggestionFollowLoop() {
-  return DataSuggestionFollow.map(
-    ({ name, username, image, isFollowing }, index) => (
-      <Flex gap="3" justifyContent="space-between" key={index}>
-        <Avatar src={image} size="xl" />
-        <Flex direction="column" marginEnd="auto">
-          <Text>{name}</Text>
-          <Text textStyle="xs" color="#5a5a5b">
-            @{username}
-          </Text>
-        </Flex>
-        <Button
-          variant="outline"
-          style={{
-            color: isFollowing ? "#747475" : "white",
-            borderColor: isFollowing ? "#747475" : "white",
-          }}
-          rounded="4xl"
-        >
-          {isFollowing ? "Following" : "Follow"}
-        </Button>
+interface SearchUserDataProps extends BoxProps {
+  searchUserData: UserProfileDetailEntitiy;
+}
+export function SuggestionFollowLoop({ searchUserData }: SearchUserDataProps) {
+  const { onClickFollow, onClickUnfollow } = useFollowsSideBar(searchUserData);
+  return (
+    <Flex gap="3" justifyContent="space-between">
+      <Avatar src={searchUserData.profile?.avatarUrl ?? ""} size="xl" />
+      <Flex direction="column" marginEnd="auto">
+        <Text>{searchUserData.fullName}</Text>
+        <Text textStyle="xs" color="#5a5a5b">
+          @{searchUserData.userName}
+        </Text>
       </Flex>
-    )
+      <Button
+        variant={"outline"}
+        borderColor={"white"}
+        rounded={"full"}
+        onClick={searchUserData.isFollow ? onClickUnfollow : onClickFollow}
+      >
+        {searchUserData.isFollow ? "Followed" : "Follow"}
+      </Button>
+    </Flex>
   );
 }
