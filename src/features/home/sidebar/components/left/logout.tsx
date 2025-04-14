@@ -22,7 +22,7 @@ export default function Logout() {
   }
 
   return (
-    <Box p="10" alignSelf="center" gridRow="4">
+    <Box p="10" alignSelf="start" gridRow="4">
       <Stack
         alignSelf={"end"}
         direction="row"

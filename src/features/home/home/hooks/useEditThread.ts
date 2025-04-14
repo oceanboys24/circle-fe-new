@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/config/axios";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { toaster } from "@/components/ui/toaster";
 import { useRef, useState } from "react";
 import { ThreadDetails } from "../../detail-status/types/thread-detail-types";
@@ -27,7 +27,7 @@ export default function useEditThread(thread: ThreadDetails) {
   } = register("imageContent");
 
   // Edit Thread
-  const { mutateAsync: CreateThread, isPending : isPendingEdit } = useMutation({
+  const { mutateAsync: EditThread, isPending: isPendingEdit } = useMutation({
     mutationKey: ["EditThread"],
     mutationFn: async (formData: FormData) => {
       const response = await axiosInstance.patch(
@@ -47,6 +47,10 @@ export default function useEditThread(thread: ThreadDetails) {
     onSuccess: async (data) => {
       queryClient.invalidateQueries({
         queryKey: ["Threads"],
+      });
+      resetContent({
+        content: "",
+        imageContent: undefined,
       });
       toaster.create({
         title: data.message,
@@ -72,15 +76,15 @@ export default function useEditThread(thread: ThreadDetails) {
     const formData = new FormData();
 
     //Form Content
-    formData.append("content", data.content);
+    if (data.content) {
+      formData.append("content", data.content);
+    }
 
     if (data.imageContent?.length > 0) {
       formData.append("imageContent", data.imageContent[0]);
     }
-
-    await CreateThread(formData);
-    resetContent();
-    setPreviewURL(null);
+    setPreviewURL(null)
+    await EditThread(formData);
   };
   return {
     register,

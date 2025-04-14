@@ -1,3 +1,5 @@
+import { UserProfile } from "@/store/useAuth";
+
 export type UserPost = {
   fullName: string;
   userName: string;
@@ -6,12 +8,14 @@ export type UserPost = {
 
 export type Reply = {
   id: string;
+  createdAt: Date;
   user: UserPost;
   content: string;
   contentImage: string;
   likesCount: number;
   replyCount: number;
   reatedAt: string;
+  userId: string;
 };
 
 export type Post = {

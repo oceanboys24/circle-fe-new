@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const createThreadSchema = z.object({
-  content: z.string().max(280),
+  content: z.string().max(280).optional(),
   imageContent: z.string().optional(),
 });
 

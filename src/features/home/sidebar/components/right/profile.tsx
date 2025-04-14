@@ -27,17 +27,16 @@ export default function ProfileSidebarRight() {
         fontSize="40px"
         rounded="lg"
       />
-      <Flex justify="space-between" h="100px" >
+      <Flex justify="space-between" h="100px">
         <Avatar
           src={
             userLogin?.profile?.avatarUrl ??
             "https://api.dicebear.com/9.x/bottts/svg"
           }
-          w={"100px"}
-          h={"100px"}
+          w={"90px"}
+          h={"90px"}
           bottom="50px"
           left="30px"
-          
         />
         <ModalEdit />
       </Flex>
@@ -47,21 +46,27 @@ export default function ProfileSidebarRight() {
           @{userLogin.userName}
         </Text>
         <Text>{userLogin.profile?.bio ?? " "}</Text>
-        <Text textStyle="md">
-          <Text as="span" fontWeight="bold" color="white">
-          {userLogin.following?.length ?? 0}
-          </Text>
-          <Text as="span" color="gray.400">
-            {" "}
-            Following{" "}
-          </Text>
-          <Text as="span" fontWeight="bold" color="white">
-          {userLogin.followers?.length ?? 0}
-          </Text>
-          <Text as="span" color="gray.400">
-            {" "}
-            Followers
-          </Text>
+        <Text display={'flex'} textStyle="md" direction={'rows'} gap={'4'}>
+          <Flex gap={'1'}>
+            <Text as="span" fontWeight="bold" color="white">
+              {userLogin.following?.length ?? 0}
+            </Text>
+            <Text as="span" color="gray.400">
+              {" "}
+              Following{" "}
+            </Text>
+          </Flex>
+
+          <Flex gap={'1'}>
+            <Text as="span" fontWeight="bold" color="white">
+              {" "}
+              {userLogin.followers?.length ?? 0}
+            </Text>
+            <Text as="span" color="gray.400">
+              {" "}
+              Followers
+            </Text>
+          </Flex>
         </Text>
       </Stack>
     </Stack>

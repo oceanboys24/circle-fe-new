@@ -121,7 +121,7 @@ export default function MainMenu() {
             </DialogBody>
             <DialogFooter justifyContent="space-between">
               <Flex alignSelf="start" as="label" cursor="pointer">
-                <Image src="./src/assets/gallery-add.svg" />
+                <Image src="/public/gallery-add.svg" />
                 <input
                   type="file"
                   hidden

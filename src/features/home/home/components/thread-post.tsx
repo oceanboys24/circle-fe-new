@@ -9,13 +9,15 @@ import {
   Spinner,
   Stack,
   Text,
+  Menu,
+  Portal,
   Textarea,
 } from "@chakra-ui/react";
 import { Avatar } from "@/components/ui/avatar.tsx";
 import { useAuthStore } from "@/store/useAuth";
 import { ThreadDetails } from "../../detail-status/types/thread-detail-types";
 import useNavigateThread from "../hooks/useNavigateThread";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DialogActionTrigger,
   DialogBody,
@@ -57,7 +59,7 @@ export default function ThreadPost({ thread }: CardThreadProps) {
 
       return response.data;
     },
-    enabled: !!thread.id, //Only fetch if id exist
+    enabled: !!thread.id,
   });
 
   //Edit Threads
@@ -74,6 +76,7 @@ export default function ThreadPost({ thread }: CardThreadProps) {
     registerImagesRef,
     inputFileRef,
     setValue,
+    resetContent,
   } = useEditThread(thread);
 
   const handleButtonClick = async () => {
@@ -82,7 +85,14 @@ export default function ThreadPost({ thread }: CardThreadProps) {
       setOpen(false);
     })();
   };
+  
+  useEffect(()=> {
+    if(thread) {
+      setValue('content', thread.content)
+    }
+  }, [thread, setValue])
 
+  console.log(thread.imageContent)
   return (
     <Flex direction="column">
       <Flex
@@ -113,152 +123,187 @@ export default function ThreadPost({ thread }: CardThreadProps) {
               {convertToWIB(thread.createdAt)}
             </Text>
 
+            {/* Menu Edit Delete */}
             {user.id === thread.user.id && (
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogRoot
-                  size={"lg"}
-                  open={isOpenEdit}
-                  onOpenChange={(details) => setOpenEdit(details.open)}
-                >
-                  <DialogTrigger asChild>
-                    <Button size="sm" colorPalette={"orange"}>
-                      Edit Thread
-                    </Button>
-                  </DialogTrigger>
-                  <DialogBackdrop />
-                  <DialogContent rounded="lg">
-                    <DialogCloseTrigger bg="bg" />
-                    <DialogBody p="5">
-                      <Flex justify="center" align="start" flexShrink={0}>
-                        <Box p="2.5"></Box>
-                        <Textarea
-                          autoresize
-                          maxH="30vh"
-                          {...register("content")}
-                          placeholder="Edit Thread"
-                          variant="flushed"
-                          p="4"
-                          textStyle="lg"
-                          minW="xs"
-                          borderBottom="none"
-                          _focus={{ borderBottom: "none", boxShadow: "none" }}
-                        />
-                      </Flex>
-                    </DialogBody>
-                    <DialogFooter justifyContent="space-between">
-                      <Flex alignSelf="start" as="label" cursor="pointer">
-                        <Image src="/gallery-add.svg" />
-                        <input
-                          type="file"
-                          hidden
-                          {...restRegisterImages}
-                          onChange={(e) => {
-                            handlePreview(e);
-                            registerImagesOnChange(e);
-                          }}
-                          ref={(e) => {
-                            registerImagesRef(e);
-                            inputFileRef.current = e;
-                          }}
-                        />
-                      </Flex>
-                      <Button
-                        bgColor="#04A51E"
-                        color="white"
-                        type="submit"
-                        rounded="full"
-                        p="4"
-                        onClick={() => {
-                          handleButtonClick(), setOpenEdit(false);
-                        }}
-                        disabled={isPendingEdit}
-                      >
-                        {isPendingEdit ? <Spinner /> : "Edit Thread"}
-                      </Button>
-                    </DialogFooter>
-                    <Stack
-                      w="xs"
-                      alignSelf="center"
-                      p="2"
-                      position={"relative"}
-                      display={previewURL ? "flex" : "none"}
-                    >
-                      <Image
-                        objectFit="contain"
-                        maxHeight="300px"
-                        maxWidth="300px"
-                        src={previewURL ?? ""}
-                        borderRadius="md"
-                      />
-                      {previewURL && (
-                        <Float>
-                          <CloseButton
-                            onClick={() => {
-                              setPreviewURL(null);
-                              setValue("imageContent", new DataTransfer().files);
-                            }}
-                            variant={"solid"}
-                            rounded={"full"}
-                            size={"xs"}
-                          />
-                        </Float>
-                      )}
-                    </Stack>
-                  </DialogContent>
-                </DialogRoot>
-              </form>
-            )}
-
-            {user.id === thread.user.id && (
-              <DialogRoot
-                open={isOpen}
-                onOpenChange={(details) => setOpen(details.open)}
-              >
-                <DialogTrigger asChild>
-                  <Button size="sm" colorPalette={"red"}>
-                    Delete
+              <Menu.Root>
+                <Menu.Trigger asChild>
+                  <Button variant="outline" size="sm">
+                    :
                   </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Delete Confirmation</DialogTitle>
-                  </DialogHeader>
-                  <DialogBody>
-                    <p>Are you Sure to Delete?</p>
-                  </DialogBody>
-                  <DialogFooter>
-                    <DialogActionTrigger asChild>
-                      <Button variant="outline">Cancel</Button>
-                    </DialogActionTrigger>
-                    <Button
-                      variant="subtle"
-                      size="sm"
-                      colorPalette={"red"}
-                      disabled={isPendingDelete ? true : false}
-                      onClick={async () => {
-                        onClickDelete();
-                        setOpen(false);
-                      }}
-                    >
-                      {isPendingDelete ? <Spinner /> : "Delete"}
-                    </Button>
-                  </DialogFooter>
-                  <DialogCloseTrigger />
-                </DialogContent>
-              </DialogRoot>
+                </Menu.Trigger>
+                <Portal>
+                  <Menu.Positioner>
+                    <Menu.Content>
+                      <Menu.Item value="edit-thread">
+                        {" "}
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                          <DialogRoot
+                            size={"lg"}
+                            open={isOpenEdit}
+                            onOpenChange={(details) =>
+                              setOpenEdit(details.open)
+                            }
+                          >
+                            <DialogTrigger asChild>
+                              <Text>Edit Thread</Text>
+                            </DialogTrigger>
+                            <DialogBackdrop />
+                            <DialogContent rounded="lg">
+                              <DialogCloseTrigger bg="bg" />
+                              <DialogBody p="5">
+                                <Flex
+                                  justify="center"
+                                  align="start"
+                                  flexShrink={0}
+                                >
+                                  <Box p="2.5"></Box>
+                                  <Textarea
+                                    autoresize
+                                    maxH="30vh"
+                                    {...register("content")}
+                                    placeholder="Edit Thread"
+                                    variant="flushed"
+                                    p="4"
+                                    textStyle="lg"
+                                    minW="xs"
+                                    borderBottom="none"
+                                    _focus={{
+                                      borderBottom: "none",
+                                      boxShadow: "none",
+                                    }}
+                                  />
+                                </Flex>
+                              </DialogBody>
+                              <DialogFooter justifyContent="space-between">
+                                <Flex
+                                  alignSelf="start"
+                                  as="label"
+                                  cursor="pointer"
+                                >
+                                  <Image src="/gallery-add.svg" />
+                                  <input
+                                    type="file"
+                                    hidden
+                                    {...restRegisterImages}
+                                    onChange={(e) => {
+                                      handlePreview(e);
+                                      registerImagesOnChange(e);
+                                    }}
+                                    ref={(e) => {
+                                      registerImagesRef(e);
+                                      inputFileRef.current = e;
+                                    }}
+                                  />
+                                </Flex>
+                                <Button
+                                  bgColor="#04A51E"
+                                  color="white"
+                                  type="submit"
+                                  rounded="full"
+                                  p="4"
+                                  onClick={() => {
+                                    handleButtonClick(), setOpenEdit(false);
+                                  }}
+                                  disabled={isPendingEdit}
+                                >
+                                  {isPendingEdit ? <Spinner /> : "Edit Thread"}
+                                </Button>
+                              </DialogFooter>
+                              <Stack
+                                w="xs"
+                                alignSelf="center"
+                                p="2"
+                                position={"relative"}
+                              >
+                                <Image
+                                  objectFit="contain"
+                                  maxHeight="300px"
+                                  maxWidth="300px"
+                                  src={previewURL || thread.imageContent}
+                                  borderRadius="md"
+                                  mb={"20px"}
+                                />
+                                {previewURL && (
+                                  <Float>
+                                    <CloseButton
+                                      onClick={() => {
+                                        setPreviewURL(null);
+                                        setValue(
+                                          "imageContent",
+                                          new DataTransfer().files
+                                        );
+                                      }}
+                                      variant={"solid"}
+                                      rounded={"full"}
+                                      size={"xs"}
+                                    />
+                                  </Float>
+                                )}
+                              </Stack>
+                            </DialogContent>
+                          </DialogRoot>
+                        </form>
+                      </Menu.Item>
+                      <Menu.Item value="delete-thread" color={"fg.error"}>
+                        <DialogRoot
+                          open={isOpen}
+                          onOpenChange={(details) => setOpen(details.open)}
+                        >
+                          <DialogTrigger asChild>
+                            <Text>Delete Thread</Text>
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle>Delete Confirmation</DialogTitle>
+                            </DialogHeader>
+                            <DialogBody>
+                              <p>Are you Sure to Delete?</p>
+                            </DialogBody>
+                            <DialogFooter>
+                              <DialogActionTrigger asChild>
+                                <Button variant="outline">Cancel</Button>
+                              </DialogActionTrigger>
+                              <Button
+                                variant="subtle"
+                                size="sm"
+                                colorPalette={"red"}
+                                disabled={isPendingDelete ? true : false}
+                                onClick={async () => {
+                                  onClickDelete();
+                                  setOpen(false);
+                                }}
+                              >
+                                {isPendingDelete ? <Spinner /> : "Delete"}
+                              </Button>
+                            </DialogFooter>
+                            <DialogCloseTrigger />
+                          </DialogContent>
+                        </DialogRoot>
+                      </Menu.Item>
+                    </Menu.Content>
+                  </Menu.Positioner>
+                </Portal>
+              </Menu.Root>
             )}
           </Flex>
-          <Flex>
+          <Flex mb={'14px'}>
             <Text>{thread.content}</Text>
           </Flex>
 
           <DialogRoot size={"full"}>
             <DialogTrigger asChild>
-              <Flex justify={"center"} as="label" cursor={"pointer"}>
+              <Flex
+                justify={"center"}
+                as="label"
+                cursor={"pointer"}
+                backgroundColor={"gray.700"}
+              
+                w={'full'}
+              >
                 <Image
                   src={thread.imageContent ?? undefined}
-                  maxW={"xs"}
-                  maxH={"xs"}
+                  maxW={"full"}
+                  maxH={"full"}
                   alignSelf={"center"}
                 />
               </Flex>
@@ -266,11 +311,15 @@ export default function ThreadPost({ thread }: CardThreadProps) {
             <DialogContent>
               <DialogBody>
                 <Flex h={"100vh"}>
-                  <Flex w={"full"} justify={"center"}>
+                  <Flex
+                    w={"full"}
+                    justify={"center"}
+                    backgroundColor={"gray.700"}
+                  >
                     <Image
                       src={thread.imageContent ?? undefined}
-                      maxW={"lg"}
-                      maxH={"lg"}
+                      maxW={"full"}
+                      maxH={"full"}
                       alignSelf={"center"}
                     />
                   </Flex>
@@ -308,6 +357,7 @@ export default function ThreadPost({ thread }: CardThreadProps) {
               </Button>
             </Flex>
             <Flex
+              gap={'1'}
               mt={"2"}
               mb={"2"}
               p={"0.5"}
